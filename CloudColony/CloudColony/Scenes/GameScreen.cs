@@ -25,6 +25,7 @@ namespace CloudColony.Scenes
         {
             //this.Camera = new Camera2D(17.5f, 10f);
             this.World = new World();
+            this.Renderer = new GameRenderer(World);
         }
 
         public override void Update(float delta)

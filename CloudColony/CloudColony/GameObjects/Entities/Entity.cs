@@ -11,7 +11,7 @@ namespace CloudColony.GameObjects.Entities
         public Vector2 Velocity { get { return velocity; } }
         private Vector2 velocity;
 
-        public Entity(World world) : base(null, 0,0,0,0)
+        public Entity(World world, TextureRegion region, float x, float y, float width, float height) : base(region, x, y, width, height)
         {
             this.World = world;
         }

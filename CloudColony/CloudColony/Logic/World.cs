@@ -9,6 +9,9 @@ namespace CloudColony.Logic
 {
     public class World : IUpdate
     {
+        public const float WORLD_WIDTH = 17.5f;
+        public const float WORLD_HEIGHT = 10f;
+
         public List<Entity> Entities { get; private set; }
 
         public Player PlayerRed { get; private set; }
@@ -26,7 +29,7 @@ namespace CloudColony.Logic
             PlayerRed = new Player(null, PlayerIndex.One);
             for (int i = 0; i < each; i++)
             {
-                Ship ship = new Ship(this, PlayerRed);
+                Ship ship = new Ship(this, null, PlayerRed, 9 - i, 7);
                 Entities.Add(ship);
                 PlayerRed.Ships.Add(ship);
             }
@@ -35,7 +38,7 @@ namespace CloudColony.Logic
             PlayerBlue = new Player(null, PlayerIndex.Two);
             for (int i = 0; i < each; i++)
             {
-                Ship ship = new Ship(this, PlayerBlue);
+                Ship ship = new Ship(this, null, PlayerBlue, 1 + i, 4);
                 Entities.Add(ship);
                 PlayerBlue.Ships.Add(ship);
             }
