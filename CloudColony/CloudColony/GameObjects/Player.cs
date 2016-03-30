@@ -5,16 +5,17 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using CloudColony.GameObjects.Entities;
+using CloudColony.GameObjects.Targets;
 
 namespace CloudColony.GameObjects
 {
-    public class Player : IRenderable, IUpdate
+    public class Player :  Target, IRenderable, IUpdate
     {
         public const float PLAYER_SPEED = 2;
 
         public List<Ship> Ships { get; private set; }
 
-        public Vector2 Position { get { return position;} }
+        public override Vector2 Position { get { return position;} }
         private Vector2 position;
 
         private readonly Sprite pointer;
