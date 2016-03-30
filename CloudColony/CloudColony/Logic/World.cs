@@ -31,7 +31,7 @@ namespace CloudColony.Logic
             PlayerRed = new Player(CC.Pointer, PlayerIndex.One, WORLD_WIDTH - 1.5f, 7);
             for (int i = 0; i < each; i++)
             {
-                Ship ship = new Ship(this, CC.Ship, PlayerRed, 9 - i, 7);
+                Ship ship = new Ship(this, CC.Ship, PlayerRed, WORLD_WIDTH - ( i % WORLD_WIDTH), 7 + (int)(i / WORLD_WIDTH));
                 Entities.Add(ship);
                 PlayerRed.Ships.Add(ship);
             }
@@ -40,7 +40,7 @@ namespace CloudColony.Logic
             PlayerBlue = new Player(CC.Pointer, PlayerIndex.Two, 1.5f, 4);
             for (int i = 0; i < each; i++)
             {
-                Ship ship = new Ship(this, CC.Ship, PlayerBlue, 1 + i, 4);
+                Ship ship = new Ship(this, CC.Ship, PlayerBlue, 1 + (i % WORLD_WIDTH), 4 - (int)(i / WORLD_WIDTH));
                 Entities.Add(ship);
                 PlayerBlue.Ships.Add(ship);
             }

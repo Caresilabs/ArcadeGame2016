@@ -33,6 +33,9 @@ namespace CloudColony
             Ship = new TextureRegion(tex, 0, 0, 16, 16);
 
             Pointer = new TextureRegion(tex, 24, 24, 16, 16);
+
+
+            Font = content.Load<SpriteFont>("Font");
         }
     }
 }

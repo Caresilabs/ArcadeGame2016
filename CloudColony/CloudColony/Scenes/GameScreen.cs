@@ -4,6 +4,7 @@ using CloudColony.Logic;
 using CloudColony.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace CloudColony.Scenes
 {
@@ -11,7 +12,7 @@ namespace CloudColony.Scenes
     {
         public enum GameState
         {
-            RUNNING, GAMEOVER, PAUSED
+            READY, RUNNING, GAMEOVER, PAUSED
         }
 
         public Camera2D UICamera { get; private set; }
@@ -21,6 +22,8 @@ namespace CloudColony.Scenes
         public GameRenderer Renderer { get; private set; }
 
         public World World { get; private set; }
+
+        public float ReadyTime { get; private set; }
 
         public override void Init()
         {
@@ -33,6 +36,13 @@ namespace CloudColony.Scenes
         {
             switch (State)
             {
+                case GameState.READY:
+                    ReadyTime += delta;
+                    if (ReadyTime >= 3)
+                        State = GameState.RUNNING;
+
+                    World.Update(delta);
+                    break;
                 case GameState.RUNNING:
                     World.Update(delta);
                     break;
@@ -51,6 +61,33 @@ namespace CloudColony.Scenes
             Graphics.Clear(Color.Green);
 
             Renderer.Draw(batch);
+
+            batch.Begin(SpriteSortMode.BackToFront,
+                     BlendState.AlphaBlend,
+                     SamplerState.PointClamp,
+                     null,
+                     null,
+                     null,
+                     UICamera.GetMatrix());
+            {
+                switch (State)
+                {
+                    case GameState.READY:
+                        batch.DrawString(CC.Font, "" + (int)(3 - ReadyTime), new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT / 2f),
+                            Color.Red, 0, new Vector2(8, 8), 10 + (ReadyTime - (float)Math.Floor(ReadyTime)) * 2, SpriteEffects.None, 0);
+                        break;
+                    case GameState.RUNNING:
+                        break;
+                    case GameState.GAMEOVER:
+                        break;
+                    case GameState.PAUSED:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            batch.End();
+
         }
 
         public override void Dispose()

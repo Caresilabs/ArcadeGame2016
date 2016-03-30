@@ -11,9 +11,9 @@ namespace CloudColony.GameObjects.Entities
         private const float MAX_SPEED = 2;
         private const float MAX_HEALTH = 100;
 
-        public const float SEPARATION_WEIGHT = 10f;
+        public const float SEPARATION_WEIGHT = 12f;
         public const float COHESION_WEIGHT = 2f;
-        public const float ALIGNMENT_WEIGHT = 22f;
+        public const float ALIGNMENT_WEIGHT = 2f;
 
         public Player Player { get; private set; }
 
@@ -54,6 +54,8 @@ namespace CloudColony.GameObjects.Entities
                 IsDead = true;
 
             KeepInside();
+
+            Rotation = (float)Math.Atan2(velocity.Y, velocity.X);
         }
 
         private void SeekTarget(float delta)
@@ -85,7 +87,7 @@ namespace CloudColony.GameObjects.Entities
                 velocity.X = -Math.Abs(velocity.X);
             }
 
-            if (position.Y < Size.Y /2f)
+            if (position.Y < Size.Y / 2f)
             {
                 position.Y = Size.Y / 2f;
                 velocity.Y = Math.Abs(velocity.Y);
@@ -100,86 +102,55 @@ namespace CloudColony.GameObjects.Entities
 
         private Vector2 Alignment()
         {
-            var NeighborCount = 0;
-
-            Vector2 v = new Vector2();
-
-            foreach (var boid in Player.Ships)
+            Vector2 pvj = Vector2.Zero;
+            foreach (var b in Player.Ships)
             {
-                if (boid == this)
-                    continue;
-
-                if (Distance(position, boid.position) < 4)
+                if (this != b)
                 {
-                    v += boid.velocity;
-                    ++NeighborCount;
+                    pvj += b.velocity;
                 }
             }
-
-            if (NeighborCount == 0)
-                return v;
-
-            v /= NeighborCount;
-            v.Normalize();
-
-            return v;
+            pvj /= (Player.Ships.Count - 1);
+            return (pvj - velocity) * 0.01f;
         }
 
         private Vector2 Cohesion()
         {
-            var NeighborCount = 0;
-
-            Vector2 v = new Vector2();
-
-            foreach (var boid in Player.Ships)
+            Vector2 pcj = Vector2.Zero;
+            int neighborCount = 0;
+            foreach (var b in Player.Ships)
             {
-                if (boid == this)
-                    continue;
-
-                if (Distance(position, boid.position) < 4)
+                if (this != b && Distance(b.position, position) <= 3)
                 {
-                    v += boid.position;
-                    ++NeighborCount;
+                    pcj += b.position;
+                    neighborCount++;
                 }
             }
-
-            if (NeighborCount == 0)
-                return v;
-
-            v /= NeighborCount;
-            v = new Vector2(v.X - position.X, v.Y - position.Y);
-            v.Normalize();
-
-            return v;
+            pcj /= neighborCount + 1;
+            return (pcj - position) * 0.01f;
         }
 
         private Vector2 Separation()
         {
-            var NeighborCount = 0;
-
-            Vector2 v = new Vector2();
-
-            foreach (var boid in Player.Ships)
+            Vector2 vec = Vector2.Zero;
+            int neighborCount = 0;
+            foreach (var b in Player.Ships)
             {
-                if (boid == this)
-                    continue;
-
-                if (Distance(position, boid.position) < 3)
+                if (this != b)
                 {
-                    v += (boid.position - position) * 0.5f;
-                    ++NeighborCount;
+                    var distance = Distance(position, b.position);
+                    if (distance > 0 && distance < 5)
+                    {
+                        var deltaVector = position - b.position;
+                        deltaVector.Normalize();
+                        deltaVector /= distance;
+                        vec += deltaVector;
+                        neighborCount++;
+                    }
                 }
             }
-
-            if (NeighborCount == 0)
-                return v;
-
-            v /= NeighborCount;
-            // v = new Vector2(v.X - position.X, v.Y - position.Y);
-            v *= -1;
-            v.Normalize();
-
-            return v;
+            Vector2 averageSteeringVector = (neighborCount > 0) ? (vec / neighborCount) : Vector2.Zero;
+            return averageSteeringVector;
         }
 
         private float Distance(Vector2 v1, Vector2 v2)
