@@ -26,7 +26,7 @@ namespace CloudColony.Logic
         private void InitPopulation(int each)
         {
             // Init red
-            PlayerRed = new Player(null, PlayerIndex.One);
+            PlayerRed = new Player(null, PlayerIndex.One, WORLD_WIDTH/2f - 1, WORLD_HEIGHT /2f);
             for (int i = 0; i < each; i++)
             {
                 Ship ship = new Ship(this, null, PlayerRed, 9 - i, 7);
@@ -35,7 +35,7 @@ namespace CloudColony.Logic
             }
 
             // Init blue
-            PlayerBlue = new Player(null, PlayerIndex.Two);
+            PlayerBlue = new Player(null, PlayerIndex.Two, WORLD_WIDTH / 2f + 1, WORLD_HEIGHT / 2f);
             for (int i = 0; i < each; i++)
             {
                 Ship ship = new Ship(this, null, PlayerBlue, 1 + i, 4);

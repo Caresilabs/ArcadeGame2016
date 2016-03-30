@@ -1,4 +1,5 @@
 ﻿using CloudColony.Framework;
+using CloudColony.Framework.Tools;
 using CloudColony.Logic;
 using CloudColony.Rendering;
 using Microsoft.Xna.Framework;
@@ -13,7 +14,7 @@ namespace CloudColony.Scenes
             RUNNING, GAMEOVER, PAUSED
         }
 
-       // public Camera2D Camera { get; private set; }
+        public Camera2D UICamera { get; private set; }
 
         public GameState State { get; private set; }
 
@@ -23,7 +24,7 @@ namespace CloudColony.Scenes
 
         public override void Init()
         {
-            //this.Camera = new Camera2D(17.5f, 10f);
+            this.UICamera = new Camera2D(CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT);
             this.World = new World();
             this.Renderer = new GameRenderer(World);
         }

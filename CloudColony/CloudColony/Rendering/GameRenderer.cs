@@ -30,8 +30,24 @@ namespace CloudColony.Rendering
                      null,
                      Camera.GetMatrix());
 
+            DrawObjects(batch);
+            DrawPlayers(batch);
 
             batch.End();
+        }
+
+        private void DrawPlayers(SpriteBatch batch)
+        {
+            foreach (var obj in World.Entities)
+            {
+                obj.Draw(batch);
+            }
+        }
+
+        private void DrawObjects(SpriteBatch batch)
+        {
+            World.PlayerRed.Draw(batch);
+            World.PlayerBlue.Draw(batch);
         }
     }
 }
