@@ -3,11 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CloudColony.Framework
 {
-    public class Sprite
+    public class Sprite : IRenderable, IUpdate
     {
         public TextureRegion Region { get; private set; }
 
-        public Vector2 Position { get; set; }
+        public Vector2 Position { get { return position; } }
+        protected Vector2 position;
 
         public Vector2 Scale { get; set; }
 
@@ -42,7 +43,7 @@ namespace CloudColony.Framework
             this.Size = new Vector2(width, height);
             this.DrawOffset = new Vector2();
             this.Effect = SpriteEffects.None;
-            this.Position = new Vector2(x, y);
+            this.position = new Vector2(x, y);
             this.Animations = new Animations();
             this.DrawOffset = new Vector2(Size.X/2, Size.Y/2);
 
@@ -52,7 +53,7 @@ namespace CloudColony.Framework
             UpdateSizeScale();
         }
 
-        public void Update(float delta)
+        public virtual void Update(float delta)
         {
             Animations.Update(delta);
             if (Animations.HasNext())
@@ -106,13 +107,14 @@ namespace CloudColony.Framework
 
         public Sprite SetPosition(float x, float y)
         {
-            this.Position = new Vector2(x, y);
+            this.position.X = x;
+            this.position.Y = y;
             return this;
         }
 
         public Sprite SetPosition(Vector2 position)
         {
-            this.Position = position;
+            this.position = position;
             return this;
         }
 
