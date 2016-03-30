@@ -1,0 +1,13 @@
+LOGIC:
+-Movement Behaviors
+-Attack/Shield
+-Powerup
+-Stay inside battlefield
+
+-Mainmenu
+
+Graphics:
+-Ship
+-Mouse Pointer
+
+Sound:
