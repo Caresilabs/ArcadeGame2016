@@ -13,6 +13,7 @@ namespace CloudColony.Logic
         public const float WORLD_HEIGHT = 10f;
 
         public List<Entity> Entities { get; private set; }
+        public List<Entity> DeadEntities { get; private set; }
 
         public Player PlayerRed { get; private set; }
         public Player PlayerBlue { get; private set; }
@@ -20,25 +21,26 @@ namespace CloudColony.Logic
         public World()
         {
             this.Entities = new List<Entity>();
+            this.DeadEntities = new List<Entity>();
             InitPopulation(25);
         }
 
         private void InitPopulation(int each)
         {
             // Init red
-            PlayerRed = new Player(null, PlayerIndex.One, WORLD_WIDTH/2f - 1, WORLD_HEIGHT /2f);
+            PlayerRed = new Player(CC.Pointer, PlayerIndex.One, WORLD_WIDTH - 1.5f, 7);
             for (int i = 0; i < each; i++)
             {
-                Ship ship = new Ship(this, null, PlayerRed, 9 - i, 7);
+                Ship ship = new Ship(this, CC.Ship, PlayerRed, 9 - i, 7);
                 Entities.Add(ship);
                 PlayerRed.Ships.Add(ship);
             }
 
             // Init blue
-            PlayerBlue = new Player(null, PlayerIndex.Two, WORLD_WIDTH / 2f + 1, WORLD_HEIGHT / 2f);
+            PlayerBlue = new Player(CC.Pointer, PlayerIndex.Two, 1.5f, 4);
             for (int i = 0; i < each; i++)
             {
-                Ship ship = new Ship(this, null, PlayerBlue, 1 + i, 4);
+                Ship ship = new Ship(this, CC.Ship, PlayerBlue, 1 + i, 4);
                 Entities.Add(ship);
                 PlayerBlue.Ships.Add(ship);
             }
@@ -52,7 +54,26 @@ namespace CloudColony.Logic
             foreach (var entity in Entities)
             {
                 entity.Update(delta);
+
+                if (entity.IsDead)
+                    DeadEntities.Add(entity);
             }
+
+            foreach (var dead in DeadEntities)
+            {
+                Entities.Remove(dead);
+                if (dead is Ship)
+                {
+                    PlayerRed.Ships.Remove((Ship)dead);
+                    PlayerBlue.Ships.Remove((Ship)dead);
+                }
+            }
+            DeadEntities.Clear();
+        }
+
+        public List<Entity> GetNearbyEntities(float radius)
+        {
+            return Entities;
         }
     }
 }

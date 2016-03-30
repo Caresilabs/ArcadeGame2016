@@ -9,11 +9,15 @@ namespace CloudColony.GameObjects.Entities
         public World World { get; private set; }
 
         public Vector2 Velocity { get { return velocity; } }
-        private Vector2 velocity;
+        protected Vector2 velocity;
+
+        public bool IsDead { get; protected set; }
 
         public Entity(World world, TextureRegion region, float x, float y, float width, float height) : base(region, x, y, width, height)
         {
             this.World = world;
+            this.velocity = new Vector2();
+            this.IsDead = false;
         }
 
         public override void Update(float delta)

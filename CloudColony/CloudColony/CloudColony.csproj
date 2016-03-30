@@ -48,9 +48,11 @@
     <Compile Include="Framework\Tools\Camera2D.cs" />
     <Compile Include="Framework\Tools\MathUtils.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="GameObjects\Entities\Bullet.cs" />
     <Compile Include="GameObjects\Entities\Entity.cs" />
     <Compile Include="GameObjects\Entities\Ship.cs" />
     <Compile Include="GameObjects\Player.cs" />
+    <Compile Include="GameObjects\Targets\FlankTarget.cs" />
     <Compile Include="GameObjects\Targets\Target.cs" />
     <Compile Include="Logic\World.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

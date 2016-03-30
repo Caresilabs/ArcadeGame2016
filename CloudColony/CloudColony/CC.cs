@@ -29,7 +29,10 @@ namespace CloudColony
 
         private static void LoadAssets(ContentManager content)
         {
+            var tex = content.Load<Texture2D>("PreviewData/GamePreviewInfoImage");
+            Ship = new TextureRegion(tex, 0, 0, 16, 16);
 
+            Pointer = new TextureRegion(tex, 24, 24, 16, 16);
         }
     }
 }

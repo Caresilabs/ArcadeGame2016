@@ -2,8 +2,10 @@
 
 namespace CloudColony.GameObjects.Targets
 {
-    public class Target
+    public interface Target
     {
-        public virtual Vector2 Position { get; }
+        Vector2 Position { get; }
+
+        bool Done { get; }
     }
 }
