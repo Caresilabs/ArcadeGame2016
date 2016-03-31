@@ -39,7 +39,7 @@ namespace CloudColony.Framework
         public override TextureRegion GetRegion()
         {
             return new TextureRegion(
-                texture, origin.X + (width * currentFrame), origin.Y, width, height
+                texture, origin.X , origin.Y + (height * currentFrame), width, height
            );
         }
     }

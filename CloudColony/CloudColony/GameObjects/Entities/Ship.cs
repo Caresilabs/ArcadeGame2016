@@ -34,7 +34,7 @@ namespace CloudColony.GameObjects.Entities
             velocity.X = (int)player.Index == 0 ? MAX_SPEED : -MAX_SPEED;
             //Color = (int)player.Index == 0 ? Color.Red : Color.Blue;
 
-            AddAnimation("Move", new FrameAnimation(CC.Atlas, 0, 2 + ((int)player.Index == 0 ? 0 : 32), 32, 32, 2, 0.3f))
+            AddAnimation("Move", new FrameAnimation(CC.Atlas, 0 + ((int)player.Index == 0 ? 0 : 32), 2 , 32, 32, 2, 0.3f))
                 .SetAnimation("Move");
         }
 

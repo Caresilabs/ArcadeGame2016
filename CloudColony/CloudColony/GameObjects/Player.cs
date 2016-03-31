@@ -38,6 +38,7 @@ namespace CloudColony.GameObjects
             this.Index = index;
             this.World = world;
             this.pointer = new Sprite(pointer, x, y, 0.7f, 0.7f);
+            this.pointer.ZIndex = 1;
             this.position = new Vector2(x, y);
             this.Stamina = STAMINA_MAX;
         }

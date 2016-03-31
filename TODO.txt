@@ -2,12 +2,15 @@ LOGIC:
 -Movement Behaviors
 -Attack/Shield
 -Powerup
--Stay inside battlefield
-
 -Mainmenu
 
 Graphics:
--Ship
--Mouse Pointer
+-Background & parallax
+-meny sprites
+-shield
+-splash screen
+-Banner
+-Stylade skott
+-Win banner / Win (Red won, blue won)
 
 Sound:
