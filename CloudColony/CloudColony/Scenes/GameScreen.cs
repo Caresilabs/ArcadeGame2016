@@ -4,6 +4,7 @@ using CloudColony.Logic;
 using CloudColony.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 
 namespace CloudColony.Scenes
@@ -40,6 +41,13 @@ namespace CloudColony.Scenes
                         State = GameState.RUNNING;
                     break;
                 case GameState.RUNNING:
+                    if (InputHandler.GetButtonState(PlayerIndex.One, PlayerInput.Start) == InputState.Released ||
+                        InputHandler.GetButtonState(PlayerIndex.Two, PlayerInput.Start) == InputState.Released)
+                    {
+                        State = GameState.PAUSED;
+                       
+                    }
+
                     World.Update(delta);
 
                     if (World.State == World.WorldState.REDWON)
@@ -52,6 +60,11 @@ namespace CloudColony.Scenes
                     SetScreen(new GameScreen());
                     break;
                 case GameState.PAUSED:
+                    if (CC.AnyKeyPressed(PlayerIndex.One) || CC.AnyKeyPressed(PlayerIndex.Two))
+                    {
+                        State = GameState.READY;
+                        World.SetReady();
+                    }
                     break;
                 default:
                     break;
@@ -61,7 +74,7 @@ namespace CloudColony.Scenes
         public override void Draw(SpriteBatch batch)
         {
             // Clear Screen
-            Graphics.Clear(Color.Green);
+            Graphics.Clear(Color.Black);
 
             Renderer.Draw(batch);
 
@@ -86,6 +99,9 @@ namespace CloudColony.Scenes
                     case GameState.GAMEOVER:
                         break;
                     case GameState.PAUSED:
+                        string txt = "PAUSED";
+                        batch.DrawString(CC.Font, txt, new Vector2(CC.VIEWPORT_WIDTH /2f, CC.VIEWPORT_HEIGHT * 0.5f),
+                            Color.Crimson, 0, CC.Font.MeasureString(txt) / 2f, 4.2f, SpriteEffects.None, 0);
                         break;
                     default:
                         break;

@@ -42,7 +42,7 @@ namespace CloudColony
             // Load Content
             CC.Load(Content);
 
-            SetScreen(new GameScreen());
+            SetScreen(new MainMenuScreen());
         }
 
         protected override void UnloadContent()
@@ -67,8 +67,6 @@ namespace CloudColony
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
             // Draw screen
             CurrentScreen.Draw(spriteBatch);
 

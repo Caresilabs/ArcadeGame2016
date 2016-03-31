@@ -2,8 +2,8 @@
 using CloudColony.GameObjects;
 using CloudColony.GameObjects.Entities;
 using System.Collections.Generic;
-using System;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace CloudColony.Logic
 {
@@ -39,24 +39,30 @@ namespace CloudColony.Logic
         private void InitPopulation(int each)
         {
             // Init red
-            PlayerRed = new Player(this, CC.PointerRed, PlayerIndex.One, WORLD_WIDTH - 1.5f, 8f);
+            PlayerRed = new Player(this, CC.PointerRed, PlayerIndex.One,  1.5f, 1.5f);
             for (int i = 0; i < each; i++)
             {
-                Ship ship = new Ship(this, PlayerRed, CC.ShipRed, PlayerRed, WORLD_WIDTH - (i % (WORLD_WIDTH / 2f)), 7 + (int)((i * 2) / WORLD_WIDTH));
+                Ship ship = new Ship(this, PlayerRed, CC.ShipBlue, PlayerRed, 1 + (i % (WORLD_WIDTH / 2f)), 4 - (int)((i * 2) / WORLD_WIDTH));
                 Entities.Add(ship);
                 PlayerRed.Ships.Add(ship);
             }
 
             // Init blue
-            PlayerBlue = new Player(this, CC.PointerBlue, PlayerIndex.Two, 1.5f, 1.5f);
+            PlayerBlue = new Player(this, CC.PointerBlue, PlayerIndex.Two, WORLD_WIDTH - 1.5f, 8f);
             for (int i = 0; i < each; i++)
             {
-                Ship ship = new Ship(this, PlayerBlue, CC.ShipBlue, PlayerBlue, 1 + (i % (WORLD_WIDTH / 2f)), 4 - (int)((i *2) / WORLD_WIDTH));
+                Ship ship = new Ship(this, PlayerBlue, CC.ShipRed, PlayerBlue, WORLD_WIDTH - (i % (WORLD_WIDTH / 2f)), 7 + (int)((i * 2) / WORLD_WIDTH));
                 Entities.Add(ship);
                 PlayerBlue.Ships.Add(ship);
             }
 
             this.Players = new Player[] {PlayerRed, PlayerBlue };
+        }
+
+        public void SetReady()
+        {
+            State = WorldState.READY;
+            ReadyTime = 0;
         }
 
         public void SpawnBullet(Bullet bullet)

@@ -1,4 +1,5 @@
 ﻿using CloudColony.GameObjects.Entities;
+using CloudColony.Logic;
 using Microsoft.Xna.Framework;
 
 namespace CloudColony.GameObjects.Targets
@@ -7,22 +8,30 @@ namespace CloudColony.GameObjects.Targets
     {
         public const float COST = 50;
 
-        private const float FLANK_DISTANCE = 2.5f;
+        private const float FLANK_DISTANCE = 3f;
 
         private readonly int direction;
         private readonly Vector2 mid;
+        private readonly float range;
 
         public Vector2 Position
         {
             get
             {
+                var tmp = mid - Player.Position;
+                tmp.Normalize();
+                tmp *= range;
+
                 var right = mid - Player.Position;
                 right.Normalize();
 
                 float x = right.X;
                 right.X = right.Y;
                 right.Y = -x;
-                return mid + (right * FLANK_DISTANCE * direction);
+
+                var p = tmp + Player.Position + (right * FLANK_DISTANCE * direction);
+                KeepInside(ref p);
+                return p;
             }
         }
 
@@ -44,6 +53,35 @@ namespace CloudColony.GameObjects.Targets
             this.Player = player;
             this.mid = ship.Position;
             this.direction = direction;
+            this.range = 1.5f;//(player.Position - ship.Position).Length();
+        }
+
+
+        private void KeepInside(ref Vector2 position)
+        {
+            if (position.X < 0)
+            {
+                position.X = 0;
+            }
+            else
+            if (position.X > World.WORLD_WIDTH)
+            {
+                position.X = World.WORLD_WIDTH;
+            }
+
+            if (position.Y < 0)
+            {
+                position.Y = 0;
+            }
+            else
+            if (position.Y > World.WORLD_HEIGHT)
+            {
+                position.Y = World.WORLD_HEIGHT;
+            }
+        }
+
+        public void Update(float delta)
+        {
         }
     }
 }

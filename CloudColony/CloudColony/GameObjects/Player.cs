@@ -7,12 +7,13 @@ using System.Collections.Generic;
 using CloudColony.GameObjects.Entities;
 using CloudColony.GameObjects.Targets;
 using CloudColony.Logic;
+using System.Linq;
 
 namespace CloudColony.GameObjects
 {
     public class Player : Target, IRenderable, IUpdate
     {
-        public const float PLAYER_SPEED = 5;
+        public const float PLAYER_SPEED = 8;
 
         public const float STAMINA_GAIN = 25;
         public const float STAMINA_MAX = 100;
@@ -77,6 +78,8 @@ namespace CloudColony.GameObjects
                 {
                     if (TryDrainStamina(FlankTarget.COST))
                     {
+                        ///Ships = Ships.OrderBy(x => x.Position.Y).ToList();
+
                         for (int i = 0; i < Ships.Count / 2; i++)
                         {
                             Ships[i].Target = new FlankTarget(Ships[i], this, -1);
@@ -88,8 +91,19 @@ namespace CloudColony.GameObjects
                     }
                 }
 
-                // Attack def
                 if (PressedButton(PlayerInput.Red))
+                {
+                    if (TryDrainStamina(ExplosionTarget.COST))
+                    {
+                        foreach (var ship in Ships)
+                        {
+                            ship.Target = new ExplosionTarget(this);
+                        }
+                    }
+                }
+
+                // Attack def
+                if (PressedButton(PlayerInput.Yellow))
                 {
                     foreach (var ship in Ships)
                     {
@@ -97,6 +111,12 @@ namespace CloudColony.GameObjects
                         {
                             ship.Shoot();
                         }
+                    }
+                }
+                if (PressedButton(PlayerInput.Green))
+                {
+                    foreach (var ship in Ships)
+                    {
                     }
                 }
             }

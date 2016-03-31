@@ -8,7 +8,7 @@ namespace CloudColony.GameObjects.Entities
 {
     public class Ship : Entity
     {
-        private const float MAX_SPEED = 2.5f;
+        private const float MAX_SPEED = 3f;
         private const float MAX_HEALTH = 100;
 
         private const float FIRE_RATE = 0.5f;
@@ -41,6 +41,12 @@ namespace CloudColony.GameObjects.Entities
         public override void Update(float delta)
         {
             base.Update(delta);
+
+            // Don't udpate player twice
+            if (Target != Player)
+            {
+                Target.Update(delta);
+            }
 
             var alignment = Alignment();
             var cohesion = Cohesion();

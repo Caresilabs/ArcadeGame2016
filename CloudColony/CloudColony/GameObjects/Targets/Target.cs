@@ -1,8 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CloudColony.Framework;
+using Microsoft.Xna.Framework;
 
 namespace CloudColony.GameObjects.Targets
 {
-    public interface Target
+    public interface Target : IUpdate
     {
         Vector2 Position { get; }
 

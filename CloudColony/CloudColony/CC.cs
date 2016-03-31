@@ -2,6 +2,8 @@
 using CloudColony.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace CloudColony
 {
@@ -48,6 +50,18 @@ namespace CloudColony
 
 
             Font = content.Load<SpriteFont>("Font");
+        }
+
+        public static bool AnyKeyPressed(PlayerIndex index)
+        {
+            bool pressed = false;
+            for (int i = 1; i < Enum.GetValues(typeof(PlayerInput)).Length; i++)
+            {
+                if (InputHandler.GetButtonState(index, (PlayerInput)i) == InputState.Released)
+                    pressed = true;
+            }
+
+            return pressed;
         }
     }
 }

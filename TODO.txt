@@ -5,12 +5,15 @@ LOGIC:
 -Mainmenu
 
 Graphics:
+
 -Background & parallax
 -meny sprites
 -shield
 -splash screen
 -Banner
--Stylade skott
+-Styled bullets
 -Win banner / Win (Red won, blue won)
+
+-White pixel
 
 Sound:

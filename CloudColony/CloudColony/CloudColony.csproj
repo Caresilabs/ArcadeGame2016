@@ -54,11 +54,13 @@
     <Compile Include="GameObjects\Entities\Entity.cs" />
     <Compile Include="GameObjects\Entities\Ship.cs" />
     <Compile Include="GameObjects\Player.cs" />
+    <Compile Include="GameObjects\Targets\ExplosionTarget.cs" />
     <Compile Include="GameObjects\Targets\FlankTarget.cs" />
     <Compile Include="GameObjects\Targets\Target.cs" />
     <Compile Include="Logic\World.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\GameRenderer.cs" />
+    <Compile Include="Scenes\CreditsScreen.cs" />
     <Compile Include="Scenes\GameScreen.cs" />
     <Compile Include="Scenes\MainMenuScreen.cs" />
   </ItemGroup>
