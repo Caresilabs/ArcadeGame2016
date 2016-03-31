@@ -8,11 +8,13 @@ namespace CloudColony.GameObjects.Entities
 {
     public class Ship : Entity
     {
-        private const float MAX_SPEED = 2;
+        private const float MAX_SPEED = 2.5f;
         private const float MAX_HEALTH = 100;
 
+        private const float FIRE_RATE = 0.5f;
+
         public const float SEPARATION_WEIGHT = 12f;
-        public const float COHESION_WEIGHT = 2f;
+        public const float COHESION_WEIGHT = 3f;
         public const float ALIGNMENT_WEIGHT = 2f;
 
         public Player Player { get; private set; }
@@ -21,13 +23,19 @@ namespace CloudColony.GameObjects.Entities
 
         public float Health { get; private set; }
 
-        public Ship(World world, TextureRegion region, Player player, float x, float y) : base(world, region, x, y, 0.5f, 0.5f)
+        private float shootDelayTimer;
+
+        public Ship(World world, Player owner, TextureRegion region, Player player, float x, float y) : base(world, owner, region, x, y, 0.5f, 0.5f)
         {
             this.Player = player;
             this.Target = player;
             this.Health = MAX_HEALTH;
+            this.shootDelayTimer = 0;
             velocity.X = (int)player.Index == 0 ? MAX_SPEED : -MAX_SPEED;
-            Color = (int)player.Index == 0 ? Color.Red : Color.Blue;
+            //Color = (int)player.Index == 0 ? Color.Red : Color.Blue;
+
+            AddAnimation("Move", new FrameAnimation(CC.Atlas, 0, 2 + ((int)player.Index == 0 ? 0 : 32), 32, 32, 2, 0.3f))
+                .SetAnimation("Move");
         }
 
         public override void Update(float delta)
@@ -45,7 +53,9 @@ namespace CloudColony.GameObjects.Entities
                 MaxSpeed();
             }
 
+
             SeekTarget(delta);
+
 
             if (Target.Done)
                 Target = Player;
@@ -53,9 +63,51 @@ namespace CloudColony.GameObjects.Entities
             if (Health <= 0)
                 IsDead = true;
 
+            shootDelayTimer += delta;
+
+            CheckCollision(delta);
+
             KeepInside();
 
+            if (float.IsNaN(position.X))
+            {
+                velocity = Vector2.Zero;
+            }
+
             Rotation = (float)Math.Atan2(velocity.Y, velocity.X);
+        }
+
+        private void CheckCollision(float delta)
+        {
+            foreach (var enemy in World.Entities)
+            {
+                if (enemy.Owner == Player)
+                    continue;
+
+                if (!enemy.Bounds.Intersects(Bounds))
+                    continue;
+
+                if (enemy is Bullet)
+                {
+                    Health -= Bullet.DAMAGE;
+                    enemy.IsDead = true;
+                }
+            }
+        }
+
+        public bool CanShoot()
+        {
+            return shootDelayTimer >= FIRE_RATE;
+        }
+
+        public void Shoot()
+        {
+            shootDelayTimer = 0;
+            var dir = Velocity;
+            dir.Normalize();
+
+            Bullet bullet = new Bullet(World, Player, (int)Player.Index == 0 ? CC.BulletBlue : CC.BulletBlue, position.X, position.Y, dir);
+            World.SpawnBullet(bullet);
         }
 
         private void SeekTarget(float delta)
@@ -102,6 +154,9 @@ namespace CloudColony.GameObjects.Entities
 
         private Vector2 Alignment()
         {
+            if (Player.Ships.Count <= 1)
+                return Vector2.Zero;
+
             Vector2 pvj = Vector2.Zero;
             foreach (var b in Player.Ships)
             {
@@ -116,6 +171,9 @@ namespace CloudColony.GameObjects.Entities
 
         private Vector2 Cohesion()
         {
+            if (Player.Ships.Count <= 1)
+                return Vector2.Zero;
+
             Vector2 pcj = Vector2.Zero;
             int neighborCount = 0;
             foreach (var b in Player.Ships)

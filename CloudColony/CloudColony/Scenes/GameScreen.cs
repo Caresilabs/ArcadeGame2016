@@ -23,8 +23,6 @@ namespace CloudColony.Scenes
 
         public World World { get; private set; }
 
-        public float ReadyTime { get; private set; }
-
         public override void Init()
         {
             this.UICamera = new Camera2D(CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT);
@@ -37,16 +35,21 @@ namespace CloudColony.Scenes
             switch (State)
             {
                 case GameState.READY:
-                    ReadyTime += delta;
-                    if (ReadyTime >= 3)
-                        State = GameState.RUNNING;
-
                     World.Update(delta);
+                    if (World.State == World.WorldState.RUNNING)
+                        State = GameState.RUNNING;
                     break;
                 case GameState.RUNNING:
                     World.Update(delta);
+
+                    if (World.State == World.WorldState.REDWON)
+                        State = GameState.GAMEOVER;
+
+                    if (World.State == World.WorldState.BLUEWON)
+                        State = GameState.GAMEOVER;
                     break;
                 case GameState.GAMEOVER:
+                    SetScreen(new GameScreen());
                     break;
                 case GameState.PAUSED:
                     break;
@@ -73,8 +76,10 @@ namespace CloudColony.Scenes
                 switch (State)
                 {
                     case GameState.READY:
-                        batch.DrawString(CC.Font, "" + (int)(3 - ReadyTime), new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT / 2f),
-                            Color.Red, 0, new Vector2(8, 8), 10 + (ReadyTime - (float)Math.Floor(ReadyTime)) * 2, SpriteEffects.None, 0);
+                        string countdown = "" + (int)(3 - World.ReadyTime + 1);
+                        countdown = countdown == "0" ? "GO!" : countdown;
+                        batch.DrawString(CC.Font, countdown , new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT / 2f),
+                            Color.Red, 0, CC.Font.MeasureString(countdown) / 2f, 5 + (World.ReadyTime - (float)Math.Floor(World.ReadyTime)) * 2, SpriteEffects.None, 0);
                         break;
                     case GameState.RUNNING:
                         break;

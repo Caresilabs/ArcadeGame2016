@@ -40,6 +40,8 @@
     <Compile Include="CC.cs" />
     <Compile Include="Framework\Animation.cs" />
     <Compile Include="Framework\Animations.cs" />
+    <Compile Include="Framework\Circle.cs" />
+    <Compile Include="Framework\FrameAnimation.cs" />
     <Compile Include="Framework\IRenderable.cs" />
     <Compile Include="Framework\IUpdate.cs" />
     <Compile Include="Framework\Screen.cs" />

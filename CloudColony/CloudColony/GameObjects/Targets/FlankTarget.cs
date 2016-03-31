@@ -7,7 +7,7 @@ namespace CloudColony.GameObjects.Targets
     {
         public const float COST = 50;
 
-        private const float FLANK_DISTANCE = 5;
+        private const float FLANK_DISTANCE = 2.5f;
 
         private readonly int direction;
         private readonly Vector2 mid;

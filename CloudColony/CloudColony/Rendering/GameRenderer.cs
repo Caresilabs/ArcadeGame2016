@@ -24,7 +24,7 @@ namespace CloudColony.Rendering
             // Draw World
             batch.Begin(SpriteSortMode.BackToFront,
                      BlendState.AlphaBlend,
-                     SamplerState.LinearClamp,
+                     SamplerState.PointClamp,
                      null,
                      null,
                      null,

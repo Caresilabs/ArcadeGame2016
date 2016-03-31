@@ -9,6 +9,11 @@ namespace CloudColony.Logic
 {
     public class World : IUpdate
     {
+        public enum WorldState
+        {
+            READY, RUNNING, REDWON, BLUEWON
+        }
+
         public const float WORLD_WIDTH = 17.5f;
         public const float WORLD_HEIGHT = 10f;
 
@@ -17,37 +22,72 @@ namespace CloudColony.Logic
 
         public Player PlayerRed { get; private set; }
         public Player PlayerBlue { get; private set; }
+        public Player[] Players { get; private set; }
+
+        public WorldState State { get; private set; }
+
+        public float ReadyTime { get; private set; }
 
         public World()
         {
             this.Entities = new List<Entity>();
             this.DeadEntities = new List<Entity>();
+            this.State = WorldState.READY;
             InitPopulation(25);
         }
 
         private void InitPopulation(int each)
         {
             // Init red
-            PlayerRed = new Player(CC.Pointer, PlayerIndex.One, WORLD_WIDTH - 1.5f, 7);
+            PlayerRed = new Player(this, CC.PointerRed, PlayerIndex.One, WORLD_WIDTH - 1.5f, 8f);
             for (int i = 0; i < each; i++)
             {
-                Ship ship = new Ship(this, CC.Ship, PlayerRed, WORLD_WIDTH - ( i % WORLD_WIDTH), 7 + (int)(i / WORLD_WIDTH));
+                Ship ship = new Ship(this, PlayerRed, CC.ShipRed, PlayerRed, WORLD_WIDTH - (i % (WORLD_WIDTH / 2f)), 7 + (int)((i * 2) / WORLD_WIDTH));
                 Entities.Add(ship);
                 PlayerRed.Ships.Add(ship);
             }
 
             // Init blue
-            PlayerBlue = new Player(CC.Pointer, PlayerIndex.Two, 1.5f, 4);
+            PlayerBlue = new Player(this, CC.PointerBlue, PlayerIndex.Two, 1.5f, 1.5f);
             for (int i = 0; i < each; i++)
             {
-                Ship ship = new Ship(this, CC.Ship, PlayerBlue, 1 + (i % WORLD_WIDTH), 4 - (int)(i / WORLD_WIDTH));
+                Ship ship = new Ship(this, PlayerBlue, CC.ShipBlue, PlayerBlue, 1 + (i % (WORLD_WIDTH / 2f)), 4 - (int)((i *2) / WORLD_WIDTH));
                 Entities.Add(ship);
                 PlayerBlue.Ships.Add(ship);
             }
+
+            this.Players = new Player[] {PlayerRed, PlayerBlue };
+        }
+
+        public void SpawnBullet(Bullet bullet)
+        {
+            Entities.Add(bullet);
         }
 
         public void Update(float delta)
         {
+            switch (State)
+            {
+                case WorldState.READY:
+                    ReadyTime += delta;
+                    if (ReadyTime >= 4)
+                        State = WorldState.RUNNING;
+                    break;
+                case WorldState.RUNNING:
+                    if (PlayerBlue.Ships.Count == 0)
+                        State = WorldState.REDWON;
+
+                    if (PlayerRed.Ships.Count == 0)
+                        State = WorldState.BLUEWON;
+                    break;
+                case WorldState.REDWON:
+                    break;
+                case WorldState.BLUEWON:
+                    break;
+                default:
+                    break;
+            }
+
             PlayerRed.Update(delta);
             PlayerBlue.Update(delta);
 
