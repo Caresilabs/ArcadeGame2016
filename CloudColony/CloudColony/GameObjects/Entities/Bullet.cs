@@ -10,7 +10,7 @@ namespace CloudColony.GameObjects.Entities
 
         public const float COST = 1;
 
-        public Bullet(World world, Player owner, TextureRegion region, float x, float y, Vector2 direction) : base(world, owner, region, x, y, 0.1f, 0.1f)
+        public Bullet(World world, Player owner, TextureRegion region, float x, float y, Vector2 direction) : base(world, owner, region, x, y, 0.05f, 0.05f)
         {
             velocity = direction * 8;
         }

@@ -4,6 +4,10 @@ LOGIC:
 -Powerup
 -Mainmenu
 
+-SpatialHashGrid
+
+-Tweak Gameplay
+
 Graphics:
 
 -Background & parallax

@@ -8,6 +8,7 @@ using CloudColony.GameObjects.Entities;
 using CloudColony.GameObjects.Targets;
 using CloudColony.Logic;
 using System.Linq;
+using CloudColony.Rendering;
 
 namespace CloudColony.GameObjects
 {
@@ -32,6 +33,7 @@ namespace CloudColony.GameObjects
         public World World { get; private set; }
 
         private readonly Sprite pointer;
+        private readonly StaminaProgressBar staminaBar;
 
         public Player(World world, TextureRegion pointer, PlayerIndex index, float x, float y)
         {
@@ -39,6 +41,7 @@ namespace CloudColony.GameObjects
             this.Index = index;
             this.World = world;
             this.pointer = new Sprite(pointer, x, y, 0.7f, 0.7f);
+            this.staminaBar = new StaminaProgressBar();
             this.pointer.ZIndex = 1;
             this.position = new Vector2(x, y);
             this.Stamina = STAMINA_MAX;
@@ -50,6 +53,9 @@ namespace CloudColony.GameObjects
 
             Stamina = Math.Min(Stamina + STAMINA_GAIN * delta, STAMINA_MAX);
 
+            staminaBar.Position = position;
+            staminaBar.SetPercentage(Stamina / STAMINA_MAX);
+
             UpdateInput(delta);
 
             KeepInside();
@@ -58,16 +64,16 @@ namespace CloudColony.GameObjects
         private void UpdateInput(float delta)
         {
             // Movement
-            if (PressedButton(PlayerInput.Up))
+            if (ButtonDown(PlayerInput.Up))
                 position.Y += delta * -PLAYER_SPEED;
 
-            if (PressedButton(PlayerInput.Down))
+            if (ButtonDown(PlayerInput.Down))
                 position.Y += delta * PLAYER_SPEED;
 
-            if (PressedButton(PlayerInput.Left))
+            if (ButtonDown(PlayerInput.Left))
                 position.X += delta * -PLAYER_SPEED;
 
-            if (PressedButton(PlayerInput.Right))
+            if (ButtonDown(PlayerInput.Right))
                 position.X += delta * PLAYER_SPEED;
 
             // Dont allow on ready / gameover
@@ -103,13 +109,16 @@ namespace CloudColony.GameObjects
                 }
 
                 // Attack def
-                if (PressedButton(PlayerInput.Yellow))
+                if (ButtonDown(PlayerInput.Yellow))
                 {
-                    foreach (var ship in Ships)
+                    if (Stamina >= Bullet.COST * Ships.Count)
                     {
-                        if (ship.CanShoot() && TryDrainStamina(Bullet.COST))
+                        foreach (var ship in Ships)
                         {
-                            ship.Shoot();
+                            if (ship.CanShoot() && TryDrainStamina(Bullet.COST))
+                            {
+                                ship.Shoot();
+                            }
                         }
                     }
                 }
@@ -132,14 +141,20 @@ namespace CloudColony.GameObjects
             return true;
         }
 
-        private bool PressedButton(PlayerInput button)
+        private bool ButtonDown(PlayerInput button)
         {
             return InputHandler.GetButtonState(Index, button) == InputState.Down;
+        }
+
+        private bool PressedButton(PlayerInput button)
+        {
+            return InputHandler.GetButtonState(Index, button) == InputState.Released;
         }
 
         public void Draw(SpriteBatch batch)
         {
             pointer.Draw(batch);
+            staminaBar.Draw(batch);
         }
 
         private void KeepInside()

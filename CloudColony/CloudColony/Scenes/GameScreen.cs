@@ -45,7 +45,7 @@ namespace CloudColony.Scenes
                         InputHandler.GetButtonState(PlayerIndex.Two, PlayerInput.Start) == InputState.Released)
                     {
                         State = GameState.PAUSED;
-                       
+
                     }
 
                     World.Update(delta);
@@ -91,7 +91,7 @@ namespace CloudColony.Scenes
                     case GameState.READY:
                         string countdown = "" + (int)(3 - World.ReadyTime + 1);
                         countdown = countdown == "0" ? "GO!" : countdown;
-                        batch.DrawString(CC.Font, countdown , new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT / 2f),
+                        batch.DrawString(CC.Font, countdown, new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT / 2f),
                             Color.Red, 0, CC.Font.MeasureString(countdown) / 2f, 5 + (World.ReadyTime - (float)Math.Floor(World.ReadyTime)) * 2, SpriteEffects.None, 0);
                         break;
                     case GameState.RUNNING:
@@ -100,8 +100,8 @@ namespace CloudColony.Scenes
                         break;
                     case GameState.PAUSED:
                         string txt = "PAUSED";
-                        batch.DrawString(CC.Font, txt, new Vector2(CC.VIEWPORT_WIDTH /2f, CC.VIEWPORT_HEIGHT * 0.5f),
-                            Color.Crimson, 0, CC.Font.MeasureString(txt) / 2f, 4.2f, SpriteEffects.None, 0);
+                        batch.DrawString(CC.Font, txt, new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.5f),
+                            Color.Green, 0, CC.Font.MeasureString(txt) / 2f, 4.2f, SpriteEffects.None, 0);
                         break;
                     default:
                         break;

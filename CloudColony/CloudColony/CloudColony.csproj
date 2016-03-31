@@ -60,6 +60,7 @@
     <Compile Include="Logic\World.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\GameRenderer.cs" />
+    <Compile Include="Rendering\StaminaProgressBar.cs" />
     <Compile Include="Scenes\CreditsScreen.cs" />
     <Compile Include="Scenes\GameScreen.cs" />
     <Compile Include="Scenes\MainMenuScreen.cs" />
