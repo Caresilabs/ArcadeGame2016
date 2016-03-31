@@ -1,9 +1,9 @@
 LOGIC:
+
 -Movement Behaviors
--Attack/Shield
+-Shield
 -Powerup
 -Mainmenu
-
 -SpatialHashGrid
 
 -Tweak Gameplay
@@ -17,6 +17,8 @@ Graphics:
 -Banner
 -Styled bullets
 -Win banner / Win (Red won, blue won)
+
+-Powerups (Boost? What more)
 
 -White pixel
 
