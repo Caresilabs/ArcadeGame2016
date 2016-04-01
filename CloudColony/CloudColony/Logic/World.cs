@@ -28,6 +28,8 @@ namespace CloudColony.Logic
 
         public float ReadyTime { get; private set; }
 
+        public float SlowmoTime { get; private set; }
+
         public World()
         {
             this.Entities = new List<Entity>();
@@ -42,7 +44,7 @@ namespace CloudColony.Logic
             PlayerRed = new Player(this, CC.PointerRed, PlayerIndex.One,  1.5f, 1.5f);
             for (int i = 0; i < each; i++)
             {
-                Ship ship = new Ship(this, PlayerRed, CC.ShipBlue, PlayerRed, 1 + (i % (WORLD_WIDTH / 2f)), 4 - (int)((i * 2) / WORLD_WIDTH));
+                Ship ship = new Ship(this, PlayerRed, CC.ShipRed,CC.ShieldRed, PlayerRed, 1 + (i % (WORLD_WIDTH / 2f)), 4 - (int)((i * 2) / WORLD_WIDTH));
                 Entities.Add(ship);
                 PlayerRed.Ships.Add(ship);
             }
@@ -51,7 +53,7 @@ namespace CloudColony.Logic
             PlayerBlue = new Player(this, CC.PointerBlue, PlayerIndex.Two, WORLD_WIDTH - 1.5f, 8f);
             for (int i = 0; i < each; i++)
             {
-                Ship ship = new Ship(this, PlayerBlue, CC.ShipRed, PlayerBlue, WORLD_WIDTH - (i % (WORLD_WIDTH / 2f)), 7 + (int)((i * 2) / WORLD_WIDTH));
+                Ship ship = new Ship(this, PlayerBlue, CC.ShipBlue, CC.ShieldBlue ,PlayerBlue, WORLD_WIDTH - (i % (WORLD_WIDTH / 2f)), 7 + (int)((i * 2) / WORLD_WIDTH));
                 Entities.Add(ship);
                 PlayerBlue.Ships.Add(ship);
             }
@@ -72,6 +74,12 @@ namespace CloudColony.Logic
 
         public void Update(float delta)
         {
+            if (SlowmoTime > 0)
+            {
+                SlowmoTime -= delta;
+                delta *= 0.2f;
+            }
+
             switch (State)
             {
                 case WorldState.READY:
@@ -115,6 +123,11 @@ namespace CloudColony.Logic
                 }
             }
             DeadEntities.Clear();
+        }
+
+        public void Slowmotion()
+        {
+            SlowmoTime = 1.2f;
         }
 
         public List<Entity> GetNearbyEntities(float radius)

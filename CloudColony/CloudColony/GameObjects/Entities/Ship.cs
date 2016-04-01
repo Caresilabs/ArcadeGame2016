@@ -3,6 +3,7 @@ using CloudColony.Framework;
 using CloudColony.GameObjects.Targets;
 using CloudColony.Logic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace CloudColony.GameObjects.Entities
 {
@@ -23,19 +24,32 @@ namespace CloudColony.GameObjects.Entities
 
         public float Health { get; private set; }
 
+
+        // Shoot
         private float shootDelayTimer;
 
-        public Ship(World world, Player owner, TextureRegion region, Player player, float x, float y) : base(world, owner, region, x, y, 0.5f, 0.5f)
+        // Shield
+        public float ShieldHealth { get; private set; }
+        public Sprite ShieldSprite { get; private set; }
+
+        public Ship(World world, Player owner, TextureRegion region, TextureRegion shieldTexture , Player player, float x, float y) : base(world, owner, region, x, y, 0.5f, 0.5f)
         {
             this.Player = player;
             this.Target = player;
             this.Health = MAX_HEALTH;
             this.shootDelayTimer = 0;
             velocity.X = (int)player.Index == 0 ? MAX_SPEED : -MAX_SPEED;
-            //Color = (int)player.Index == 0 ? Color.Red : Color.Blue;
+
+            this.ShieldSprite = new Sprite(shieldTexture, 0, 0, 1, 1);
 
             AddAnimation("Move", new FrameAnimation(CC.Atlas, 0 + ((int)player.Index == 0 ? 0 : 32), 2 , 32, 32, 2, 0.3f))
                 .SetAnimation("Move");
+        }
+
+        public override void Draw(SpriteBatch batch)
+        {
+            base.Draw(batch);
+            ShieldSprite.Draw(batch);
         }
 
         public override void Update(float delta)
@@ -89,6 +103,15 @@ namespace CloudColony.GameObjects.Entities
             {
                 if (enemy.Owner == Player)
                     continue;
+
+                if (Player.Ships.Count == 1)
+                {
+                    if (enemy is Bullet)
+                    {
+                        if ((enemy.Position - position).Length() <= 2.1f && Health <= 60)
+                            World.Slowmotion();
+                    }
+                }
 
                 if (!enemy.Bounds.Intersects(Bounds))
                     continue;

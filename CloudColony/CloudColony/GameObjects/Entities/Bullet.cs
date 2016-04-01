@@ -6,7 +6,7 @@ namespace CloudColony.GameObjects.Entities
 {
     public class Bullet : Entity
     {
-        public const float DAMAGE = 20;
+        public const float DAMAGE = 5;
 
         public const float COST = 1;
 
