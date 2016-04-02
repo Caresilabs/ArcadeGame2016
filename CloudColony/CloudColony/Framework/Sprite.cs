@@ -62,7 +62,7 @@ namespace CloudColony.Framework
             }
         }
 
-        public void Draw(SpriteBatch batch)
+        public virtual void Draw(SpriteBatch batch)
         {
             if (Region != null)
                 batch.Draw(Region, Position - DrawOffset + size/2, Region, Color, Rotation, Origin, Scale * SizeScale, Effect, ZIndex);

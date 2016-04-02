@@ -22,10 +22,12 @@ namespace CloudColony
         public static TextureRegion ShipBlue { get; private set; }
         public static TextureRegion PointerBlue { get; private set; }
         public static TextureRegion BulletBlue { get; private set; }
+        public static TextureRegion ShieldBlue { get; private set; }
 
         public static TextureRegion ShipRed { get; private set; }
         public static TextureRegion PointerRed { get; private set; }
         public static TextureRegion BulletRed { get; private set; }
+        public static TextureRegion ShieldRed { get; private set; }
 
         // UI
         public static TextureRegion ScoreBoard { get; private set; }
@@ -46,10 +48,12 @@ namespace CloudColony
             ShipBlue = new TextureRegion(Atlas, 32, 2, 32, 32);
             PointerBlue = new TextureRegion(Atlas, 256 + 20 + 32, 0, 32, 32);
             BulletBlue = new TextureRegion(Atlas, 0, 0, 2, 2);
+            ShieldBlue = new TextureRegion(Atlas, 2, 0, 2, 2);
 
             ShipRed = new TextureRegion(Atlas, 0, 2, 32, 32);
             PointerRed = new TextureRegion(Atlas, 256 + 20, 0, 32, 32); // todo correct x
             BulletRed = new TextureRegion(Atlas, 2, 0, 2, 2);
+            ShieldRed = new TextureRegion(Atlas, 2, 0, 2, 2);
 
 
             Font = content.Load<SpriteFont>("Font");
