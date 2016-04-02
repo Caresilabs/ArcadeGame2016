@@ -7,6 +7,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CloudColony
 {
+	
+	// http://store.steampowered.com/app/232790/ <3
+	
     public class CC
     {
         // Globals
