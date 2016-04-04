@@ -4,6 +4,8 @@ using CloudColony.GameObjects.Entities;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using System;
+using CloudColony.Framework.Tools;
+using CloudColony.GameObjects.Powerups;
 
 namespace CloudColony.Logic
 {
@@ -16,6 +18,8 @@ namespace CloudColony.Logic
 
         public const float WORLD_WIDTH = 17.5f;
         public const float WORLD_HEIGHT = 10f;
+
+        public const int MAX_NUM_SHIPS = 30;
 
         public List<Entity> Entities { get; private set; }
         public List<Entity> DeadEntities { get; private set; }
@@ -30,35 +34,44 @@ namespace CloudColony.Logic
 
         public float SlowmoTime { get; private set; }
 
+        public float PowerupTime { get; private set; }
+
         public World()
         {
             this.Entities = new List<Entity>();
             this.DeadEntities = new List<Entity>();
             this.State = WorldState.READY;
-            InitPopulation(30);
+            InitPopulation(MAX_NUM_SHIPS);
         }
 
         private void InitPopulation(int each)
         {
             // Init red
-            PlayerRed = new Player(this, CC.PointerRed, PlayerIndex.One,  1.5f, 1.5f);
-            for (int i = 0; i < each; i++)
+            PlayerRed = new Player(this, CC.PointerRed, PlayerIndex.One, 1.5f, 1.5f);
+           
+            // Init blue
+            PlayerBlue = new Player(this, CC.PointerBlue, PlayerIndex.Two, WORLD_WIDTH - 1.5f, 8f);
+
+            SpawnShips(each, each);
+
+            this.Players = new Player[] { PlayerRed, PlayerBlue };
+        }
+
+        public void SpawnShips(int red, int blue)
+        {
+            for (int i = 0; i < red; i++)
             {
-                Ship ship = new Ship(this, PlayerRed, CC.ShipRed,CC.ShieldRed, PlayerRed, 1 + (i % (WORLD_WIDTH / 2f)), 4 - (int)((i * 2) / WORLD_WIDTH));
+                Ship ship = new Ship(this, PlayerRed, CC.ShieldRed, PlayerRed, 1 + (i % (WORLD_WIDTH / 2f)), 4 - (int)((i * 2) / WORLD_WIDTH));
                 Entities.Add(ship);
                 PlayerRed.Ships.Add(ship);
             }
 
-            // Init blue
-            PlayerBlue = new Player(this, CC.PointerBlue, PlayerIndex.Two, WORLD_WIDTH - 1.5f, 8f);
-            for (int i = 0; i < each; i++)
+            for (int i = 0; i < blue; i++)
             {
-                Ship ship = new Ship(this, PlayerBlue, CC.ShipBlue, CC.ShieldBlue ,PlayerBlue, WORLD_WIDTH - (i % (WORLD_WIDTH / 2f)), 7 + (int)((i * 2) / WORLD_WIDTH));
+                Ship ship = new Ship(this, PlayerBlue, CC.ShieldBlue, PlayerBlue, WORLD_WIDTH - (i % (WORLD_WIDTH / 2f)), 7 + (int)((i * 2) / WORLD_WIDTH));
                 Entities.Add(ship);
                 PlayerBlue.Ships.Add(ship);
             }
-
-            this.Players = new Player[] {PlayerRed, PlayerBlue };
         }
 
         public void SetReady()
@@ -99,6 +112,8 @@ namespace CloudColony.Logic
                         State = WorldState.BLUEWON;
                         SlowmoTime = 2.5f;
                     }
+
+                    UpdatePowerups(delta);
                     break;
                 case WorldState.REDWON:
                     break;
@@ -129,6 +144,55 @@ namespace CloudColony.Logic
                 }
             }
             DeadEntities.Clear();
+        }
+
+        private void UpdatePowerups(float delta)
+        {
+            PowerupTime += delta;
+
+            if (PowerupTime >= 7.5f && MathUtils.Random(1.0f) < 0.01f)
+            {
+                Powerup power = null;
+                Vector2 pos = Vector2.Zero;
+
+                // Find a safe place
+                for (int i = 0; i < 20; i++)
+                {
+                    pos = new Vector2(MathUtils.Random(2, WORLD_WIDTH - 2), MathUtils.Random(2, WORLD_HEIGHT - 2));
+
+                    bool collided = false;
+                    foreach (var entity in Entities)
+                    {
+                        if (entity.Bounds.Contains(pos))
+                        {
+                            collided = true;
+                            break;
+                        }
+                    }
+
+                    if (!collided)
+                        break;
+                }
+                
+                // Random power
+                switch (MathUtils.Random(3))
+                {
+                    case 0:
+                        power = new ReviveShipPowerup(this, CC.BluePowerup, pos.X, pos.Y);
+                        break;
+                    case 1:
+                        power = new UnlimitedStaminaPowerup(this, CC.GreenPowerup, pos.X, pos.Y);
+                        break;
+                    case 2:
+                        power = new SpeedPowerup(this, CC.RedPowerup, pos.X, pos.Y);
+                        break;
+                    default:
+                        break;
+                }
+
+                Entities.Add(power);
+                PowerupTime = 0;
+            }
         }
 
         public void Slowmotion()

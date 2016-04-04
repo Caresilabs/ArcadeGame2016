@@ -7,7 +7,7 @@ namespace CloudColony.GameObjects.Entities
 {
     public class Entity : Sprite
     {
-        public Player Owner { get; private set; }
+        public Player Owner { get; protected set; }
 
         public World World { get; private set; }
 

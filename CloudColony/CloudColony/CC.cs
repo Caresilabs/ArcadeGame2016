@@ -21,15 +21,17 @@ namespace CloudColony
 
         public static TextureRegion Pixel { get; private set; }
 
-        public static TextureRegion ShipBlue { get; private set; }
         public static TextureRegion PointerBlue { get; private set; }
         public static TextureRegion BulletBlue { get; private set; }
         public static TextureRegion ShieldBlue { get; private set; }
 
-        public static TextureRegion ShipRed { get; private set; }
         public static TextureRegion PointerRed { get; private set; }
         public static TextureRegion BulletRed { get; private set; }
         public static TextureRegion ShieldRed { get; private set; }
+
+        public static TextureRegion RedPowerup { get; private set; }
+        public static TextureRegion BluePowerup { get; private set; }
+        public static TextureRegion GreenPowerup { get; private set; }
 
         // UI
         public static TextureRegion ScoreBoard { get; private set; }
@@ -50,17 +52,17 @@ namespace CloudColony
         {
             Atlas = content.Load<Texture2D>("FirstEditionAtlas");
 
-
-            ShipBlue = new TextureRegion(Atlas, 32, 4, 32, 32);
             PointerBlue = new TextureRegion(Atlas, 256 + 20 + 32, 0, 32, 32);
             BulletBlue = new TextureRegion(Atlas, 16, 64, 16, 16);
             ShieldBlue = new TextureRegion(Atlas, 64, 64, 32, 32);
 
-            ShipRed = new TextureRegion(Atlas, 4, 0, 32, 32);
-            PointerRed = new TextureRegion(Atlas, 256 + 20, 0, 32, 32); // todo correct x
+            PointerRed = new TextureRegion(Atlas, 256 + 20, 0, 32, 32);
             BulletRed = new TextureRegion(Atlas, 0, 64, 16, 16);
             ShieldRed = new TextureRegion(Atlas, 32, 64, 32, 32);
 
+            RedPowerup = new TextureRegion(Atlas, 68 + 32, 0, 16, 16);
+            BluePowerup = new TextureRegion(Atlas, 68 + 16, 0, 16, 16);
+            GreenPowerup = new TextureRegion(Atlas, 68, 0, 16, 16);
 
             // UI
             WinBlue = new TextureRegion(Atlas, 96, 58, 96, 64);
@@ -68,7 +70,6 @@ namespace CloudColony
             WinRed = new TextureRegion(Atlas, 192, 64, 86, 58);
 
             Pixel = new TextureRegion(Atlas, 422, 23, 1, 1);
-
 
             Font = content.Load<SpriteFont>("Font");
         }

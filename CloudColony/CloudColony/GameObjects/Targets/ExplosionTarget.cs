@@ -26,7 +26,7 @@ namespace CloudColony.GameObjects.Targets
         {
             get
             {
-                return time >= 3.5f;
+                return time >= 3.0f;
             }
         }
 

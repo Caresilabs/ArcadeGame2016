@@ -9,6 +9,7 @@ using CloudColony.GameObjects.Targets;
 using CloudColony.Logic;
 using System.Linq;
 using CloudColony.Rendering;
+using CloudColony.GameObjects.Powerups;
 
 namespace CloudColony.GameObjects
 {
@@ -28,9 +29,11 @@ namespace CloudColony.GameObjects
 
         public PlayerIndex Index { get; private set; }
 
-        public float Stamina { get; private set; }
+        public float Stamina { get; set; }
 
         public World World { get; private set; }
+
+        public Powerup ActivePowerup { get; set; }
 
         private readonly Sprite pointer;
         private readonly StaminaProgressBar staminaBar;
@@ -59,6 +62,20 @@ namespace CloudColony.GameObjects
             UpdateInput(delta);
 
             KeepInside();
+
+            UpdatePowerup(delta);
+        }
+
+        private void UpdatePowerup(float delta)
+        {
+            if (ActivePowerup != null)
+            {
+                ActivePowerup.Update(delta);
+                ActivePowerup.RunPower();
+
+                if (ActivePowerup.Done)
+                    ActivePowerup = null;
+            }
         }
 
         private void UpdateInput(float delta)

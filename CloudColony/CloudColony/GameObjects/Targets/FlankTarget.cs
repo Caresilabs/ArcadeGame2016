@@ -14,6 +14,8 @@ namespace CloudColony.GameObjects.Targets
         private readonly Vector2 mid;
         private readonly float range;
 
+        private float time;
+
         public Vector2 Position
         {
             get
@@ -40,7 +42,7 @@ namespace CloudColony.GameObjects.Targets
             get
             {
                 // TODO dont use position.. cpu hog
-                return (Ship.Position - Position).LengthSquared() < 1;
+                return time >= 2.1f || (Ship.Position - Position).LengthSquared() < 1;
             }
         }
 
@@ -53,7 +55,7 @@ namespace CloudColony.GameObjects.Targets
             this.Player = player;
             this.mid = ship.Position;
             this.direction = direction;
-            this.range = 1.5f;//(player.Position - ship.Position).Length();
+            this.range = (player.Position - ship.Position).Length(); //1.8f;  
         }
 
 
@@ -82,6 +84,7 @@ namespace CloudColony.GameObjects.Targets
 
         public void Update(float delta)
         {
+            time += delta;
         }
     }
 }

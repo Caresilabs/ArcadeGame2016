@@ -4,20 +4,20 @@ using CloudColony.GameObjects.Targets;
 using CloudColony.Logic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using CloudColony.GameObjects.Powerups;
 
 namespace CloudColony.GameObjects.Entities
 {
     public class Ship : Entity
     {
-        private const float MAX_SPEED = 3f;
+        public const float MAX_SPEED = 3f;
         private const float MAX_HEALTH = 100;
-
 
         private const float MAX_SHIELD_HEALTH = 50;
 
         private const float FIRE_RATE = 0.5f;
 
-        public const float SEPARATION_WEIGHT = 12f;
+        public const float SEPARATION_WEIGHT = 13f;
         public const float COHESION_WEIGHT = 3f;
         public const float ALIGNMENT_WEIGHT = 2f;
 
@@ -27,6 +27,7 @@ namespace CloudColony.GameObjects.Entities
 
         public float Health { get; private set; }
 
+        public float Speed { get; set; }
 
         // Shoot
         private float shootDelayTimer;
@@ -35,8 +36,8 @@ namespace CloudColony.GameObjects.Entities
         public float ShieldHealth { get; private set; }
         public Sprite ShieldSprite { get; private set; }
 
-        public Ship(World world, Player owner, TextureRegion region, TextureRegion shieldTexture , Player player, float x, float y) 
-            : base(world, owner, region, x, y, 0.55f, 0.55f)
+        public Ship(World world, Player owner, TextureRegion shieldTexture, Player player, float x, float y)
+            : base(world, owner, null, x, y, 0.55f, 0.55f)
         {
             this.Player = player;
             this.Target = player;
@@ -46,11 +47,11 @@ namespace CloudColony.GameObjects.Entities
 
             this.ShieldSprite = new Sprite(shieldTexture, 0, 0, 1.25f, 1.25f);
             ShieldSprite.ZIndex = 0.35f;
-            ShieldSprite.Color = new Color(255, 255, 255, 255)* 0.3f;
+            ShieldSprite.Color = new Color(255, 255, 255, 255) * 0.3f;
 
             ZIndex = 0.4f;
 
-            AddAnimation("Move", new FrameAnimation(CC.Atlas, 0 + ((int)player.Index == 0 ? 4 : 36), 0 , 32, 32, 2, 0.3f))
+            AddAnimation("Move", new FrameAnimation(CC.Atlas, 0 + ((int)player.Index == 0 ? 4 : 36), 0, 32, 32, 2, 0.3f))
                 .SetAnimation("Move");
         }
 
@@ -80,11 +81,13 @@ namespace CloudColony.GameObjects.Entities
             if (flock != Vector2.Zero)
             {
                 velocity += flock * delta;
-                MaxSpeed();
+
+                // MaxSpeed();
             }
 
             SeekTarget(delta);
 
+            MaxSpeed(delta);
 
             if (Target.Done)
                 Target = Player;
@@ -134,6 +137,14 @@ namespace CloudColony.GameObjects.Entities
                     Health -= Bullet.DAMAGE;
                     enemy.IsDead = true;
                 }
+
+                if (enemy is Powerup)
+                {
+                    enemy.IsDead = true;
+                    Player.ActivePowerup = (Powerup)enemy;
+                    Player.ActivePowerup.Init(Player);
+                }
+
             }
         }
 
@@ -164,13 +175,14 @@ namespace CloudColony.GameObjects.Entities
             desiredVelocity.Normalize();
             desiredVelocity *= MAX_SPEED;
             velocity += (desiredVelocity - velocity) * 0.14f;
-            MaxSpeed();
+            // MaxSpeed();
         }
 
-        private void MaxSpeed()
+        private void MaxSpeed(float delta)
         {
             velocity.Normalize();
-            velocity *= MAX_SPEED;
+            Speed = MathHelper.Lerp(Speed, MAX_SPEED, delta * 2f);
+            velocity *= Speed;
         }
 
         private void KeepInside()
@@ -226,14 +238,14 @@ namespace CloudColony.GameObjects.Entities
             int neighborCount = 0;
             foreach (var b in Player.Ships)
             {
-                if (this != b && Distance(b.position, position) <= 3)
+                if (this != b && Distance(b.position, position) <= 3.5f)
                 {
                     pcj += b.position;
                     neighborCount++;
                 }
             }
             pcj /= neighborCount + 1;
-            return (pcj - position) * 0.01f;
+            return (pcj - position) * 0.005f; // 0.01f
         }
 
         private Vector2 Separation()

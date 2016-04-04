@@ -52,9 +52,12 @@
     <Compile Include="Game1.cs" />
     <Compile Include="GameObjects\Entities\Bullet.cs" />
     <Compile Include="GameObjects\Entities\Entity.cs" />
-    <Compile Include="GameObjects\Entities\Powerup.cs" />
+    <Compile Include="GameObjects\Powerups\Powerup.cs" />
     <Compile Include="GameObjects\Entities\Ship.cs" />
     <Compile Include="GameObjects\Player.cs" />
+    <Compile Include="GameObjects\Powerups\ReviveShipPowerup.cs" />
+    <Compile Include="GameObjects\Powerups\SpeedPowerup.cs" />
+    <Compile Include="GameObjects\Powerups\UnlimitedStaminaPowerup.cs" />
     <Compile Include="GameObjects\Targets\ExplosionTarget.cs" />
     <Compile Include="GameObjects\Targets\FlankTarget.cs" />
     <Compile Include="GameObjects\Targets\Target.cs" />

@@ -1,11 +1,8 @@
 LOGIC:
 
--Movement Behaviors
 -Shield
--Powerup
 -Mainmenu
 -SpatialHashGrid
-
 -Tweak Gameplay
 
 Graphics: 
@@ -14,7 +11,6 @@ Graphics:
 -meny sprites
 -splash screen
 -Banner
-
--Powerups (Boost, få skepp, unlimited stamina för en kort stund?) (HAR MÅLAT 3 ST BOLLAR SOM SKA REPRESENTERA P-UPS, DE KAN VI VÄL ANVÄNDA?, KANSKE RÖRA SIG UPP OCH NER, SER UT SOM DE FLYGER? sorry caps :D 
+-LOGO
 
 Sound:

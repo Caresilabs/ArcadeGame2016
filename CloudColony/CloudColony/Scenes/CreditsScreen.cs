@@ -11,9 +11,9 @@ namespace CloudColony.Scenes
         private string[] credits = {
             "Created by:", "",
 
-            "Lead Programmer:", "SIMON BOTHEN", "",
+            "Programmer:", "SIMON BOTHEN", "",
 
-            "Art:", "SEBASTIAN LIND", "",
+            "Art & Sound:", "SEBASTIAN LIND", "",
 
             "(c) " + DateTime.Now.Year
 
@@ -51,7 +51,7 @@ namespace CloudColony.Scenes
 
             var logoText = "Cloud Colony";
             batch.DrawString(CC.Font, logoText, new Vector2(CC.VIEWPORT_WIDTH / 2f, 230),
-               Color.Crimson, (float)Math.Sin(time * 10) / 50f, CC.Font.MeasureString(logoText) / 2f, 2f, SpriteEffects.None, 0);
+               Color.Crimson, (float)Math.Sin(time * 10) / 50f, CC.Font.MeasureString(logoText) / 2f, 2.4f, SpriteEffects.None, 0);
 
             float y = 350;
             foreach (var txt in credits)
