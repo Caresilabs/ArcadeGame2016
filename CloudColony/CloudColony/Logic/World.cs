@@ -89,10 +89,16 @@ namespace CloudColony.Logic
                     break;
                 case WorldState.RUNNING:
                     if (PlayerBlue.Ships.Count == 0)
+                    {
                         State = WorldState.REDWON;
+                        SlowmoTime = 2.5f;
+                    }
 
                     if (PlayerRed.Ships.Count == 0)
+                    {
                         State = WorldState.BLUEWON;
+                        SlowmoTime = 2.5f;
+                    }
                     break;
                 case WorldState.REDWON:
                     break;

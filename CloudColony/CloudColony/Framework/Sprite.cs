@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace CloudColony.Framework
@@ -35,7 +36,8 @@ namespace CloudColony.Framework
 
         private Animations Animations { get; set; }
 
-        public Sprite(TextureRegion region, float x, float y, float width, float height) {
+        public Sprite(TextureRegion region, float x, float y, float width, float height)
+        {
             this.ZIndex = 0;
             this.Region = region;
             this.Color = Color.White;
@@ -45,7 +47,7 @@ namespace CloudColony.Framework
             this.Effect = SpriteEffects.None;
             this.position = new Vector2(x, y);
             this.Animations = new Animations();
-            this.DrawOffset = new Vector2(Size.X/2, Size.Y/2);
+            this.DrawOffset = new Vector2(Size.X / 2, Size.Y / 2);
 
             if (region != null)
                 this.Origin = new Vector2(region.GetSource().Width / 2, region.GetSource().Height / 2);
@@ -65,7 +67,7 @@ namespace CloudColony.Framework
         public virtual void Draw(SpriteBatch batch)
         {
             if (Region != null)
-                batch.Draw(Region, Position - DrawOffset + size/2, Region, Color, Rotation, Origin, Scale * SizeScale, Effect, ZIndex);
+                batch.Draw(Region, Position - DrawOffset + size / 2, Region, Color, Rotation, Origin, Scale * SizeScale, Effect, ZIndex);
         }
 
         private void UpdateSizeScale()
@@ -95,6 +97,12 @@ namespace CloudColony.Framework
         public Sprite SetScale(float x, float y)
         {
             this.Scale = new Vector2(x, y);
+            return this;
+        }
+
+        public Sprite SetScale(float v)
+        {
+            this.Scale = new Vector2(v, v);
             return this;
         }
 

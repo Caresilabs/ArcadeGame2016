@@ -12,6 +12,9 @@ namespace CloudColony.GameObjects.Entities
         private const float MAX_SPEED = 3f;
         private const float MAX_HEALTH = 100;
 
+
+        private const float MAX_SHIELD_HEALTH = 50;
+
         private const float FIRE_RATE = 0.5f;
 
         public const float SEPARATION_WEIGHT = 12f;
@@ -40,7 +43,11 @@ namespace CloudColony.GameObjects.Entities
             this.shootDelayTimer = 0;
             velocity.X = (int)player.Index == 0 ? MAX_SPEED : -MAX_SPEED;
 
-            this.ShieldSprite = new Sprite(shieldTexture, 0, 0, 1, 1);
+            this.ShieldSprite = new Sprite(shieldTexture, 0, 0, 1.25f, 1.25f);
+            ShieldSprite.ZIndex = 0.5f;
+            ShieldSprite.Color = new Color(1, 1, 1, 0.02f);
+
+            ZIndex = 0.4f;
 
             AddAnimation("Move", new FrameAnimation(CC.Atlas, 0 + ((int)player.Index == 0 ? 0 : 32), 2 , 32, 32, 2, 0.3f))
                 .SetAnimation("Move");
@@ -49,7 +56,9 @@ namespace CloudColony.GameObjects.Entities
         public override void Draw(SpriteBatch batch)
         {
             base.Draw(batch);
-            ShieldSprite.Draw(batch);
+
+            if (ShieldHealth > 0)
+                ShieldSprite.Draw(batch);
         }
 
         public override void Update(float delta)
@@ -73,7 +82,6 @@ namespace CloudColony.GameObjects.Entities
                 MaxSpeed();
             }
 
-
             SeekTarget(delta);
 
 
@@ -93,6 +101,10 @@ namespace CloudColony.GameObjects.Entities
             {
                 velocity = Vector2.Zero;
             }
+
+            ShieldSprite.SetPosition(position);
+            ShieldSprite.SetScale((ShieldHealth / MAX_SHIELD_HEALTH) - 0.25f);
+            ShieldHealth -= delta * 2;
 
             Rotation = (float)Math.Atan2(velocity.Y, velocity.X);
         }
@@ -129,13 +141,19 @@ namespace CloudColony.GameObjects.Entities
             return shootDelayTimer >= FIRE_RATE;
         }
 
+        public void ActivateShield()
+        {
+            ShieldHealth = MAX_SHIELD_HEALTH;
+        }
+
         public void Shoot()
         {
+            ShieldHealth = 0;
             shootDelayTimer = 0;
             var dir = Velocity;
             dir.Normalize();
 
-            Bullet bullet = new Bullet(World, Player, (int)Player.Index == 0 ? CC.BulletBlue : CC.BulletBlue, position.X, position.Y, dir);
+            Bullet bullet = new Bullet(World, Player, (int)Player.Index == 0 ? CC.BulletRed : CC.BulletBlue, position.X, position.Y, dir);
             World.SpawnBullet(bullet);
         }
 

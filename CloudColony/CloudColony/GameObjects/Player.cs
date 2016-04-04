@@ -42,7 +42,7 @@ namespace CloudColony.GameObjects
             this.World = world;
             this.pointer = new Sprite(pointer, x, y, 0.7f, 0.7f);
             this.staminaBar = new StaminaProgressBar();
-            this.pointer.ZIndex = 1;
+            this.pointer.ZIndex = 0.01f;
             this.position = new Vector2(x, y);
             this.Stamina = STAMINA_MAX;
         }
@@ -122,10 +122,13 @@ namespace CloudColony.GameObjects
                         }
                     }
                 }
+
+                // Shield
                 if (PressedButton(PlayerInput.Green))
                 {
                     foreach (var ship in Ships)
                     {
+                        ship.ActivateShield();
                     }
                 }
             }

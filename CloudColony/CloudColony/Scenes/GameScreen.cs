@@ -24,6 +24,10 @@ namespace CloudColony.Scenes
 
         public World World { get; private set; }
 
+        public Sprite WinSprite { get; private set; }
+
+        public float TotalTime { get; private set; }
+
         public override void Init()
         {
             this.UICamera = new Camera2D(CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT);
@@ -33,10 +37,17 @@ namespace CloudColony.Scenes
 
         public override void Update(float delta)
         {
+            TotalTime += delta;
+
             switch (State)
             {
                 case GameState.READY:
+                    if (TotalTime < 1.4f)
+                    {
+                        World.SetReady();
+                    }
                     World.Update(delta);
+
                     if (World.State == World.WorldState.RUNNING)
                         State = GameState.RUNNING;
                     break;
@@ -45,19 +56,32 @@ namespace CloudColony.Scenes
                         InputHandler.GetButtonState(PlayerIndex.Two, PlayerInput.Start) == InputState.Released)
                     {
                         State = GameState.PAUSED;
-
                     }
 
                     World.Update(delta);
 
                     if (World.State == World.WorldState.REDWON)
+                    {
                         State = GameState.GAMEOVER;
+                        WinSprite = new Sprite(CC.WinRed, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.4f, 96, 64);
+                    }
 
                     if (World.State == World.WorldState.BLUEWON)
+                    {
                         State = GameState.GAMEOVER;
+                        WinSprite = new Sprite(CC.WinBlue, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.4f, 96, 64);
+                    }
+
                     break;
                 case GameState.GAMEOVER:
-                    SetScreen(new GameScreen());
+                    if (InputHandler.GetButtonState(PlayerIndex.One, PlayerInput.Start) == InputState.Released ||
+                      InputHandler.GetButtonState(PlayerIndex.Two, PlayerInput.Start) == InputState.Released)
+                        SetScreen(new MainMenuScreen());
+
+                    WinSprite.SetScale(MathHelper.Lerp(WinSprite.Scale.X, 6f, delta * 4f));
+
+                    World.Update(delta);
+
                     break;
                 case GameState.PAUSED:
                     if (CC.AnyKeyPressed(PlayerIndex.One) || CC.AnyKeyPressed(PlayerIndex.Two))
@@ -97,6 +121,13 @@ namespace CloudColony.Scenes
                     case GameState.RUNNING:
                         break;
                     case GameState.GAMEOVER:
+
+                        WinSprite.Draw(batch);
+
+                        string continueText = "Press start to continue...";
+                        batch.DrawString(CC.Font, continueText, new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.62f),
+                            Color.White, 0, CC.Font.MeasureString(continueText) / 2f, 2.2f, SpriteEffects.None, 0);
+
                         break;
                     case GameState.PAUSED:
                         string txt = "PAUSED";
@@ -107,6 +138,12 @@ namespace CloudColony.Scenes
                         break;
                 }
             }
+
+            if (TotalTime < 1.5f)
+            {
+                batch.Draw(CC.Pixel, new Rectangle(0, 0, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT), CC.Pixel, Color.Black * (1.5f - (TotalTime / 1.5f)));
+            }
+
             batch.End();
 
         }

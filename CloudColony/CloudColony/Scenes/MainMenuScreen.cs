@@ -60,11 +60,6 @@ namespace CloudColony.Scenes
                     null,
                     null);
 
-            if (PlayDelayTime > 0)
-            {
-                batch.Draw(CC.BulletBlue, new Rectangle(0, 0, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT), new Rectangle(0, 0, 1, 1), Color.White * ((PlayDelayTime / 3f)));
-            }
-
             if (PlayerRedReady)
             {
                 string txt = "Player 1 READY";
@@ -99,6 +94,12 @@ namespace CloudColony.Scenes
             string insert = "Insert coin";
             batch.DrawString(CC.Font, insert, new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.87f),
                 Color.White * (float)((Math.Sin(TotalTime * 5) + 1) / 2f), 0, CC.Font.MeasureString(insert) / 2f, 2, SpriteEffects.None, 0);
+
+
+            if (PlayDelayTime > 0)
+            {
+                batch.Draw(CC.Pixel, new Rectangle(0, 0, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT), CC.Pixel, Color.Black * ((PlayDelayTime / 3f)));
+            }
 
             batch.End();
         }

@@ -15,7 +15,7 @@ namespace CloudColony.Scenes
 
             "Art:", "SEBASTIAN LIND", "",
 
-            "(c) 2016"
+            "(c) " + DateTime.Now.Year
 
         };
 

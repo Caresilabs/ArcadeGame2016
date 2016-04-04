@@ -22,7 +22,7 @@ namespace CloudColony.Rendering
         public void Draw(SpriteBatch batch)
         {
             // Draw World
-            batch.Begin(SpriteSortMode.FrontToBack,
+            batch.Begin(SpriteSortMode.BackToFront,
                      BlendState.AlphaBlend,
                      SamplerState.PointClamp,
                      null,

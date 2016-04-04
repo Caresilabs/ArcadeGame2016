@@ -10,18 +10,11 @@ LOGIC:
 
 Graphics: 
 
-------TA BORT MIN TEXT NÄR DU HAR LÄST DET OCH LAGT IN POSTIONERNA! :) --------- TROR DE STÄMMER, ANVÄNDER EN PACKER XD 
-
 -Background & parallax
 -meny sprites
--shield(STORLEK: 32x32, röd pos: 32/64, blå pos: 64/ 64 ) //Gjorde den ena lite mer squichy så den kanske behöver bara lite större. är inte transparanta, gör det i Mono istället. OBS: båda måste scalas) :) 
 -splash screen
 -Banner
--Styled bullets(STORLEK: 16x16, röd pos: 0/64, blå pos: 16/ 64 ), //Hit-box storleken borde väl vara lika stor på båda så det inte blir orättvist?
--Win banner / Win (Red won, blue won) (STORLEK BLÅ: 96x58 POS BLÅ: 96x64), (STORLEK RÖD: 86 x 58, POS 192 x 64)
 
 -Powerups (Boost, få skepp, unlimited stamina för en kort stund?) (HAR MÅLAT 3 ST BOLLAR SOM SKA REPRESENTERA P-UPS, DE KAN VI VÄL ANVÄNDA?, KANSKE RÖRA SIG UPP OCH NER, SER UT SOM DE FLYGER? sorry caps :D 
-
--White pixel (POS 422, 23) 
 
 Sound:

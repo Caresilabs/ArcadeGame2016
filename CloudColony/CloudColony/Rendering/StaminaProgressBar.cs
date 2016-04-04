@@ -28,7 +28,7 @@ namespace CloudColony.Rendering
             for (float i = 0; i < angle; i += 0.4f)
             {
                 batch.Draw(CC.Atlas, Position + new Vector2(0.2f * (float)Math.Cos(i), 0.2f * (float)Math.Sin(i)),
-                    CC.BulletBlue, Color.Violet, i, Vector2.Zero, 0.04f, SpriteEffects.None, 1);
+                    CC.Pixel, Color.Violet, i, Vector2.Zero, 0.04f, SpriteEffects.None, 0);
             }
         }
     }
