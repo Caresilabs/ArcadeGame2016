@@ -35,7 +35,8 @@ namespace CloudColony.GameObjects.Entities
         public float ShieldHealth { get; private set; }
         public Sprite ShieldSprite { get; private set; }
 
-        public Ship(World world, Player owner, TextureRegion region, TextureRegion shieldTexture , Player player, float x, float y) : base(world, owner, region, x, y, 0.5f, 0.5f)
+        public Ship(World world, Player owner, TextureRegion region, TextureRegion shieldTexture , Player player, float x, float y) 
+            : base(world, owner, region, x, y, 0.55f, 0.55f)
         {
             this.Player = player;
             this.Target = player;

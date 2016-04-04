@@ -23,11 +23,15 @@ namespace CloudColony.Scenes
 
         public override void Update(float delta)
         {
-            if (CC.AnyKeyPressed(PlayerIndex.One))
-                PlayerRedReady = true;
+            // Hack so input wont happen after every game
+            if (TotalTime > 0.2f)
+            {
+                if (CC.AnyKeyPressed(PlayerIndex.One))
+                    PlayerRedReady = true;
 
-            if (CC.AnyKeyPressed(PlayerIndex.Two))
-                PlayerBlueReady = true;
+                if (CC.AnyKeyPressed(PlayerIndex.Two))
+                    PlayerBlueReady = true;
+            }
 
             if (PlayerRedReady && PlayerBlueReady)
             {

@@ -35,7 +35,7 @@ namespace CloudColony.Logic
             this.Entities = new List<Entity>();
             this.DeadEntities = new List<Entity>();
             this.State = WorldState.READY;
-            InitPopulation(25);
+            InitPopulation(30);
         }
 
         private void InitPopulation(int each)
