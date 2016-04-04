@@ -16,6 +16,8 @@ namespace CloudColony.GameObjects.Entities
         {
             velocity = direction * 8.5f;
             Rotation = (float)Math.Atan2(direction.Y, direction.X);
+
+            ZIndex = 0.55f;
         }
 
         public override void Update(float delta)

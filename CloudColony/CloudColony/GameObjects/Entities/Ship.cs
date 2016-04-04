@@ -45,12 +45,12 @@ namespace CloudColony.GameObjects.Entities
             velocity.X = (int)player.Index == 0 ? MAX_SPEED : -MAX_SPEED;
 
             this.ShieldSprite = new Sprite(shieldTexture, 0, 0, 1.25f, 1.25f);
-            ShieldSprite.ZIndex = 0.5f;
-            ShieldSprite.Color = new Color(1, 1, 1, 0.02f);
+            ShieldSprite.ZIndex = 0.35f;
+            ShieldSprite.Color = new Color(255, 255, 255, 255)* 0.3f;
 
             ZIndex = 0.4f;
 
-            AddAnimation("Move", new FrameAnimation(CC.Atlas, 0 + ((int)player.Index == 0 ? 0 : 32), 2 , 32, 32, 2, 0.3f))
+            AddAnimation("Move", new FrameAnimation(CC.Atlas, 0 + ((int)player.Index == 0 ? 4 : 36), 0 , 32, 32, 2, 0.3f))
                 .SetAnimation("Move");
         }
 

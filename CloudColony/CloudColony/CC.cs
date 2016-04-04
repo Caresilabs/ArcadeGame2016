@@ -51,12 +51,12 @@ namespace CloudColony
             Atlas = content.Load<Texture2D>("FirstEditionAtlas");
 
 
-            ShipBlue = new TextureRegion(Atlas, 32, 2, 32, 32);
+            ShipBlue = new TextureRegion(Atlas, 32, 4, 32, 32);
             PointerBlue = new TextureRegion(Atlas, 256 + 20 + 32, 0, 32, 32);
             BulletBlue = new TextureRegion(Atlas, 16, 64, 16, 16);
             ShieldBlue = new TextureRegion(Atlas, 64, 64, 32, 32);
 
-            ShipRed = new TextureRegion(Atlas, 0, 2, 32, 32);
+            ShipRed = new TextureRegion(Atlas, 4, 0, 32, 32);
             PointerRed = new TextureRegion(Atlas, 256 + 20, 0, 32, 32); // todo correct x
             BulletRed = new TextureRegion(Atlas, 0, 64, 16, 16);
             ShieldRed = new TextureRegion(Atlas, 32, 64, 32, 32);
