@@ -9,11 +9,12 @@ namespace CloudColony.Rendering
     {
         public Vector2 Position { get; set; }
 
+        private readonly Color color;
         private float percent;
 
-        public StaminaProgressBar()
+        public StaminaProgressBar(Color color)
         {
-
+            this.color = color;
         }
 
         public void SetPercentage(float percent)
@@ -25,10 +26,10 @@ namespace CloudColony.Rendering
         {
             float angle = percent * (float)(Math.PI * 2f);
 
-            for (float i = 0; i < angle; i += 0.4f)
+            for (float i = 0; i < angle; i += 0.2f)
             {
-                batch.Draw(CC.Atlas, Position + new Vector2(0.2f * (float)Math.Cos(i), 0.2f * (float)Math.Sin(i)),
-                    CC.Pixel, Color.Violet, i, Vector2.Zero, 0.04f, SpriteEffects.None, 0);
+                batch.Draw(CC.Pixel, Position + new Vector2(0.3f * (float)Math.Cos(i), 0.3f * (float)Math.Sin(i)),
+                    CC.Pixel, color, i, Vector2.Zero, 0.06f, SpriteEffects.None, 0);
             }
         }
     }

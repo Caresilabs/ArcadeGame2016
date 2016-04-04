@@ -37,7 +37,7 @@ namespace CloudColony.Scenes
             {
                 PlayDelayTime += delta;
 
-                if (PlayDelayTime >= 3f)
+                if (PlayDelayTime >= 2f)
                     SetScreen(new GameScreen());
 
             }
@@ -102,7 +102,7 @@ namespace CloudColony.Scenes
 
             if (PlayDelayTime > 0)
             {
-                batch.Draw(CC.Pixel, new Rectangle(0, 0, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT), CC.Pixel, Color.Black * ((PlayDelayTime / 3f)));
+                batch.Draw(CC.Pixel, new Rectangle(0, 0, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT), CC.Pixel, Color.Black * ((PlayDelayTime / 2f)));
             }
 
             batch.End();
