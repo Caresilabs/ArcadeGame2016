@@ -52,6 +52,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="GameObjects\Entities\Bullet.cs" />
     <Compile Include="GameObjects\Entities\Entity.cs" />
+    <Compile Include="GameObjects\Entities\Powerup.cs" />
     <Compile Include="GameObjects\Entities\Ship.cs" />
     <Compile Include="GameObjects\Player.cs" />
     <Compile Include="GameObjects\Targets\ExplosionTarget.cs" />
