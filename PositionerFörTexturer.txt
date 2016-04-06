@@ -33,6 +33,11 @@ BILD SEBASTIAN(CREDIT) :D
 STATE TRANSITION LIGGER I EN ANNAN BILD
 varje frame är lika stor som framen så 160-90, 18 frames
 
+---------------------------------------
+BAKGRUND TILL STARTSCREEN/CREDITS(lika stor som framen, läggs precis bakom bara) 
+>>pos 322/218, size: 160x90
+
+
 
 
 
