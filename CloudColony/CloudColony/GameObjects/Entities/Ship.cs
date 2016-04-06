@@ -81,7 +81,6 @@ namespace CloudColony.GameObjects.Entities
             if (flock != Vector2.Zero)
             {
                 velocity += flock * delta;
-
                 // MaxSpeed();
             }
 
@@ -101,10 +100,10 @@ namespace CloudColony.GameObjects.Entities
 
             KeepInside();
 
-            if (float.IsNaN(position.X))
-            {
-                velocity = Vector2.Zero;
-            }
+            //if (float.IsNaN(position.X))
+            //{
+            //    velocity = Vector2.Zero;
+            //}
 
             ShieldSprite.SetPosition(position);
             ShieldSprite.SetScale((ShieldHealth / MAX_SHIELD_HEALTH) - 0.25f);

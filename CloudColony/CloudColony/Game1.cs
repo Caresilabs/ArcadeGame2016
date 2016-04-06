@@ -84,7 +84,7 @@ namespace CloudColony
                 {
                     if (nextScreen != null)
                     {
-                        transitionAnimation = new FrameAnimation(CC.TransitionTexture, 0, 0, 160, 90, 18, 0.06f, new Point(1, 0), false, true);
+                        transitionAnimation = new FrameAnimation(CC.TransitionTexture, 0, 0, 160, 90, 18, 0.05f, new Point(1, 0), false, true);
                         transitionSprite.AddAnimation("anim", transitionAnimation).SetAnimation("anim");
 
                         SetNextScreen();
@@ -142,7 +142,7 @@ namespace CloudColony
 
             this.nextScreen = newScreen;
 
-            transitionAnimation = new FrameAnimation(CC.TransitionTexture, 0, 0, 160, 90, 18, 0.06f, new Point(1, 0), false, false);
+            transitionAnimation = new FrameAnimation(CC.TransitionTexture, 0, 0, 160, 90, 18, 0.05f, new Point(1, 0), false, false);
             transitionSprite.AddAnimation("anim", transitionAnimation).SetAnimation("anim");
         }
     }
