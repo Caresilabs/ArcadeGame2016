@@ -15,10 +15,15 @@ namespace CloudColony.Scenes
 
         public float PlayDelayTime { get; private set; }
 
+        private Sprite logo;
+
         public override void Init()
         {
             this.PlayerRedReady = false;
             this.PlayerBlueReady = false;
+
+            this.logo = new Sprite(CC.Logo, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.22f, 358, 64);
+            logo.SetScale(2f);
         }
 
         public override void Update(float delta)
@@ -37,7 +42,7 @@ namespace CloudColony.Scenes
             {
                 PlayDelayTime += delta;
 
-                if (PlayDelayTime >= 2f)
+                if (PlayDelayTime >= 1f)
                     SetScreen(new GameScreen());
 
             }
@@ -90,9 +95,8 @@ namespace CloudColony.Scenes
                     Color.Blue, 0, CC.Font.MeasureString(txt) / 2f, 1.6f + (float)((Math.Sin(TotalTime * 5) + 1) / 15f), SpriteEffects.None, 0);
             }
 
-            string logo = "Cloud Colony";
-            batch.DrawString(CC.Font, logo, new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.22f),
-                Color.Red, 0, CC.Font.MeasureString(logo) / 2f, 4, SpriteEffects.None, 0);
+            logo.SetPosition(logo.Position.X, logo.Position.Y + (float)Math.Sin(TotalTime*2) / 2.5f);
+            logo.Draw(batch);
 
 
             string insert = "Insert coin";
@@ -100,10 +104,12 @@ namespace CloudColony.Scenes
                 Color.White * (float)((Math.Sin(TotalTime * 5) + 1) / 2f), 0, CC.Font.MeasureString(insert) / 2f, 2, SpriteEffects.None, 0);
 
 
-            if (PlayDelayTime > 0)
-            {
-                batch.Draw(CC.Pixel, new Rectangle(0, 0, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT), CC.Pixel, Color.Black * ((PlayDelayTime / 2f)));
-            }
+            //if (PlayDelayTime > 0)
+            //{
+            //    batch.Draw(CC.Pixel, new Rectangle(0, 0, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT), CC.Pixel, Color.Black * ((PlayDelayTime / 2f)));
+            //}
+
+            Game.DrawFrame();
 
             batch.End();
         }

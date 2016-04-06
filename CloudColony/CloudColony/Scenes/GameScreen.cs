@@ -13,7 +13,7 @@ namespace CloudColony.Scenes
     {
         public enum GameState
         {
-            READY, RUNNING, GAMEOVER, PAUSED, EXIT
+            READY, RUNNING, GAMEOVER, PAUSED
         }
 
         public Camera2D UICamera { get; private set; }
@@ -28,7 +28,6 @@ namespace CloudColony.Scenes
 
         public float TotalTime { get; private set; }
 
-        public float ExitTime { get; private set; }
 
         public override void Init()
         {
@@ -44,7 +43,7 @@ namespace CloudColony.Scenes
             switch (State)
             {
                 case GameState.READY:
-                    if (TotalTime < 1.4f)
+                    if (TotalTime < 0.5f)
                         World.SetReady();
 
                     World.Update(delta);
@@ -78,8 +77,7 @@ namespace CloudColony.Scenes
                     if (InputHandler.GetButtonState(PlayerIndex.One, PlayerInput.Start) == InputState.Released ||
                       InputHandler.GetButtonState(PlayerIndex.Two, PlayerInput.Start) == InputState.Released)
                     {
-                        State = GameState.EXIT;
-                        ExitTime = 1.5f;
+                        SetScreen(new MainMenuScreen());
                     }
 
                     WinSprite.SetScale(MathHelper.Lerp(WinSprite.Scale.X, 6f, delta * 4f));
@@ -93,14 +91,6 @@ namespace CloudColony.Scenes
                         State = GameState.READY;
                         World.SetReady();
                     }
-                    break;
-                case GameState.EXIT:
-                    World.Update(delta);
-
-                    if (ExitTime <= 0)
-                        SetScreen(new MainMenuScreen());
-                    else
-                        ExitTime -= delta;
                     break;
                 default:
                     break;
@@ -151,15 +141,17 @@ namespace CloudColony.Scenes
                 }
             }
 
-            if (TotalTime < 1.5f)
-            {
-                batch.Draw(CC.Pixel, new Rectangle(0, 0, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT), CC.Pixel, Color.Black * (1.5f - (TotalTime / 1.5f)));
-            }
+            //if (TotalTime < 1.5f)
+            //{
+            //    batch.Draw(CC.Pixel, new Rectangle(0, 0, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT), CC.Pixel, Color.Black * (1.5f - (TotalTime / 1.5f)));
+            //}
 
-            if (State == GameState.EXIT)
-            {
-                batch.Draw(CC.Pixel, new Rectangle(0, 0, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT), CC.Pixel, Color.Black * (1.5f - (ExitTime / 1.5f)));
-            }
+            //if (State == GameState.EXIT)
+            //{
+            //    batch.Draw(CC.Pixel, new Rectangle(0, 0, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT), CC.Pixel, Color.Black * (1.5f - (ExitTime / 1.5f)));
+            //}
+
+            Game.DrawFrame();
 
             batch.End();
 

@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CloudColony
 {
-	
-	// http://store.steampowered.com/app/232790/ <3
-	
+
+    // http://store.steampowered.com/app/232790/ <3
+
     public class CC
     {
         // Globals
@@ -18,6 +18,7 @@ namespace CloudColony
 
         // Game
         public static Texture2D Atlas { get; private set; }
+        public static Texture2D TransitionTexture { get; private set; }
 
         public static TextureRegion Pixel { get; private set; }
 
@@ -35,10 +36,17 @@ namespace CloudColony
 
         // UI
         public static TextureRegion ScoreBoard { get; private set; }
+        public static TextureRegion Frame { get; private set; }
+
+        public static TextureRegion Logo { get; private set; }
+
+        public static TextureRegion Simon { get; private set; }
+        public static TextureRegion Sebastian { get; private set; }
 
         public static TextureRegion WinBlue { get; private set; }
 
         public static TextureRegion WinRed { get; private set; }
+
 
         // Fonts
         public static SpriteFont Font { get; private set; }
@@ -64,10 +72,19 @@ namespace CloudColony
             BluePowerup = new TextureRegion(Atlas, 68 + 16, 0, 16, 16);
             GreenPowerup = new TextureRegion(Atlas, 68, 0, 16, 16);
 
-            // UI
-            WinBlue = new TextureRegion(Atlas, 96, 58, 96, 64);
 
+            TransitionTexture = content.Load<Texture2D>("GateClosingWithoutFrame");
+
+            // UI
+            Logo = new TextureRegion(Atlas, 132, 154, 358, 64);
+
+            Simon = new TextureRegion(Atlas, 0, 218, 153, 168);
+            Sebastian = new TextureRegion(Atlas, 153, 218, 169, 127);
+
+            WinBlue = new TextureRegion(Atlas, 96, 58, 96, 64);
             WinRed = new TextureRegion(Atlas, 192, 64, 86, 58);
+
+            Frame = new TextureRegion(Atlas, 278, 64, 160, 90);
 
             Pixel = new TextureRegion(Atlas, 422, 23, 1, 1);
 

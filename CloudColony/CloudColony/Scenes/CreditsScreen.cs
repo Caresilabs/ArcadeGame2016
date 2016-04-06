@@ -20,9 +20,19 @@ namespace CloudColony.Scenes
         };
 
         private float time;
+        private Sprite logo;
+
+        private Sprite simon;
+        private Sprite sebastian;
 
         public override void Init()
         {
+            this.logo = new Sprite(CC.Logo, CC.VIEWPORT_WIDTH / 2f, 200, 358, 64);
+            logo.SetScale(1.6f);
+
+
+            simon = new Sprite(CC.Simon, CC.VIEWPORT_WIDTH * 0.3f, CC.VIEWPORT_HEIGHT * 0.45f, 153, 168);
+            sebastian = new Sprite(CC.Sebastian, CC.VIEWPORT_WIDTH * 0.7f, CC.VIEWPORT_HEIGHT * 0.65f, 169, 127);
         }
 
         public override void Update(float delta)
@@ -48,10 +58,11 @@ namespace CloudColony.Scenes
                     null,
                     null);
 
+            logo.Rotation = (float)Math.Sin(time * 10) / 50f;
+            logo.Draw(batch);
 
-            var logoText = "Cloud Colony";
-            batch.DrawString(CC.Font, logoText, new Vector2(CC.VIEWPORT_WIDTH / 2f, 230),
-               Color.Crimson, (float)Math.Sin(time * 10) / 50f, CC.Font.MeasureString(logoText) / 2f, 2.4f, SpriteEffects.None, 0);
+            simon.Draw(batch);
+            sebastian.Draw(batch);
 
             float y = 350;
             foreach (var txt in credits)
@@ -61,6 +72,8 @@ namespace CloudColony.Scenes
 
                 y += 50;
             }
+
+            Game.DrawFrame();
 
             batch.End();
         }

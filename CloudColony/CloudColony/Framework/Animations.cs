@@ -34,10 +34,12 @@ namespace CloudColony.Framework
 
         public void AddAnimation(string name, Animation animation)
         {
-            if (animations.ContainsKey(name))
-                animations.Remove(name);
+            animations[name] = animation;
 
-            animations.Add(name, animation);
+            //if (animations.ContainsKey(name))
+            //    animations.Remove(name);
+
+            //animations.Add(name, animation);
         }
 
         public bool HasAnimations()

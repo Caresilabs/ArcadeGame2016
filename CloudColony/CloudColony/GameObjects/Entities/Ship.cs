@@ -51,7 +51,7 @@ namespace CloudColony.GameObjects.Entities
 
             ZIndex = 0.4f;
 
-            AddAnimation("Move", new FrameAnimation(CC.Atlas, 0 + ((int)player.Index == 0 ? 4 : 36), 0, 32, 32, 2, 0.3f))
+            AddAnimation("Move", new FrameAnimation(CC.Atlas, 0 + ((int)player.Index == 0 ? 4 : 36), 0, 32, 32, 2, 0.3f, new Point(0, 1)))
                 .SetAnimation("Move");
         }
 

@@ -1,6 +1,7 @@
 ﻿using CloudColony.Framework;
 using CloudColony.Scenes;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace CloudColony
 {
@@ -10,14 +11,21 @@ namespace CloudColony
     /// </summary>
     public class Game1 : Game
     {
-        #if (!ARCADE)
+#if (!ARCADE)
             GraphicsDeviceManager graphics;
             SpriteBatch spriteBatch;
-        #else
-            public override string GameDisplayName { get { return "CloudColony"; } }
-        #endif
+#else
+        public override string GameDisplayName { get { return "CloudColony"; } }
+#endif
 
         public Screen CurrentScreen { get; private set; }
+
+        private Screen nextScreen;
+
+        private Sprite frame;
+
+        private Sprite transitionSprite;
+        private FrameAnimation transitionAnimation;
 
         public Game1()
         {
@@ -42,7 +50,14 @@ namespace CloudColony
             // Load Content
             CC.Load(Content);
 
-            SetScreen(new MainMenuScreen());
+            frame = new Sprite(CC.Frame, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT / 2f, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT);
+
+            // Transition
+            transitionSprite = new Sprite(null, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT / 2f, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT);
+
+            nextScreen = new MainMenuScreen();
+            SetNextScreen();
+            //SetScreen(new MainMenuScreen());
         }
 
         protected override void UnloadContent()
@@ -51,16 +66,36 @@ namespace CloudColony
 
         protected override void Update(GameTime gameTime)
         {
-            #if (!ARCADE)
+#if (!ARCADE)
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            #endif
+#endif
 
             // get second between last frame and current frame, used for fair physics manipulation and not based on frames
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             // then update the screen
             CurrentScreen.Update(delta);
+
+            // Transition
+            if (transitionAnimation != null)
+            {
+                if (transitionAnimation.GetPercent() >= 1)
+                {
+                    if (nextScreen != null)
+                    {
+                        transitionAnimation = new FrameAnimation(CC.TransitionTexture, 0, 0, 160, 90, 18, 0.06f, new Point(1, 0), false, true);
+                        transitionSprite.AddAnimation("anim", transitionAnimation).SetAnimation("anim");
+
+                        SetNextScreen();
+                    }
+                    else
+                    {
+                        transitionAnimation = null;
+                    }
+                }
+                transitionSprite.Update(delta);
+            }
 
             base.Update(gameTime);
         }
@@ -70,22 +105,45 @@ namespace CloudColony
             // Draw screen
             CurrentScreen.Draw(spriteBatch);
 
+            // Draw transition
+            if (transitionAnimation != null)
+            {
+                spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+                transitionSprite.Draw(spriteBatch);
+                spriteBatch.End();
+            }
+
             base.Draw(gameTime);
         }
 
-        public void SetScreen(Screen newScreen)
+        public void DrawFrame()
         {
-            if (newScreen == null) return;
+            frame.Draw(spriteBatch);
+        }
 
+        private void SetNextScreen()
+        {
             // Dispose old screen
             if (CurrentScreen != null)
                 CurrentScreen.Dispose();
 
             // init new screen
-            CurrentScreen = newScreen;
-            newScreen.Game = this;
-            newScreen.Graphics = GraphicsDevice;
+            CurrentScreen = nextScreen;
+            nextScreen.Game = this;
+            nextScreen.Graphics = GraphicsDevice;
             CurrentScreen.Init();
+
+            nextScreen = null;
+        }
+
+        public void SetScreen(Screen newScreen)
+        {
+            if (newScreen == null || transitionAnimation != null) return;
+
+            this.nextScreen = newScreen;
+
+            transitionAnimation = new FrameAnimation(CC.TransitionTexture, 0, 0, 160, 90, 18, 0.06f, new Point(1, 0), false, false);
+            transitionSprite.AddAnimation("anim", transitionAnimation).SetAnimation("anim");
         }
     }
 }
