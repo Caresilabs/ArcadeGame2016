@@ -47,8 +47,8 @@ namespace CloudColony.Scenes
 
             }
 
-            if (InputHandler.GetButtonState(PlayerIndex.One, PlayerInput.Start) == InputState.Released ||
-                       InputHandler.GetButtonState(PlayerIndex.Two, PlayerInput.Start) == InputState.Released)
+            if (InputHandler.GetButtonState(PlayerIndex.One, PlayerInput.Side) == InputState.Released ||
+                       InputHandler.GetButtonState(PlayerIndex.Two, PlayerInput.Side) == InputState.Released)
             {
                 SetScreen(new CreditsScreen());
             }

@@ -114,7 +114,8 @@ namespace CloudColony.GameObjects.Entities
 
         private void CheckCollision(float delta)
         {
-            foreach (var enemy in World.Entities)
+            var colliders = World.HashGrid.GetPossibleColliders(this);
+            foreach (var enemy in colliders)
             {
                 if (enemy.Owner == Player)
                     continue;

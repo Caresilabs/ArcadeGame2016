@@ -24,6 +24,8 @@ namespace CloudColony.Logic
         public List<Entity> Entities { get; private set; }
         public List<Entity> DeadEntities { get; private set; }
 
+        public SpatialHashGrid HashGrid { get; private set; }
+
         public Player PlayerRed { get; private set; }
         public Player PlayerBlue { get; private set; }
         public Player[] Players { get; private set; }
@@ -38,6 +40,8 @@ namespace CloudColony.Logic
 
         public World()
         {
+            this.HashGrid = new SpatialHashGrid();
+            this.HashGrid.Setup((int)(WORLD_WIDTH + 1), (int)(WORLD_HEIGHT + 1), 3.5f);
             this.Entities = new List<Entity>();
             this.DeadEntities = new List<Entity>();
             this.State = WorldState.READY;
@@ -122,6 +126,10 @@ namespace CloudColony.Logic
                 default:
                     break;
             }
+
+            // Update our hashgrid
+            HashGrid.ClearBuckets();
+            HashGrid.AddObject(Entities);
 
             PlayerRed.Update(delta);
             PlayerBlue.Update(delta);
