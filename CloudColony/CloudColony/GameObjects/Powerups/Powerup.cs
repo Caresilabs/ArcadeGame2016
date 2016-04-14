@@ -11,7 +11,7 @@ namespace CloudColony.GameObjects.Powerups
         public float ActiveTime { get; private set; }
 
         public Powerup(World world, TextureRegion region, float x, float y) 
-            : base(world, null, region, x, y, 0.5f, 0.5f)
+            : base(world, null, region, x, y, 0.55f, 0.55f)
         {
         }
 

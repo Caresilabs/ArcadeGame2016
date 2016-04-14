@@ -14,12 +14,12 @@ namespace CloudColony.GameObjects.Powerups
 
         public override void RunPower()
         {
-            if (ActiveTime >= 3)
+            if (ActiveTime >= 4.5f)
                 Done = true;
 
             foreach (var ship in Owner.Ships)
             {
-                ship.Speed = Ship.MAX_SPEED * 1.5f;
+                ship.Speed = Ship.MAX_SPEED * 1.45f;
             }
         }
     }

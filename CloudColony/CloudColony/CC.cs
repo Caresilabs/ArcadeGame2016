@@ -37,6 +37,11 @@ namespace CloudColony
         // UI
         public static TextureRegion ScoreBoard { get; private set; }
         public static TextureRegion Frame { get; private set; }
+        public static TextureRegion GameBackground { get; private set; }
+        public static TextureRegion MenuBackground { get; private set; }
+
+        public static TextureRegion Button1 { get; private set; }
+        public static TextureRegion Button2 { get; private set; }
 
         public static TextureRegion Logo { get; private set; }
 
@@ -76,12 +81,18 @@ namespace CloudColony
             TransitionTexture = content.Load<Texture2D>("GateClosingWithoutFrame");
 
             // UI
-            Logo = new TextureRegion(Atlas, 132, 154, 358, 64);
+            Logo = new TextureRegion(Atlas, 132, 154, 358, 63);
+
+            GameBackground = new TextureRegion(Atlas, 0, 386, 160, 90);
+            MenuBackground = new TextureRegion(Atlas, 322, 218, 160, 90);
+
+            Button1 = new TextureRegion(Atlas, 438, 64, 64, 32);
+            Button2 = new TextureRegion(Atlas, 0, 154, 64, 32);
 
             Simon = new TextureRegion(Atlas, 0, 218, 153, 168);
             Sebastian = new TextureRegion(Atlas, 153, 218, 169, 127);
 
-            WinBlue = new TextureRegion(Atlas, 96, 58, 96, 64);
+            WinBlue = new TextureRegion(Atlas, 96, 64, 96, 64);
             WinRed = new TextureRegion(Atlas, 192, 64, 86, 58);
 
             Frame = new TextureRegion(Atlas, 278, 64, 160, 90);

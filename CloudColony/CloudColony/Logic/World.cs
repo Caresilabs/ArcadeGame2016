@@ -61,6 +61,23 @@ namespace CloudColony.Logic
             this.Players = new Player[] { PlayerRed, PlayerBlue };
         }
 
+        public void SpawnShips(int red, int blue, Vector2 pos)
+        {
+            for (int i = 0; i < red; i++)
+            {
+                Ship ship = new Ship(this, PlayerRed, CC.ShieldRed, PlayerRed, pos.X, pos.Y);
+                Entities.Add(ship);
+                PlayerRed.Ships.Add(ship);
+            }
+
+            for (int i = 0; i < blue; i++)
+            {
+                Ship ship = new Ship(this, PlayerBlue, CC.ShieldBlue, PlayerBlue, pos.X, pos.Y);
+                Entities.Add(ship);
+                PlayerBlue.Ships.Add(ship);
+            }
+        }
+
         public void SpawnShips(int red, int blue)
         {
             for (int i = 0; i < red; i++)

@@ -93,6 +93,7 @@ namespace CloudColony.GameObjects
             if (ButtonDown(PlayerInput.Right))
                 position.X += delta * PLAYER_SPEED;
 
+
             // Dont allow on ready / gameover
             if (World.State == World.WorldState.RUNNING)
             {
@@ -102,14 +103,15 @@ namespace CloudColony.GameObjects
                     if (TryDrainStamina(FlankTarget.COST))
                     {
                         ///Ships = Ships.OrderBy(x => x.Position.Y).ToList();
-
                         for (int i = 0; i < Ships.Count / 2; i++)
                         {
                             Ships[i].Target = new FlankTarget(Ships[i], this, -1);
+                            Ships[i].Speed = Ship.MAX_SPEED * 1.5f;
                         }
                         for (int i = Ships.Count / 2; i < Ships.Count; i++)
                         {
                             Ships[i].Target = new FlankTarget(Ships[i], this, 1);
+                            Ships[i].Speed = Ship.MAX_SPEED * 1.5f;
                         }
                     }
                 }
@@ -121,6 +123,7 @@ namespace CloudColony.GameObjects
                         foreach (var ship in Ships)
                         {
                             ship.Target = new ExplosionTarget(this);
+                            ship.Speed = Ship.MAX_SPEED * 1.5f;
                         }
                     }
                 }

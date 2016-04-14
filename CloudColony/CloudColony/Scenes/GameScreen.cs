@@ -86,7 +86,13 @@ namespace CloudColony.Scenes
 
                     break;
                 case GameState.PAUSED:
-                    if (CC.AnyKeyPressed(PlayerIndex.One) || CC.AnyKeyPressed(PlayerIndex.Two))
+                    if (InputHandler.GetButtonState(PlayerIndex.One, PlayerInput.Side) == InputState.Released ||
+                    InputHandler.GetButtonState(PlayerIndex.Two, PlayerInput.Side) == InputState.Released)
+                    {
+                        SetScreen(new MainMenuScreen());
+                    }
+                    else if (InputHandler.GetButtonState(PlayerIndex.One, PlayerInput.Start) == InputState.Released ||
+                    InputHandler.GetButtonState(PlayerIndex.Two, PlayerInput.Start) == InputState.Released)
                     {
                         State = GameState.READY;
                         World.SetReady();
@@ -100,7 +106,7 @@ namespace CloudColony.Scenes
         public override void Draw(SpriteBatch batch)
         {
             // Clear Screen
-            Graphics.Clear(Color.Black);
+            Graphics.Clear(Color.White);
 
             Renderer.Draw(batch);
 
@@ -118,7 +124,7 @@ namespace CloudColony.Scenes
                         string countdown = "" + (int)(3 - World.ReadyTime + 1);
                         countdown = countdown == "0" ? "GO!" : countdown;
                         batch.DrawString(CC.Font, countdown, new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT / 2f),
-                            Color.Red, 0, CC.Font.MeasureString(countdown) / 2f, 5 + (World.ReadyTime - (float)Math.Floor(World.ReadyTime)) * 2, SpriteEffects.None, 0);
+                            Color.WhiteSmoke, 0, CC.Font.MeasureString(countdown) / 2f, 5 + (World.ReadyTime - (float)Math.Floor(World.ReadyTime)) * 2, SpriteEffects.None, 0);
                         break;
                     case GameState.RUNNING:
                         break;
@@ -128,28 +134,22 @@ namespace CloudColony.Scenes
 
                         string continueText = "Press start to continue...";
                         batch.DrawString(CC.Font, continueText, new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.67f),
-                            Color.White, 0, CC.Font.MeasureString(continueText) / 2f, 2.2f, SpriteEffects.None, 0);
+                            Color.Black, 0, CC.Font.MeasureString(continueText) / 2f, 2.2f, SpriteEffects.None, 0);
 
                         break;
                     case GameState.PAUSED:
                         string txt = "PAUSED";
                         batch.DrawString(CC.Font, txt, new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.5f),
-                            Color.Green, 0, CC.Font.MeasureString(txt) / 2f, 3.5f + (float)((Math.Sin(TotalTime * 5) + 1) / 15f), SpriteEffects.None, 0);
+                            Color.WhiteSmoke, 0, CC.Font.MeasureString(txt) / 2f, 3.5f + (float)((Math.Sin(TotalTime * 5) + 1) / 15f), SpriteEffects.None, 0);
+
+                        txt = "-Side button to exit-";
+                        batch.DrawString(CC.Font, txt, new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.575f),
+                            Color.WhiteSmoke, 0, CC.Font.MeasureString(txt) / 2f, 1.85f + (float)((Math.Sin(TotalTime * 5) + 1) / 15f), SpriteEffects.None, 0);
                         break;
                     default:
                         break;
                 }
             }
-
-            //if (TotalTime < 1.5f)
-            //{
-            //    batch.Draw(CC.Pixel, new Rectangle(0, 0, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT), CC.Pixel, Color.Black * (1.5f - (TotalTime / 1.5f)));
-            //}
-
-            //if (State == GameState.EXIT)
-            //{
-            //    batch.Draw(CC.Pixel, new Rectangle(0, 0, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT), CC.Pixel, Color.Black * (1.5f - (ExitTime / 1.5f)));
-            //}
 
             Game.DrawFrame();
 

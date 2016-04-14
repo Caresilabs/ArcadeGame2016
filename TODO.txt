@@ -1,16 +1,24 @@
 LOGIC:
 
 -Shield
--Mainmenu
--SpatialHashGrid
 -Tweak Gameplay
 
 Graphics: 
 
 -Background & parallax
--meny sprites
--splash screen
+- Thicker target sprite. 1 px thicker
+-Menu background more faded/ dark. Less yellow
+-splash screen / isntructionscreen
 -Banner
--LOGO
+-Damage effect
 
 Sound:
+
+-Shoot?
+-Win
+-shield
+-select menu click
+
+-get powerup
+
+-background tune
