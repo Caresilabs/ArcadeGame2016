@@ -95,20 +95,20 @@ namespace CloudColony.Scenes
             }
 
             // Draw player blue side
-            var blueBackground = new Sprite(CC.Button2, CC.VIEWPORT_WIDTH * 0.75f, CC.VIEWPORT_HEIGHT * 0.55f, 780, 190);
+            var blueBackground = new Sprite(CC.Button2, CC.VIEWPORT_WIDTH * 0.75f, CC.VIEWPORT_HEIGHT * 0.55f, 700, 170);
             blueBackground.ZIndex = 0.9f;
             blueBackground.Draw(batch);
             if (PlayerBlueReady)
             {
                 string txt = "Player 2 READY";
                 batch.DrawString(CC.Font, txt, new Vector2(CC.VIEWPORT_WIDTH * 0.75f, CC.VIEWPORT_HEIGHT * 0.55f),
-                    Color.Blue, (float)Math.Sin(TotalTime * 10) / 10f, CC.Font.MeasureString(txt) / 2f, 1.6f, SpriteEffects.None, 0);
+                    Color.Blue, (float)Math.Sin(TotalTime * 10) / 10f, CC.Font.MeasureString(txt) / 2f, 1.3f, SpriteEffects.None, 0);
             }
             else
             {
                 string txt = "Player 2 - Press any key";
                 batch.DrawString(CC.Font, txt, new Vector2(CC.VIEWPORT_WIDTH * 0.75f, CC.VIEWPORT_HEIGHT * 0.55f),
-                    Color.Blue, 0, CC.Font.MeasureString(txt) / 2f, 1.6f + (float)((Math.Sin(TotalTime * 5) + 1) / 15f), SpriteEffects.None, 0);
+                    Color.Blue, 0, CC.Font.MeasureString(txt) / 2f, 1.3f + (float)((Math.Sin(TotalTime * 5) + 1) / 15f), SpriteEffects.None, 0);
             }
 
             logo.SetPosition(logo.Position.X, logo.Position.Y + (float)Math.Sin(TotalTime*2) / 2.5f);

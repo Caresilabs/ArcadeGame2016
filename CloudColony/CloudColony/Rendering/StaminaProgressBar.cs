@@ -26,10 +26,10 @@ namespace CloudColony.Rendering
         {
             float angle = percent * (float)(Math.PI * 2f);
 
-            for (float i = 0; i < angle; i += 0.2f)
+            for (float i = 0; i < angle; i += 0.28f)
             {
                 batch.Draw(CC.Pixel, Position + new Vector2(0.3f * (float)Math.Cos(i), 0.3f * (float)Math.Sin(i)),
-                    CC.Pixel, color, i, Vector2.Zero, 0.06f, SpriteEffects.None, 0);
+                    CC.Pixel, color, i, Vector2.Zero, 0.08f, SpriteEffects.None, 0);
             }
         }
     }

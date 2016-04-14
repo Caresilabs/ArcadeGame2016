@@ -13,6 +13,7 @@ namespace CloudColony.GameObjects.Powerups
         public Powerup(World world, TextureRegion region, float x, float y) 
             : base(world, null, region, x, y, 0.55f, 0.55f)
         {
+            ZIndex = 0.6f;
         }
 
         public void Init(Player player)

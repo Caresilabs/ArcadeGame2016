@@ -5,6 +5,7 @@ using CloudColony.Logic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using CloudColony.GameObjects.Powerups;
+using CloudColony.Framework.Tools;
 
 namespace CloudColony.GameObjects.Entities
 {
@@ -49,7 +50,7 @@ namespace CloudColony.GameObjects.Entities
             ShieldSprite.ZIndex = 0.35f;
             ShieldSprite.Color = new Color(255, 255, 255, 255) * 0.3f;
 
-            ZIndex = 0.4f;
+            ZIndex = 0.4f + MathUtils.Random(0.001f, 0.005f);
 
             AddAnimation("Move", new FrameAnimation(CC.Atlas, 0 + ((int)player.Index == 0 ? 4 : 36), 0, 32, 32, 2, 0.3f, new Point(0, 1)))
                 .SetAnimation("Move");

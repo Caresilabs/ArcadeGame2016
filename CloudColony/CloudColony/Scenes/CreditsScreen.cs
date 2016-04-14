@@ -30,13 +30,13 @@ namespace CloudColony.Scenes
         public override void Init()
         {
             this.logo = new Sprite(CC.Logo, CC.VIEWPORT_WIDTH / 2f, 240, 358, 64);
-            logo.SetScale(1.6f);
+            logo.SetScale(2f);
 
             this.Background = new Sprite(CC.MenuBackground, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT / 2f, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT);
             Background.ZIndex = 1f;
 
-            simon = new Sprite(CC.Simon, CC.VIEWPORT_WIDTH * 0.3f, CC.VIEWPORT_HEIGHT * 0.45f, 153, 168);
-            sebastian = new Sprite(CC.Sebastian, CC.VIEWPORT_WIDTH * 0.7f, CC.VIEWPORT_HEIGHT * 0.65f, 169, 127);
+            simon = new Sprite(CC.Simon, CC.VIEWPORT_WIDTH * 0.32f, CC.VIEWPORT_HEIGHT * 0.49f, 153, 168);
+            sebastian = new Sprite(CC.Sebastian, CC.VIEWPORT_WIDTH * 0.69f, CC.VIEWPORT_HEIGHT * 0.65f, 169, 127);
         }
 
         public override void Update(float delta)
