@@ -6,14 +6,10 @@ LOGIC:
 Graphics: 
 
 -Background & parallax
-- Thicker target sprite. 1 px thicker
--Menu background more faded/ dark. Less yellow
--splash screen / isntructionscreen
+-splash screen / isntructionscreen(HÅLLER PÅ) 
 -Banner
--Damage effect
 
 Sound:
-
 -Shoot?
 -Win
 -shield

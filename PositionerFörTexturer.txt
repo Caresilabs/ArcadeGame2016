@@ -17,6 +17,21 @@ Skott effekt BLÅ (är vänd mot höger), animation på fyra frames
 Skott effekt RÖD(är vänd mot höger), animation på fyra frames
 >>pos 100/154, size: 32x12
 
+-----------------------------------------------------------------------------------------------------------------
+-----------------------------NYTT-------------------------------------------------
+
+TEST BAKGRUND SKY 
+>>pos 230/386, size: 160x90
 
 
+ANIMATION HIT SHIP( 5 frames) Lite konstigt mått men för att hålla nere storleken 
+>>pos 160/386, size: 70x18
+---Varje frame-size 14 x 18------
 
+ANIMATION DESTROY SHIP( 14 frames)
+>>pos 0/476, size: 448x32
+---Varje frame-size 32 x 32------
+
+ANIMATION PICK UP POWER UP( 2 frames)
+>>pos 390/386, size: 36x16
+---Varje frame-size 18 x 16------
