@@ -58,7 +58,7 @@ namespace CloudColony.Logic
         {
             // Init red
             PlayerRed = new Player(this, CC.PointerRed, PlayerIndex.One, 1.5f, 1.5f);
-           
+
             // Init blue
             PlayerBlue = new Player(this, CC.PointerBlue, PlayerIndex.Two, WORLD_WIDTH - 1.5f, 8f);
 
@@ -105,21 +105,29 @@ namespace CloudColony.Logic
         {
             var fx = FXPool.GetObject();
             fx.SetPosition(pos);
-            fx.ZIndex = 0.03f;
+            fx.ZIndex = 0.023f;
 
             switch (type)
             {
                 case SpriteFX.EffectType.HIT:
-                    fx.SetSize(0.6f, 0.6f);
+                    fx.SetSize(0.55f, 0.55f);
                     fx.AddAnimation("fx", new FrameAnimation(CC.Atlas, 160, 386, 14, 18, 5, 0.08f, new Point(1, 0), false, false)).SetAnimation("fx");
                     break;
                 case SpriteFX.EffectType.DESTROY:
-                    fx.SetSize(1, 1);
-                    fx.AddAnimation("fx", new FrameAnimation(CC.Atlas, 0, 476, 32, 32, 14, 0.08f, new Point(1, 0), false, false)).SetAnimation("fx");
+                    fx.SetSize(1.1f, 1.1f);
+                    fx.AddAnimation("fx", new FrameAnimation(CC.Atlas, 0, 476, 32, 32, 14, 0.06f, new Point(1, 0), false, false)).SetAnimation("fx");
                     break;
                 case SpriteFX.EffectType.POWERUP:
-                    fx.SetSize(0.6f, 0.6f);
-                    fx.AddAnimation("fx", new FrameAnimation(CC.Atlas, 390, 386, 18, 16, 2, 0.08f, new Point(1, 0), false, false)).SetAnimation("fx");
+                    fx.SetSize(0.65f, 0.65f);
+                    fx.AddAnimation("fx", new FrameAnimation(CC.Atlas, 390, 386, 18, 16, 2, 0.16f, new Point(1, 0), false, false)).SetAnimation("fx");
+                    break;
+                case SpriteFX.EffectType.SHOOT_RED:
+                    fx.SetSize(0.3f, 0.3f);
+                    fx.AddAnimation("fx", new FrameAnimation(CC.Atlas, 100, 154, 8, 12, 4, 0.05f, new Point(1, 0), false, false)).SetAnimation("fx");
+                    break;
+                case SpriteFX.EffectType.SHOOT_BLUE:
+                    fx.SetSize(0.4f, 0.4f);
+                    fx.AddAnimation("fx", new FrameAnimation(CC.Atlas, 64, 154, 9, 10, 4, 0.05f, new Point(1, 0), false, false)).SetAnimation("fx");
                     break;
                 default:
                     FXPool.ReleaseObject(fx);
@@ -139,10 +147,23 @@ namespace CloudColony.Logic
         public void SpawnBullet(Bullet bullet)
         {
             Entities.Add(bullet);
+            SpawnEffect(bullet.Owner == PlayerRed ? SpriteFX.EffectType.SHOOT_RED : SpriteFX.EffectType.SHOOT_BLUE, 
+                bullet.Position + bullet.Direction * 0.6f);
         }
 
         public void Update(float delta)
         {
+            // Update FX
+            foreach (var fx in Effects)
+            {
+                fx.Update(delta);
+
+                if (fx.Done)
+                    FXPool.ReleaseObject(fx);
+            }
+            Effects.RemoveAll(x => x.Done);
+
+
             if (SlowmoTime > 0)
             {
                 SlowmoTime -= delta;
@@ -204,23 +225,6 @@ namespace CloudColony.Logic
                 }
             }
             DeadEntities.Clear();
-
-            // Update FX
-            {
-                foreach (var fx in Effects)
-                {
-                    fx.Update(delta);
-                }
-                foreach (var fx in Effects)
-                {
-                    if (fx.Done)
-                    {
-                        Effects.Remove(fx);
-                        FXPool.ReleaseObject(fx);
-                        break;
-                    }
-                }
-            }
         }
 
         private void UpdatePowerups(float delta)
@@ -250,7 +254,7 @@ namespace CloudColony.Logic
                     if (!collided)
                         break;
                 }
-                
+
                 // Random power
                 switch (MathUtils.Random(3))
                 {
@@ -277,9 +281,5 @@ namespace CloudColony.Logic
             SlowmoTime = 1.2f;
         }
 
-        public List<Entity> GetNearbyEntities(float radius)
-        {
-            return Entities;
-        }
     }
 }

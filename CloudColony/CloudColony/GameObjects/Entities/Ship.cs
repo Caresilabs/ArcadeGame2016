@@ -72,7 +72,9 @@ namespace CloudColony.GameObjects.Entities
         {
             base.Update(delta);
 
-            MaxSpeed = 2.8f + (((float)World.MAX_NUM_SHIPS / Player.Ships.Count) * 0.3f);
+            //MaxSpeed = 2.8f + (((float)World.MAX_NUM_SHIPS / Player.Ships.Count) * 0.3f);
+
+            MaxSpeed = MathHelper.Lerp(5.5f, 3f, Player.Ships.Count / (float)World.MAX_NUM_SHIPS);
 
             // Don't udpate player twice
             if (Target != Player)
