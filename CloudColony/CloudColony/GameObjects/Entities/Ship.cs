@@ -14,6 +14,8 @@ namespace CloudColony.GameObjects.Entities
         private const float MAX_HEALTH = 100;
 
         private const float MAX_SHIELD_HEALTH = 50;
+        private const float SHIELD_COST = 1.1f;
+        private const float SHIELD_DAMAGE = 3;
 
         private const float FIRE_RATE = 0.8f;
 
@@ -57,7 +59,7 @@ namespace CloudColony.GameObjects.Entities
             AddAnimation("Move", new FrameAnimation(CC.Atlas, 0 + ((int)player.Index == 0 ? 4 : 36), 0, 32, 32, 2, 0.3f, new Point(0, 1)))
                 .SetAnimation("Move");
 
-           
+
         }
 
         public override void Draw(SpriteBatch batch)
@@ -73,8 +75,8 @@ namespace CloudColony.GameObjects.Entities
             base.Update(delta);
 
             //MaxSpeed = 2.8f + (((float)World.MAX_NUM_SHIPS / Player.Ships.Count) * 0.3f);
-
             MaxSpeed = MathHelper.Lerp(5.5f, 3f, Player.Ships.Count / (float)World.MAX_NUM_SHIPS);
+
 
             // Don't udpate player twice
             if (Target != Player)
@@ -90,7 +92,6 @@ namespace CloudColony.GameObjects.Entities
             if (flock != Vector2.Zero)
             {
                 velocity += flock * delta;
-                // MaxSpeed();
             }
 
             SeekTarget(delta);
@@ -113,9 +114,15 @@ namespace CloudColony.GameObjects.Entities
 
             KeepInside();
 
-            ShieldSprite.SetPosition(position);
-            ShieldSprite.SetScale((ShieldHealth / MAX_SHIELD_HEALTH) - 0.25f);
-            ShieldHealth -= delta * 2;
+            if (ShieldHealth > 0)
+            {
+                ShieldSprite.SetPosition(position);
+                ShieldSprite.SetScale((ShieldHealth / MAX_SHIELD_HEALTH) - 0.25f);
+                ShieldHealth -= delta * 2;
+
+                if (!Owner.TryDrainStamina(MathHelper.Lerp(10, 1, Owner.Ships.Count / (float)World.MAX_NUM_SHIPS) * SHIELD_COST * delta))
+                    ShieldHealth = 0;
+            }
 
             Rotation = (float)Math.Atan2(velocity.Y, velocity.X);
         }
@@ -142,9 +149,28 @@ namespace CloudColony.GameObjects.Entities
 
                 if (enemy is Bullet)
                 {
-                    Health -= Bullet.DAMAGE;
                     enemy.IsDead = true;
-                    World.SpawnEffect(Rendering.SpriteFX.EffectType.HIT, position);
+                    if (ShieldHealth > 0)
+                    {
+                        ShieldHealth -= Bullet.DAMAGE;
+                    }
+                    else
+                    {
+                        Health -= Bullet.DAMAGE;
+                        World.SpawnEffect(Rendering.SpriteFX.EffectType.HIT, position);
+                    }
+                }
+
+                if (enemy is Ship)
+                {
+                    Ship otherShip = enemy as Ship;
+                    if (ShieldHealth > 0)
+                    {
+                        otherShip.Health -= SHIELD_DAMAGE * delta;
+                        ShieldHealth -= SHIELD_DAMAGE * delta * 1.5f;
+                        if (MathUtils.Random(0, 1f) < 0.01f)
+                            World.SpawnEffect(Rendering.SpriteFX.EffectType.HIT, otherShip.position);
+                    }
                 }
 
                 if (enemy is Powerup)
@@ -165,7 +191,8 @@ namespace CloudColony.GameObjects.Entities
 
         public void ActivateShield()
         {
-            ShieldHealth = MAX_SHIELD_HEALTH;
+            if (ShieldHealth <= 0)
+                ShieldHealth = MAX_SHIELD_HEALTH;
         }
 
         public void Shoot()

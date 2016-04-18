@@ -131,11 +131,11 @@ namespace CloudColony.GameObjects
                 // Attack def
                 if (ButtonDown(PlayerInput.Yellow))
                 {
-                    if (Stamina >= Bullet.COST * Ships.Count)
+                    if (TryDrainStamina(Bullet.COST * MathHelper.Lerp(1f, 0.3f, Ships.Count / (float)World.MAX_NUM_SHIPS))) //Stamina >= Bullet.COST *  Ships.Count)
                     {
                         foreach (var ship in Ships)
                         {
-                            if (ship.CanShoot() && TryDrainStamina(Bullet.COST))
+                            if (ship.CanShoot())
                             {
                                 ship.Shoot();
                             }
@@ -154,7 +154,7 @@ namespace CloudColony.GameObjects
             }
         }
 
-        private bool TryDrainStamina(float cost)
+        public bool TryDrainStamina(float cost)
         {
             if (Stamina - cost < 0)
                 return false;

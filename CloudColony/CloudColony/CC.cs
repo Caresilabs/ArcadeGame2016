@@ -55,6 +55,7 @@ namespace CloudColony
 
         // Fonts
         public static SpriteFont Font { get; private set; }
+        public static TextureRegion CloudBackground { get; private set; }
 
         public static void Load(ContentManager content)
         {
@@ -84,7 +85,7 @@ namespace CloudColony
             Logo = new TextureRegion(Atlas, 132, 154, 358, 63);
 
             GameBackground = new TextureRegion(Atlas, 0, 386, 160, 90);
-            // CLOUD GameBackground = new TextureRegion(Atlas, 230, 386, 160, 90);
+            CloudBackground = new TextureRegion(Atlas, 230, 386, 160, 90);
             MenuBackground = new TextureRegion(Atlas, 322, 218, 160, 90);
 
             Button1 = new TextureRegion(Atlas, 438, 64, 64, 32);
