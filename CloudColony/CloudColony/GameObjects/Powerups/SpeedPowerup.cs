@@ -19,7 +19,7 @@ namespace CloudColony.GameObjects.Powerups
 
             foreach (var ship in Owner.Ships)
             {
-                ship.Speed = Ship.MAX_SPEED * 1.45f;
+                ship.Speed = ship.MaxSpeed * 1.45f;
             }
         }
     }

@@ -17,6 +17,10 @@ namespace CloudColony.Scenes
 
         public Sprite Background { get; private set; }
 
+        public Sprite RedBackground { get; private set; }
+        public Sprite BlueBackground { get; private set; }
+        public Sprite CoinBackground { get; private set; }
+
         private Sprite logo;
 
         public override void Init()
@@ -24,11 +28,25 @@ namespace CloudColony.Scenes
             this.PlayerRedReady = false;
             this.PlayerBlueReady = false;
 
-            this.logo = new Sprite(CC.Logo, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.24f, 358, 64);
+            InitUI();
+        }
+
+        private void InitUI()
+        {
+            logo = new Sprite(CC.Logo, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.24f, 358, 64);
             logo.SetScale(2f);
 
-            this.Background = new Sprite(CC.MenuBackground, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT / 2f, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT);
+            Background = new Sprite(CC.MenuBackground, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT / 2f, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT);
             Background.ZIndex = 1f;
+
+            RedBackground = new Sprite(CC.Button2, CC.VIEWPORT_WIDTH * 0.25f, CC.VIEWPORT_HEIGHT * 0.55f, 700, 170);
+            RedBackground.ZIndex = 0.9f;
+
+            BlueBackground = new Sprite(CC.Button2, CC.VIEWPORT_WIDTH * 0.75f, CC.VIEWPORT_HEIGHT * 0.55f, 700, 170);
+            BlueBackground.ZIndex = 0.9f;
+
+            CoinBackground = new Sprite(CC.Button1, CC.VIEWPORT_WIDTH * 0.5f, CC.VIEWPORT_HEIGHT * 0.85f, 500, 140);
+            CoinBackground.ZIndex = 0.9f;
         }
 
         public override void Update(float delta)
@@ -78,14 +96,12 @@ namespace CloudColony.Scenes
             Background.Draw(batch);
 
             // Draw player red side
-            var redBackground = new Sprite(CC.Button2, CC.VIEWPORT_WIDTH * 0.25f, CC.VIEWPORT_HEIGHT * 0.55f, 700, 170);
-            redBackground.ZIndex = 0.9f;
-            redBackground.Draw(batch);
+            RedBackground.Draw(batch);
             if (PlayerRedReady)
             {
                 string txt = "Player 1 READY";
                 batch.DrawString(CC.Font, txt, new Vector2(CC.VIEWPORT_WIDTH * 0.25f, CC.VIEWPORT_HEIGHT * 0.55f),
-                    Color.Red, (float)Math.Sin(TotalTime * 10) / 10f, CC.Font.MeasureString(txt) / 2f, 1.6f, SpriteEffects.None, 0);
+                    Color.Red, (float)Math.Sin(TotalTime * 10) / 10f, CC.Font.MeasureString(txt) / 2f, 1.45f, SpriteEffects.None, 0);
             }
             else
             {
@@ -95,14 +111,12 @@ namespace CloudColony.Scenes
             }
 
             // Draw player blue side
-            var blueBackground = new Sprite(CC.Button2, CC.VIEWPORT_WIDTH * 0.75f, CC.VIEWPORT_HEIGHT * 0.55f, 700, 170);
-            blueBackground.ZIndex = 0.9f;
-            blueBackground.Draw(batch);
+            BlueBackground.Draw(batch);
             if (PlayerBlueReady)
             {
                 string txt = "Player 2 READY";
                 batch.DrawString(CC.Font, txt, new Vector2(CC.VIEWPORT_WIDTH * 0.75f, CC.VIEWPORT_HEIGHT * 0.55f),
-                    Color.Blue, (float)Math.Sin(TotalTime * 10) / 10f, CC.Font.MeasureString(txt) / 2f, 1.3f, SpriteEffects.None, 0);
+                    Color.Blue, (float)Math.Sin(TotalTime * 10) / 10f, CC.Font.MeasureString(txt) / 2f, 1.45f, SpriteEffects.None, 0);
             }
             else
             {
@@ -111,24 +125,23 @@ namespace CloudColony.Scenes
                     Color.Blue, 0, CC.Font.MeasureString(txt) / 2f, 1.3f + (float)((Math.Sin(TotalTime * 5) + 1) / 15f), SpriteEffects.None, 0);
             }
 
+            // Draw logo
             logo.SetPosition(logo.Position.X, logo.Position.Y + (float)Math.Sin(TotalTime*2) / 2.5f);
             logo.Draw(batch);
 
             // Draw insert coin
             {
-                var coinBackground = new Sprite(CC.Button1, CC.VIEWPORT_WIDTH * 0.5f, CC.VIEWPORT_HEIGHT * 0.85f, 500, 140);
-                coinBackground.ZIndex = 0.9f;
-                coinBackground.Draw(batch);
+                CoinBackground.Draw(batch);
 
                 string insert = "Insert coin";
                 batch.DrawString(CC.Font, insert, new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.86f),
-                    Color.WhiteSmoke * (float)((Math.Sin(TotalTime * 5) + 1) / 2f), 0, CC.Font.MeasureString(insert) / 2f, 1.9f, SpriteEffects.None, 0);
+                     new Color(56, 45, 0) * (float)((Math.Sin(TotalTime * 5.0f) + 1) / 2f), 0, CC.Font.MeasureString(insert) / 2f, 1.9f, SpriteEffects.None, 0);
             }
 
             // Copy right.
             string copy = "(c) " +  DateTime.Now.Year + " | Side button for credits";
-            batch.DrawString(CC.Font, copy, new Vector2(42, 30f),
-                Color.WhiteSmoke * (float)((Math.Sin(TotalTime * 2) + 1) / 2f), 0, Vector2.Zero, 1.15f, SpriteEffects.None, 0);
+            batch.DrawString(CC.Font, copy, new Vector2(42, 29f),
+                Color.WhiteSmoke * (float)((Math.Sin(TotalTime * 2.5f) + 1) / 2f), 0, Vector2.Zero, 1.15f, SpriteEffects.None, 0);
 
 
             Game.DrawFrame();

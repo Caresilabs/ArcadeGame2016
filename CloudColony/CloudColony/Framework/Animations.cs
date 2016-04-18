@@ -5,7 +5,8 @@ namespace CloudColony.Framework
     public class Animations
     {
         private Dictionary<string, Animation> animations;
-        private Animation currentAnimation;
+
+        public Animation CurrentAnimation { get; private set; }
 
         public Animations()
         {
@@ -22,24 +23,19 @@ namespace CloudColony.Framework
 
         public TextureRegion GetRegion()
         {
-            if (currentAnimation != null)
-                return currentAnimation.GetRegion();
+            if (CurrentAnimation != null)
+                return CurrentAnimation.GetRegion();
             else return null;
         }
 
         public void SetAnimation(string name)
         {
-            currentAnimation = animations[name];
+            CurrentAnimation = animations[name];
         }
 
         public void AddAnimation(string name, Animation animation)
         {
             animations[name] = animation;
-
-            //if (animations.ContainsKey(name))
-            //    animations.Remove(name);
-
-            //animations.Add(name, animation);
         }
 
         public bool HasAnimations()
@@ -49,9 +45,15 @@ namespace CloudColony.Framework
 
         public bool HasNext()
         {
-            if (currentAnimation != null)
-                return currentAnimation.HasNext();
+            if (CurrentAnimation != null)
+                return CurrentAnimation.HasNext();
             else return false;
+        }
+
+        public void Clear()
+        {
+            CurrentAnimation = null;
+            animations.Clear();
         }
     }
 }

@@ -50,6 +50,7 @@
     <Compile Include="Framework\TextureRegion.cs" />
     <Compile Include="Framework\Tools\Camera2D.cs" />
     <Compile Include="Framework\Tools\MathUtils.cs" />
+    <Compile Include="Framework\Tools\Pool.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameObjects\Entities\Bullet.cs" />
     <Compile Include="GameObjects\Entities\Entity.cs" />
@@ -62,9 +63,11 @@
     <Compile Include="GameObjects\Targets\ExplosionTarget.cs" />
     <Compile Include="GameObjects\Targets\FlankTarget.cs" />
     <Compile Include="GameObjects\Targets\Target.cs" />
+    <Compile Include="Logic\SpriteFXPool.cs" />
     <Compile Include="Logic\World.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\GameRenderer.cs" />
+    <Compile Include="Rendering\SpriteFX.cs" />
     <Compile Include="Rendering\StaminaProgressBar.cs" />
     <Compile Include="Scenes\CreditsScreen.cs" />
     <Compile Include="Scenes\GameScreen.cs" />

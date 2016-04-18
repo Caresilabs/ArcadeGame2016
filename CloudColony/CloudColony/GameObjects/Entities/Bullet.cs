@@ -9,7 +9,7 @@ namespace CloudColony.GameObjects.Entities
     {
         public const float DAMAGE = 8;
 
-        public const float COST = 1;
+        public const float COST = 1.25f;
 
         public Bullet(World world, Player owner, TextureRegion region, float x, float y, Vector2 direction)
             : base(world, owner, region, x, y, 0.22f, 0.22f)

@@ -11,12 +11,11 @@ namespace CloudColony.GameObjects.Entities
 {
     public class Ship : Entity
     {
-        public static float MAX_SPEED = 3f;
         private const float MAX_HEALTH = 100;
 
         private const float MAX_SHIELD_HEALTH = 50;
 
-        private const float FIRE_RATE = 1.0f;
+        private const float FIRE_RATE = 0.8f;
 
         public const float SEPARATION_WEIGHT = 13f;
         public const float COHESION_WEIGHT = 3f;
@@ -29,6 +28,7 @@ namespace CloudColony.GameObjects.Entities
         public float Health { get; private set; }
 
         public float Speed { get; set; }
+        public float MaxSpeed { get; set; }
 
         // Shoot
         private float shootDelayTimer;
@@ -44,7 +44,9 @@ namespace CloudColony.GameObjects.Entities
             this.Target = player;
             this.Health = MAX_HEALTH;
             this.shootDelayTimer = 0;
-            velocity.X = (int)player.Index == 0 ? MAX_SPEED : -MAX_SPEED;
+
+            MaxSpeed = 3f;
+            velocity.X = (int)player.Index == 0 ? MaxSpeed : -MaxSpeed;
 
             this.ShieldSprite = new Sprite(shieldTexture, 0, 0, 1.25f, 1.25f);
             ShieldSprite.ZIndex = 0.35f;
@@ -54,6 +56,8 @@ namespace CloudColony.GameObjects.Entities
 
             AddAnimation("Move", new FrameAnimation(CC.Atlas, 0 + ((int)player.Index == 0 ? 4 : 36), 0, 32, 32, 2, 0.3f, new Point(0, 1)))
                 .SetAnimation("Move");
+
+           
         }
 
         public override void Draw(SpriteBatch batch)
@@ -68,7 +72,7 @@ namespace CloudColony.GameObjects.Entities
         {
             base.Update(delta);
 
-            MAX_SPEED = 2.8f + (((float)World.MAX_NUM_SHIPS / Player.Ships.Count) * 0.3f);
+            MaxSpeed = 2.8f + (((float)World.MAX_NUM_SHIPS / Player.Ships.Count) * 0.3f);
 
             // Don't udpate player twice
             if (Target != Player)
@@ -89,17 +93,21 @@ namespace CloudColony.GameObjects.Entities
 
             SeekTarget(delta);
 
-            MaxSpeed(delta);
+            CapSpeed(delta);
 
             if (Target.Done)
                 Target = Player;
 
-            if (Health <= 0)
-                IsDead = true;
-
             shootDelayTimer += delta;
 
             CheckCollision(delta);
+
+            if (Health <= 0)
+            {
+                IsDead = true;
+                World.SpawnEffect(Rendering.SpriteFX.EffectType.DESTROY, position);
+                return;
+            }
 
             KeepInside();
 
@@ -134,6 +142,7 @@ namespace CloudColony.GameObjects.Entities
                 {
                     Health -= Bullet.DAMAGE;
                     enemy.IsDead = true;
+                    World.SpawnEffect(Rendering.SpriteFX.EffectType.HIT, position);
                 }
 
                 if (enemy is Powerup)
@@ -141,6 +150,7 @@ namespace CloudColony.GameObjects.Entities
                     enemy.IsDead = true;
                     Player.ActivePowerup = (Powerup)enemy;
                     Player.ActivePowerup.Init(Player);
+                    World.SpawnEffect(Rendering.SpriteFX.EffectType.POWERUP, enemy.Position);
                 }
 
             }
@@ -171,15 +181,15 @@ namespace CloudColony.GameObjects.Entities
         {
             var desiredVelocity = (Target.Position - position);
             desiredVelocity.Normalize();
-            desiredVelocity *= MAX_SPEED;
+            desiredVelocity *= MaxSpeed;
             velocity += (desiredVelocity - velocity) * 0.14f;
             // MaxSpeed();
         }
 
-        private void MaxSpeed(float delta)
+        private void CapSpeed(float delta)
         {
             velocity.Normalize();
-            Speed = MathHelper.Lerp(Speed, MAX_SPEED, delta * 1f);
+            Speed = MathHelper.Lerp(Speed, MaxSpeed, delta * 1f);
             velocity *= Speed;
         }
 

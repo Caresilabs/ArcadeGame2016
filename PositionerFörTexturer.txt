@@ -24,6 +24,9 @@ TEST BAKGRUND SKY
 >>pos 230/386, size: 160x90
 
 
+
+
+
 ANIMATION HIT SHIP( 5 frames) Lite konstigt mått men för att hålla nere storleken 
 >>pos 160/386, size: 70x18
 ---Varje frame-size 14 x 18------

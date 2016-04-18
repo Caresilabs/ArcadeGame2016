@@ -9,6 +9,8 @@
 
         public abstract TextureRegion GetRegion();
 
+        public abstract float GetPercent();
+
         public abstract bool HasNext();
     }
 }

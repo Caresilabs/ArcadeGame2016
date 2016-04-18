@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using System;
 using CloudColony.Framework.Tools;
 using CloudColony.GameObjects.Powerups;
+using CloudColony.Rendering;
 
 namespace CloudColony.Logic
 {
@@ -23,6 +24,9 @@ namespace CloudColony.Logic
 
         public List<Entity> Entities { get; private set; }
         public List<Entity> DeadEntities { get; private set; }
+
+        public List<SpriteFX> Effects { get; private set; }
+        public SpriteFXPool FXPool { get; private set; }
 
         public SpatialHashGrid HashGrid { get; private set; }
 
@@ -44,6 +48,8 @@ namespace CloudColony.Logic
             this.HashGrid.Setup((int)(WORLD_WIDTH + 1), (int)(WORLD_HEIGHT + 1), 3.5f);
             this.Entities = new List<Entity>();
             this.DeadEntities = new List<Entity>();
+            this.Effects = new List<SpriteFX>();
+            this.FXPool = new SpriteFXPool();
             this.State = WorldState.READY;
             InitPopulation(MAX_NUM_SHIPS);
         }
@@ -93,6 +99,35 @@ namespace CloudColony.Logic
                 Entities.Add(ship);
                 PlayerBlue.Ships.Add(ship);
             }
+        }
+
+        public void SpawnEffect(SpriteFX.EffectType type, Vector2 pos)
+        {
+            var fx = FXPool.GetObject();
+            fx.SetPosition(pos);
+            fx.ZIndex = 0.03f;
+
+            switch (type)
+            {
+                case SpriteFX.EffectType.HIT:
+                    fx.SetSize(0.6f, 0.6f);
+                    fx.AddAnimation("fx", new FrameAnimation(CC.Atlas, 160, 386, 14, 18, 5, 0.08f, new Point(1, 0), false, false)).SetAnimation("fx");
+                    break;
+                case SpriteFX.EffectType.DESTROY:
+                    fx.SetSize(1, 1);
+                    fx.AddAnimation("fx", new FrameAnimation(CC.Atlas, 0, 476, 32, 32, 14, 0.08f, new Point(1, 0), false, false)).SetAnimation("fx");
+                    break;
+                case SpriteFX.EffectType.POWERUP:
+                    fx.SetSize(0.6f, 0.6f);
+                    fx.AddAnimation("fx", new FrameAnimation(CC.Atlas, 390, 386, 18, 16, 2, 0.08f, new Point(1, 0), false, false)).SetAnimation("fx");
+                    break;
+                default:
+                    FXPool.ReleaseObject(fx);
+                    return;
+            }
+            var sx = fx.Size * 0.5f;
+            fx.DrawOffset = new Vector2(sx.X, sx.Y);
+            Effects.Add(fx);
         }
 
         public void SetReady()
@@ -169,6 +204,23 @@ namespace CloudColony.Logic
                 }
             }
             DeadEntities.Clear();
+
+            // Update FX
+            {
+                foreach (var fx in Effects)
+                {
+                    fx.Update(delta);
+                }
+                foreach (var fx in Effects)
+                {
+                    if (fx.Done)
+                    {
+                        Effects.Remove(fx);
+                        FXPool.ReleaseObject(fx);
+                        break;
+                    }
+                }
+            }
         }
 
         private void UpdatePowerups(float delta)

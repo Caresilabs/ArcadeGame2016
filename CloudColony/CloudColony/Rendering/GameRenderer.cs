@@ -45,16 +45,17 @@ namespace CloudColony.Rendering
 
         private void DrawPlayers(SpriteBatch batch)
         {
-            foreach (var obj in World.Entities)
-            {
-                obj.Draw(batch);
-            }
+            World.PlayerRed.Draw(batch);
+            World.PlayerBlue.Draw(batch);
         }
 
         private void DrawObjects(SpriteBatch batch)
         {
-            World.PlayerRed.Draw(batch);
-            World.PlayerBlue.Draw(batch);
+            foreach (var obj in World.Entities)
+                obj.Draw(batch);
+
+            foreach (var obj in World.Effects)
+                obj.Draw(batch);
         }
     }
 }

@@ -57,9 +57,19 @@ namespace CloudColony.Framework
             }
         }
 
-        public float GetPercent()
+        public override float GetPercent()
         {
-            return (int)(stateTime / (float)frameDuration) / (float)frames;
+            if (loop)
+            {
+                return 0;
+            }
+            else
+            {
+                if (reversed)
+                    return 1.0f - ((currentFrame) / (float)(frames - 1));
+                else
+                    return currentFrame / (float)(frames - 1);
+            }
         }
 
         public override TextureRegion GetRegion()

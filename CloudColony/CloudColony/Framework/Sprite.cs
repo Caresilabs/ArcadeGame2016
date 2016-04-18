@@ -34,7 +34,7 @@ namespace CloudColony.Framework
             set { size = value; UpdateSizeScale(); }
         }
 
-        private Animations Animations { get; set; }
+        protected Animations Animations { get; set; }
 
         public Sprite(TextureRegion region, float x, float y, float width, float height)
         {
@@ -43,14 +43,14 @@ namespace CloudColony.Framework
             this.Color = Color.White;
             this.Scale = new Vector2(1, 1);
             this.Size = new Vector2(width, height);
-            this.DrawOffset = new Vector2();
+           // this.DrawOffset = new Vector2();
             this.Effect = SpriteEffects.None;
             this.position = new Vector2(x, y);
             this.Animations = new Animations();
             this.DrawOffset = new Vector2(Size.X / 2, Size.Y / 2);
 
-            if (region != null)
-                this.Origin = new Vector2(region.GetSource().Width / 2, region.GetSource().Height / 2);
+           // if (region != null)
+            //    this.Origin = new Vector2(region.GetSource().Width / 2, region.GetSource().Height / 2);
 
             UpdateSizeScale();
         }
@@ -75,7 +75,7 @@ namespace CloudColony.Framework
             if (Region != null)
             {
                 this.SizeScale = new Vector2(Size.X / Region.GetSource().Width, Size.Y / Region.GetSource().Height);
-                this.Origin = new Vector2(Region.GetSource().Width / 2, Region.GetSource().Height / 2);
+                this.Origin = new Vector2(Region.GetSource().Width / 2f, Region.GetSource().Height / 2f);
             }
         }
 
@@ -137,5 +137,6 @@ namespace CloudColony.Framework
         {
             return Scale * SizeScale;
         }
+
     }
 }
