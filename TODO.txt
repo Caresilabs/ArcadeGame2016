@@ -18,3 +18,11 @@ Sound:
 -get powerup
 
 -background tune
+
+
+------------------------------
+Extra från Sebastian
+
+Göra effekten när man tar power upen lite mindre
+Öka loggans storlek på startskärmen(och kanske minska de andra texten men det får bli en annan gång i så fall :P ) 
+skaka våra bilder på oss(som med texten) så ser det nog lite mer unified! 
