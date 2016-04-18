@@ -1,2 +1,13 @@
 TEST BAKGRUND SKY 
 >>pos 230/386, size: 160x90
+
+---------------------------------------------
+
+Parallax över(full eller nästan full opacity) 
+>>pos 0/90, size: 160x90
+
+Parallax under(mycket lägre opacity än den andra, rör sig långsamare) 
+>>pos 0/0, size: 160x90
+
+Annars får vi testa att ta inviduella moln från atlasen men detta känns lättare! :) 
+
