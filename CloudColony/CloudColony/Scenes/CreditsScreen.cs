@@ -82,6 +82,15 @@ namespace CloudColony.Scenes
                 y += 50;
             }
 
+            string ghosts = "You've caught\n  a total of...";
+            batch.DrawString(CC.Font, ghosts, new Vector2(CC.VIEWPORT_WIDTH * 0.15f, 300),
+                  Color.WhiteSmoke, (float)Math.Sin(time * 10 + 2) / 50f, CC.Font.MeasureString(ghosts) / 2f, 1.1f, SpriteEffects.None, 0);
+
+            ghosts = "2 developers!"; 
+            batch.DrawString(CC.Font, ghosts, new Vector2(CC.VIEWPORT_WIDTH * 0.15f, 420),
+                 Color.WhiteSmoke, (float)Math.Sin(time * 10 + 1.1f) / 50f, CC.Font.MeasureString(ghosts) / 2f, 1.4f, SpriteEffects.None, 0);
+
+
             Game.DrawFrame();
 
             batch.End();

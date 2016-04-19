@@ -33,16 +33,16 @@ namespace CloudColony.Scenes
 
         private void InitUI()
         {
-            logo = new Sprite(CC.Logo, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.23f, 358, 64);
+            logo = new Sprite(CC.Logo, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.235f, 358, 64);
             logo.SetScale(2.3f);
 
             Background = new Sprite(CC.MenuBackground, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT / 2f, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT);
             Background.ZIndex = 1f;
 
-            RedBackground = new Sprite(CC.Button2, CC.VIEWPORT_WIDTH * 0.25f, CC.VIEWPORT_HEIGHT * 0.55f, 700, 170);
+            RedBackground = new Sprite(CC.Button2, CC.VIEWPORT_WIDTH * 0.25f, CC.VIEWPORT_HEIGHT * 0.55f, 600, 180);
             RedBackground.ZIndex = 0.9f;
 
-            BlueBackground = new Sprite(CC.Button2, CC.VIEWPORT_WIDTH * 0.75f, CC.VIEWPORT_HEIGHT * 0.55f, 700, 170);
+            BlueBackground = new Sprite(CC.Button2, CC.VIEWPORT_WIDTH * 0.75f, CC.VIEWPORT_HEIGHT * 0.55f, 600, 180);
             BlueBackground.ZIndex = 0.9f;
 
             CoinBackground = new Sprite(CC.Button1, CC.VIEWPORT_WIDTH * 0.5f, CC.VIEWPORT_HEIGHT * 0.85f, 500, 140);
@@ -107,7 +107,7 @@ namespace CloudColony.Scenes
             {
                 string txt = "Player 1 - Press any key";
                 batch.DrawString(CC.Font, txt, new Vector2(CC.VIEWPORT_WIDTH * 0.25f, CC.VIEWPORT_HEIGHT * 0.55f),
-                    Color.Red, 0, CC.Font.MeasureString(txt) / 2f, 1.3f + (float)((Math.Sin(TotalTime * 5) + 1) / 15f), SpriteEffects.None, 0);
+                    Color.Red, 0, CC.Font.MeasureString(txt) / 2f, 1.15f + (float)((Math.Sin(TotalTime * 5) + 1) / 15f), SpriteEffects.None, 0);
             }
 
             // Draw player blue side
@@ -122,7 +122,7 @@ namespace CloudColony.Scenes
             {
                 string txt = "Player 2 - Press any key";
                 batch.DrawString(CC.Font, txt, new Vector2(CC.VIEWPORT_WIDTH * 0.75f, CC.VIEWPORT_HEIGHT * 0.55f),
-                    Color.Blue, 0, CC.Font.MeasureString(txt) / 2f, 1.3f + (float)((Math.Sin(TotalTime * 5) + 1) / 15f), SpriteEffects.None, 0);
+                    Color.Blue, 0, CC.Font.MeasureString(txt) / 2f, 1.15f + (float)((Math.Sin(TotalTime * 5) + 1) / 15f), SpriteEffects.None, 0);
             }
 
             // Draw logo
