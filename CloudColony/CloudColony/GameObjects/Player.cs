@@ -106,12 +106,12 @@ namespace CloudColony.GameObjects
                         for (int i = 0; i < Ships.Count / 2; i++)
                         {
                             Ships[i].Target = new FlankTarget(Ships[i], this, -1);
-                            Ships[i].Speed = Ships[i].MaxSpeed * 1.8f;
+                            Ships[i].Speed = Ships[i].MaxSpeed * 1.6f;
                         }
                         for (int i = Ships.Count / 2; i < Ships.Count; i++)
                         {
                             Ships[i].Target = new FlankTarget(Ships[i], this, 1);
-                            Ships[i].Speed = Ships[i].MaxSpeed * 1.8f;
+                            Ships[i].Speed = Ships[i].MaxSpeed * 1.6f;
                         }
                     }
                 }
@@ -123,7 +123,7 @@ namespace CloudColony.GameObjects
                         foreach (var ship in Ships)
                         {
                             ship.Target = new ExplosionTarget(this);
-                            ship.Speed = ship.MaxSpeed * 1.8f;
+                            ship.Speed = ship.MaxSpeed * 1.7f;
                         }
                     }
                 }

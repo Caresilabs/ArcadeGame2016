@@ -118,7 +118,7 @@ namespace CloudColony.GameObjects.Entities
             {
                 ShieldSprite.SetPosition(position);
                 ShieldSprite.SetScale((ShieldHealth / MAX_SHIELD_HEALTH) - 0.25f);
-                ShieldHealth -= delta * 2;
+                ShieldHealth -= delta * 3;
 
                 if (!Owner.TryDrainStamina(MathHelper.Lerp(10, 1, Owner.Ships.Count / (float)World.MAX_NUM_SHIPS) * SHIELD_COST * delta))
                     ShieldHealth = 0;

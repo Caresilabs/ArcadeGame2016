@@ -6,7 +6,7 @@ namespace CloudColony.GameObjects.Targets
 {
     public class ExplosionTarget : Target
     {
-        public const float COST = 50;
+        public const float COST = 75;
 
         private const float DISTANCE = 4f;
 
