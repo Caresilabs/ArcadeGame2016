@@ -33,8 +33,8 @@ namespace CloudColony.Scenes
 
         private void InitUI()
         {
-            logo = new Sprite(CC.Logo, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.24f, 358, 64);
-            logo.SetScale(2f);
+            logo = new Sprite(CC.Logo, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.23f, 358, 64);
+            logo.SetScale(2.3f);
 
             Background = new Sprite(CC.MenuBackground, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT / 2f, CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT);
             Background.ZIndex = 1f;
@@ -139,9 +139,12 @@ namespace CloudColony.Scenes
             }
 
             // Copy right.
-            string copy = "(c) " +  DateTime.Now.Year + " | Side button for credits";
-            batch.DrawString(CC.Font, copy, new Vector2(42, 29f),
-                Color.WhiteSmoke * (float)((Math.Sin(TotalTime * 2.5f) + 1) / 2f), 0, Vector2.Zero, 1.15f, SpriteEffects.None, 0);
+            string copy = "...C.C.B.N. ALERT... Side button for credits... github.com/Caresilabs/ArcadeGame2016... " + "(c) " +  DateTime.Now.Year;
+            //batch.DrawString(CC.Font, copy, new Vector2(42, 29f),
+            //    Color.WhiteSmoke * (float)((Math.Sin(TotalTime * 2.5f) + 1) / 2f), 0, Vector2.Zero, 1.15f, SpriteEffects.None, 0);
+            batch.DrawString(CC.Font, copy, new Vector2(CC.VIEWPORT_WIDTH - (TotalTime * 150) % (CC.VIEWPORT_WIDTH + CC.Font.MeasureString(copy).X * 1.15f), 29f),
+               Color.WhiteSmoke, 0, Vector2.Zero, 1.15f, SpriteEffects.None, 0);
+
 
 
             Game.DrawFrame();

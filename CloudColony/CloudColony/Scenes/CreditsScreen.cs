@@ -67,7 +67,10 @@ namespace CloudColony.Scenes
             logo.Rotation = (float)Math.Sin(time * 10) / 50f;
             logo.Draw(batch);
 
+            simon.Rotation = (float)Math.Sin(time * 10 + 3) / 45f;
             simon.Draw(batch);
+
+            sebastian.Rotation = (float)Math.Sin(time * 10 + 1.5f) / 45f;
             sebastian.Draw(batch);
 
             float y = 400;

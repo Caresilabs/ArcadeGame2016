@@ -118,8 +118,8 @@ namespace CloudColony.Logic
                     fx.AddAnimation("fx", new FrameAnimation(CC.Atlas, 0, 476, 32, 32, 14, 0.06f, new Point(1, 0), false, false)).SetAnimation("fx");
                     break;
                 case SpriteFX.EffectType.POWERUP:
-                    fx.SetSize(0.65f, 0.65f);
-                    fx.AddAnimation("fx", new FrameAnimation(CC.Atlas, 390, 386, 18, 16, 2, 0.16f, new Point(1, 0), false, false)).SetAnimation("fx");
+                    fx.SetSize(0.46f, 0.46f);
+                    fx.AddAnimation("fx", new FrameAnimation(CC.Atlas, 390, 386, 18, 16, 2, 0.17f, new Point(1, 0), false, false)).SetAnimation("fx");
                     break;
                 case SpriteFX.EffectType.SHOOT_RED:
                     fx.SetSize(0.3f, 0.3f);
