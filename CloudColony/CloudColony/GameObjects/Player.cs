@@ -149,7 +149,7 @@ namespace CloudColony.GameObjects
                 // Shield
                 if (PressedButton(PlayerInput.Green))
                 {
-                    if (Stamina >= 20)
+                    if (Stamina >= 25)
                     {
                         foreach (var ship in Ships)
                         {
