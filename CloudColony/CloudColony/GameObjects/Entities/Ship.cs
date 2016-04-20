@@ -14,8 +14,8 @@ namespace CloudColony.GameObjects.Entities
         private const float MAX_HEALTH = 100;
 
         private const float MAX_SHIELD_HEALTH = 50;
-        private const float SHIELD_COST = 1.1f;
-        private const float SHIELD_DAMAGE = 3;
+        private const float SHIELD_COST = 1.2f;
+        private const float SHIELD_DAMAGE = 2.5f;
 
         private const float FIRE_RATE = 0.8f;
 
@@ -36,7 +36,7 @@ namespace CloudColony.GameObjects.Entities
         private float shootDelayTimer;
 
         // Shield
-        public float ShieldHealth { get; private set; }
+        public float ShieldHealth { get; set; }
         public Sprite ShieldSprite { get; private set; }
 
         public Ship(World world, Player owner, TextureRegion shieldTexture, Player player, float x, float y)
@@ -120,8 +120,9 @@ namespace CloudColony.GameObjects.Entities
                 ShieldSprite.SetScale((ShieldHealth / MAX_SHIELD_HEALTH) - 0.25f);
                 ShieldHealth -= delta * 3;
 
-                if (!Owner.TryDrainStamina(MathHelper.Lerp(10, 1, Owner.Ships.Count / (float)World.MAX_NUM_SHIPS) * SHIELD_COST * delta))
-                    ShieldHealth = 0;
+                if (!Owner.TryDrainStamina(MathHelper.Lerp(7, 1, Owner.Ships.Count / (float)World.MAX_NUM_SHIPS) * SHIELD_COST * delta))
+                { }
+                //  ShieldHealth = 0;
             }
 
             Rotation = (float)Math.Atan2(velocity.Y, velocity.X);
@@ -166,10 +167,18 @@ namespace CloudColony.GameObjects.Entities
                     Ship otherShip = enemy as Ship;
                     if (ShieldHealth > 0)
                     {
-                        otherShip.Health -= SHIELD_DAMAGE * delta;
-                        ShieldHealth -= SHIELD_DAMAGE * delta * 1.5f;
-                        if (MathUtils.Random(0, 1f) < 0.01f)
-                            World.SpawnEffect(Rendering.SpriteFX.EffectType.HIT, otherShip.position);
+                        ShieldHealth -= SHIELD_DAMAGE * delta;
+
+                        if (otherShip.ShieldHealth > 0)
+                        {
+                            otherShip.ShieldHealth -= SHIELD_DAMAGE * delta;
+                        }
+                        else
+                        {
+                            otherShip.Health -= SHIELD_DAMAGE * delta;
+                            if (MathUtils.Random(0, 1f) < 0.01f)
+                                World.SpawnEffect(Rendering.SpriteFX.EffectType.HIT, otherShip.position);
+                        }
                     }
                 }
 
@@ -197,7 +206,6 @@ namespace CloudColony.GameObjects.Entities
 
         public void Shoot()
         {
-            ShieldHealth = 0;
             shootDelayTimer = 0;
             var dir = Velocity;
             dir.Normalize();

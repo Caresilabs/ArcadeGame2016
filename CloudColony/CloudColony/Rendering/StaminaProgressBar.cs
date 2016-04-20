@@ -24,9 +24,9 @@ namespace CloudColony.Rendering
 
         public void Draw(SpriteBatch batch)
         {
-            float angle = percent * (float)(Math.PI * 2f);
+            float angle =  (percent * (float)(Math.PI * 2f)) - 0.4f;
 
-            for (float i = 0; i < angle; i += 0.28f)
+            for (float i = 0; i < angle + 0.29f; i += 0.29f)
             {
                 batch.Draw(CC.Pixel, Position + new Vector2(0.29f * (float)Math.Cos(i), 0.29f * (float)Math.Sin(i)),
                     CC.Pixel, color, i, Vector2.Zero, 0.08f, SpriteEffects.None, 0.01f);

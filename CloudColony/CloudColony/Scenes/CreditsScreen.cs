@@ -11,9 +11,9 @@ namespace CloudColony.Scenes
         private string[] credits = {
             "Created by:", "",
 
-            "Programmer:", "SIMON BOTHEN", "",
+            "Programmer:", "SIMON BOTHEN", "(caresilabs.com)", "",
 
-            "Art & Sound:", "SEBASTIAN LIND", "",
+            "Art & Sound:", "SEBASTIAN LIND", "(doodleforlifeblog.wordpress.com)", "",
 
             "(c) " + DateTime.Now.Year
 
@@ -36,7 +36,7 @@ namespace CloudColony.Scenes
             Background.ZIndex = 1f;
 
             simon = new Sprite(CC.Simon, CC.VIEWPORT_WIDTH * 0.32f, CC.VIEWPORT_HEIGHT * 0.49f, 153, 168);
-            sebastian = new Sprite(CC.Sebastian, CC.VIEWPORT_WIDTH * 0.69f, CC.VIEWPORT_HEIGHT * 0.65f, 169, 127);
+            sebastian = new Sprite(CC.Sebastian, CC.VIEWPORT_WIDTH * 0.69f, CC.VIEWPORT_HEIGHT * 0.625f, 169, 127);
         }
 
         public override void Update(float delta)

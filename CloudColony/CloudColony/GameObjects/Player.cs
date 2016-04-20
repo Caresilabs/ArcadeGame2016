@@ -17,7 +17,7 @@ namespace CloudColony.GameObjects
     {
         public const float PLAYER_SPEED = 8;
 
-        public const float STAMINA_GAIN = 25;
+        public const float STAMINA_GAIN = 20;
         public const float STAMINA_MAX = 100;
 
         public bool Done { get { return false; } }
@@ -47,7 +47,7 @@ namespace CloudColony.GameObjects
             this.pointer.ZIndex = 0.01f;
 
             this.staminaBar = new StaminaProgressBar(Index == PlayerIndex.One ? Color.Red : Color.Blue);
-           
+
             this.position = new Vector2(x, y);
             this.Stamina = STAMINA_MAX;
         }
@@ -133,11 +133,12 @@ namespace CloudColony.GameObjects
                 // Attack def
                 if (ButtonDown(PlayerInput.Yellow))
                 {
-                    if (TryDrainStamina(Bullet.COST * MathHelper.Lerp(1f, 0.3f, Ships.Count / (float)World.MAX_NUM_SHIPS))) //Stamina >= Bullet.COST *  Ships.Count)
+                    foreach (var ship in Ships)
                     {
-                        foreach (var ship in Ships)
+                        if (ship.CanShoot())
                         {
-                            if (ship.CanShoot())
+                            ship.ShieldHealth = 0;
+                            if (TryDrainStamina(Bullet.COST * MathHelper.Lerp(1.2f, 0.3f, Ships.Count / (float)World.MAX_NUM_SHIPS))) //Stamina >= Bullet.COST *  Ships.Count)
                             {
                                 ship.Shoot();
                             }
@@ -148,9 +149,12 @@ namespace CloudColony.GameObjects
                 // Shield
                 if (PressedButton(PlayerInput.Green))
                 {
-                    foreach (var ship in Ships)
+                    if (Stamina >= 20)
                     {
-                        ship.ActivateShield();
+                        foreach (var ship in Ships)
+                        {
+                            ship.ActivateShield();
+                        }
                     }
                 }
             }
@@ -163,7 +167,7 @@ namespace CloudColony.GameObjects
 
             Stamina -= cost;
 
-            return true;
+            return true; // Stamina >= 15;
         }
 
         private bool ButtonDown(PlayerInput button)
