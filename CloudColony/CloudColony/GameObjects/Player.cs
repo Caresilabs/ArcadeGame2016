@@ -44,8 +44,10 @@ namespace CloudColony.GameObjects
             this.Index = index;
             this.World = world;
             this.pointer = new Sprite(pointer, x, y, 0.9f, 0.9f);
-            this.staminaBar = new StaminaProgressBar(Index == PlayerIndex.One ? Color.Red : Color.Blue);
             this.pointer.ZIndex = 0.01f;
+
+            this.staminaBar = new StaminaProgressBar(Index == PlayerIndex.One ? Color.Red : Color.Blue);
+           
             this.position = new Vector2(x, y);
             this.Stamina = STAMINA_MAX;
         }

@@ -5,8 +5,8 @@ namespace CloudColony.Framework
 {
     public class TextureRegion
     {
-        private Texture2D texture;
-        private Rectangle region;
+        private readonly Texture2D texture;
+        public Rectangle region;
 
         public TextureRegion(Texture2D texture, int x, int y, int width, int height)
         {

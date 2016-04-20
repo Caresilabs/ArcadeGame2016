@@ -28,8 +28,8 @@ namespace CloudColony.Rendering
 
             for (float i = 0; i < angle; i += 0.28f)
             {
-                batch.Draw(CC.Pixel, Position + new Vector2(0.3f * (float)Math.Cos(i), 0.3f * (float)Math.Sin(i)),
-                    CC.Pixel, color, i, Vector2.Zero, 0.08f, SpriteEffects.None, 0);
+                batch.Draw(CC.Pixel, Position + new Vector2(0.29f * (float)Math.Cos(i), 0.29f * (float)Math.Sin(i)),
+                    CC.Pixel, color, i, Vector2.Zero, 0.08f, SpriteEffects.None, 0.01f);
             }
         }
     }
