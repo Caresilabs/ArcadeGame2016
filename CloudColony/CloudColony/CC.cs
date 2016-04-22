@@ -19,6 +19,7 @@ namespace CloudColony
         // Game
         public static Texture2D Atlas { get; private set; }
         public static Texture2D TransitionTexture { get; private set; }
+        public static Texture2D ParallaxTexture { get; private set; }
 
         public static TextureRegion Pixel { get; private set; }
 
@@ -78,7 +79,10 @@ namespace CloudColony
             BluePowerup = new TextureRegion(Atlas, 68 + 16, 0, 16, 16);
             GreenPowerup = new TextureRegion(Atlas, 68, 0, 16, 16);
 
+            // Parallax
+            ParallaxTexture = content.Load<Texture2D>("SecondEditionAtlas");
 
+            // Transition
             TransitionTexture = content.Load<Texture2D>("GateClosingWithoutFrame");
 
             // UI

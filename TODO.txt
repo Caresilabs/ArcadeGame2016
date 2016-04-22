@@ -2,12 +2,13 @@ LOGIC:
 
 -Tweak Gameplay
 
+==================
 Graphics: 
 
--Background & parallax
 -splash screen / isntructionscreen(HÅLLER PÅ) 
 -Banner
 
+===================
 Sound:
 -Shoot?
 -Win
@@ -19,7 +20,7 @@ Sound:
 -background tune
 
 
-------------------------------
-Extra från Sebastian
+===================
+Extra
 
-Öka loggans storlek på startskärmen(och kanske minska de andra texten men det får bli en annan gång i så fall :P ) 
+(och kanske minska de andra texten men det får bli en annan gång i så fall :P ) 

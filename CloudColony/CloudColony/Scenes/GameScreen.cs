@@ -40,6 +40,8 @@ namespace CloudColony.Scenes
         {
             TotalTime += delta;
 
+            Renderer.Update(delta);
+
             switch (State)
             {
                 case GameState.READY:
@@ -124,7 +126,7 @@ namespace CloudColony.Scenes
                         string countdown = "" + (int)(3 - World.ReadyTime + 1);
                         countdown = countdown == "0" ? "GO!" : countdown;
                         batch.DrawString(CC.Font, countdown, new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT / 2f),
-                            Color.WhiteSmoke, 0, CC.Font.MeasureString(countdown) / 2f, 5 + (World.ReadyTime - (float)Math.Floor(World.ReadyTime)) * 2, SpriteEffects.None, 0);
+                            Color.Black, 0, CC.Font.MeasureString(countdown) / 2f, 5 + (World.ReadyTime - (float)Math.Floor(World.ReadyTime)) * 2, SpriteEffects.None, 0);
                         break;
                     case GameState.RUNNING:
                         break;
@@ -140,11 +142,11 @@ namespace CloudColony.Scenes
                     case GameState.PAUSED:
                         string txt = "PAUSED";
                         batch.DrawString(CC.Font, txt, new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.5f),
-                            Color.WhiteSmoke, 0, CC.Font.MeasureString(txt) / 2f, 3.5f + (float)((Math.Sin(TotalTime * 5) + 1) / 15f), SpriteEffects.None, 0);
+                            Color.Black, 0, CC.Font.MeasureString(txt) / 2f, 3.5f + (float)((Math.Sin(TotalTime * 5) + 1) / 15f), SpriteEffects.None, 0);
 
                         txt = "-Side button to exit-";
                         batch.DrawString(CC.Font, txt, new Vector2(CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.575f),
-                            Color.WhiteSmoke, 0, CC.Font.MeasureString(txt) / 2f, 1.85f + (float)((Math.Sin(TotalTime * 5) + 1) / 15f), SpriteEffects.None, 0);
+                            Color.Black, 0, CC.Font.MeasureString(txt) / 2f, 1.85f + (float)((Math.Sin(TotalTime * 5) + 1) / 15f), SpriteEffects.None, 0);
                         break;
                     default:
                         break;

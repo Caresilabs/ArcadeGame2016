@@ -48,6 +48,7 @@
     <Compile Include="Framework\SpatialHashGrid.cs" />
     <Compile Include="Framework\Sprite.cs" />
     <Compile Include="Framework\TextureRegion.cs" />
+    <Compile Include="Framework\TextureScrollAnimation.cs" />
     <Compile Include="Framework\Tools\Camera2D.cs" />
     <Compile Include="Framework\Tools\MathUtils.cs" />
     <Compile Include="Framework\Tools\Pool.cs" />

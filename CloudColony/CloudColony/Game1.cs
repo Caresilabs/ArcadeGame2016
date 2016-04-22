@@ -15,7 +15,7 @@ namespace CloudColony
             GraphicsDeviceManager graphics;
             SpriteBatch spriteBatch;
 #else
-        public override string GameDisplayName { get { return "CloudColony"; } }
+        public override string GameDisplayName { get { return "Cloud Colony"; } }
 #endif
 
         public Screen CurrentScreen { get; private set; }
