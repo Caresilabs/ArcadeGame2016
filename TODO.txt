@@ -1,6 +1,5 @@
 LOGIC:
 
--Shield
 -Tweak Gameplay
 
 Graphics: 
