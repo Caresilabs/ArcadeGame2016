@@ -6,7 +6,7 @@ namespace CloudColony.GameObjects.Targets
 {
     public class FlankTarget : Target
     {
-        public const float COST = 50;
+        public const float COST = 45;
 
         private const float FLANK_DISTANCE = 3f;
 

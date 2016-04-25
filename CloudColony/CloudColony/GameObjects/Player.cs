@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using CloudColony.GameObjects.Entities;
 using CloudColony.GameObjects.Targets;
 using CloudColony.Logic;
-using System.Linq;
 using CloudColony.Rendering;
 using CloudColony.GameObjects.Powerups;
 
@@ -15,9 +14,9 @@ namespace CloudColony.GameObjects
 {
     public class Player : Target, IRenderable, IUpdate
     {
-        public const float PLAYER_SPEED = 8;
+        public const float PLAYER_SPEED = 10.5f;
 
-        public const float STAMINA_GAIN = 20;
+        public const float STAMINA_GAIN = 25;
         public const float STAMINA_MAX = 100;
 
         public bool Done { get { return false; } }
@@ -35,11 +34,14 @@ namespace CloudColony.GameObjects
 
         public Powerup ActivePowerup { get; set; }
 
+        public bool ShieldOn { get; set; }
+
         private readonly Sprite pointer;
         private readonly StaminaProgressBar staminaBar;
 
         public Player(World world, TextureRegion pointer, PlayerIndex index, float x, float y)
         {
+            this.ShieldOn = false;
             this.Ships = new List<Ship>();
             this.Index = index;
             this.World = world;
@@ -149,11 +151,21 @@ namespace CloudColony.GameObjects
                 // Shield
                 if (PressedButton(PlayerInput.Green))
                 {
-                    if (Stamina >= 25)
+                    // Nasty hack... Dont replicate ^^
+                    float oldStamina = Stamina;
                     {
                         foreach (var ship in Ships)
                         {
                             ship.ActivateShield();
+                        }
+
+                        if (Stamina <= 0)
+                        {
+                            foreach (var ship in Ships)
+                            {
+                                ship.ActivateShield();
+                            }
+                            Stamina = oldStamina;
                         }
                     }
                 }
@@ -168,6 +180,11 @@ namespace CloudColony.GameObjects
             Stamina -= cost;
 
             return true; // Stamina >= 15;
+        }
+
+        public void DrainStamina(float cost)
+        {
+            Stamina = Math.Max(0,  Stamina - cost);
         }
 
         private bool ButtonDown(PlayerInput button)

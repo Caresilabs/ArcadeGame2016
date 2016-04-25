@@ -12,7 +12,7 @@ namespace CloudColony.GameObjects.Powerups
 
         public override void RunPower()
         {
-            if (ActiveTime >= 4)
+            if (ActiveTime >= 3.5f)
                 Done = true;
 
             Owner.Stamina = Player.STAMINA_MAX;

@@ -18,7 +18,7 @@ namespace CloudColony.Rendering
         public Sprite Parallax1 { get; private set; }
         public Sprite Parallax2 { get; private set; }
 
-        private float scrollX = 0;
+        private float scrollX;
 
         public GameRenderer(World world)
         {
@@ -38,14 +38,14 @@ namespace CloudColony.Rendering
             Parallax2.Color = Color.White * 0.55f;
             Parallax2.DrawOffset = new Vector2(0, Parallax2.Size.Y / 2f);
 
-            //  Parallax1.AddAnimation("anim", new TextureScrollAnimation(CC.ParallaxTexture, 0, 90)).SetAnimation("anim");
+            scrollX = Camera.GetWidth() * 3;
         }
 
 
         public void Update(float delta)
         {
-            scrollX += 0.18f * delta;
-            scrollX %= Camera.GetWidth();
+            scrollX += .18f * delta;
+            // scrollX %= Camera.GetWidth() * 2;
         }
 
         public void Draw(SpriteBatch batch)
@@ -64,21 +64,17 @@ namespace CloudColony.Rendering
             {
                 float px2Scale = 0.43f;
                 // Draw the texture, if it is still onscreen.
-                if (scrollX * px2Scale < Camera.GetWidth())
-                {
-                    Parallax2.SetPosition(scrollX * px2Scale, Parallax2.Position.Y);
-                    Parallax2.Draw(batch);
-                }
-                Parallax2.SetPosition(scrollX - Parallax2.Size.X * px2Scale, Parallax2.Position.Y);
+
+                Parallax2.SetPosition((((px2Scale * scrollX - (Camera.GetWidth() * 1.0f))) % (Camera.GetWidth() * 2)) - Camera.GetWidth(), Parallax2.Position.Y);
                 Parallax2.Draw(batch);
 
-                // Draw the texture, if it is still onscreen.
-                if (scrollX < Camera.GetWidth())
-                {
-                    Parallax1.SetPosition(scrollX, Parallax1.Position.Y);
-                    Parallax1.Draw(batch);
-                }
-                Parallax1.SetPosition(scrollX - Parallax1.Size.X, Parallax1.Position.Y);
+                Parallax2.SetPosition(((px2Scale * (scrollX + Camera.GetWidth() * 0.0f)) % (Camera.GetWidth() * 2)) - Camera.GetWidth(), Parallax2.Position.Y);
+                Parallax2.Draw(batch);
+
+                Parallax1.SetPosition(((scrollX - Camera.GetWidth()) % (Camera.GetWidth() * 2)) - Camera.GetWidth(), Parallax1.Position.Y);
+                Parallax1.Draw(batch);
+
+                Parallax1.SetPosition((scrollX % (Camera.GetWidth() * 2)) - Camera.GetWidth(), Parallax1.Position.Y);
                 Parallax1.Draw(batch);
             }
 

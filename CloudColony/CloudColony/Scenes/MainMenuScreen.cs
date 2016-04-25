@@ -53,17 +53,16 @@ namespace CloudColony.Scenes
         {
             TotalTime += delta;
 
-
-            if (InputHandler.GetButtonState(PlayerIndex.One, PlayerInput.Side) == InputState.Released ||
-                       InputHandler.GetButtonState(PlayerIndex.Two, PlayerInput.Side) == InputState.Released)
-            {
-                SetScreen(new CreditsScreen());
-                return;
-            }
-
             // Hack so input wont happen after every game
             if (TotalTime > 0.2f)
             {
+                if (InputHandler.GetButtonState(PlayerIndex.One, PlayerInput.Side) == InputState.Released ||
+                       InputHandler.GetButtonState(PlayerIndex.Two, PlayerInput.Side) == InputState.Released)
+                {
+                    SetScreen(new CreditsScreen());
+                    return;
+                }
+
                 if (CC.AnyKeyPressed(PlayerIndex.One))
                     PlayerRedReady = true;
 
@@ -126,7 +125,7 @@ namespace CloudColony.Scenes
             }
 
             // Draw logo
-            logo.SetPosition(logo.Position.X, logo.Position.Y + (float)Math.Sin(TotalTime*2) / 2.5f);
+            logo.SetPosition(logo.Position.X, logo.Position.Y + (float)Math.Sin(TotalTime * 2) / 2.5f);
             logo.Draw(batch);
 
             // Draw insert coin
@@ -139,7 +138,7 @@ namespace CloudColony.Scenes
             }
 
             // Copy right.
-            string copy = "...C.C.B.N. ALERT... Side button for credits... github.com/Caresilabs/ArcadeGame2016... " + "(c) " +  DateTime.Now.Year;
+            string copy = "...C.C.B.N. ALERT... Side button for credits... github.com/Caresilabs/ArcadeGame2016... " + "(c) " + DateTime.Now.Year;
             //batch.DrawString(CC.Font, copy, new Vector2(42, 29f),
             //    Color.WhiteSmoke * (float)((Math.Sin(TotalTime * 2.5f) + 1) / 2f), 0, Vector2.Zero, 1.15f, SpriteEffects.None, 0);
             batch.DrawString(CC.Font, copy, new Vector2(CC.VIEWPORT_WIDTH - (TotalTime * 150) % (CC.VIEWPORT_WIDTH + CC.Font.MeasureString(copy).X * 1.15f), 29f),

@@ -101,11 +101,12 @@ namespace CloudColony.Logic
             }
         }
 
-        public void SpawnEffect(SpriteFX.EffectType type, Vector2 pos)
+        public void SpawnEffect(SpriteFX.EffectType type, Vector2 pos, Color? color = null)
         {
             var fx = FXPool.GetObject();
             fx.SetPosition(pos);
             fx.ZIndex = 0.023f;
+            fx.Color = color.HasValue ? color.Value : Color.White;
 
             switch (type)
             {

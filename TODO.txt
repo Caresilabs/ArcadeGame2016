@@ -5,8 +5,7 @@ LOGIC:
 ==================
 Graphics: 
 
--splash screen / isntructionscreen(HÅLLER PÅ) 
--Banner
+- hit FX vit.
 
 ===================
 Sound:
