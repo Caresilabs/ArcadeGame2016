@@ -154,16 +154,21 @@ namespace CloudColony.GameObjects
                     // Nasty hack... Dont replicate ^^
                     float oldStamina = Stamina;
                     {
+                        bool failed = false;
                         foreach (var ship in Ships)
                         {
-                            ship.ActivateShield();
+                            if (!ship.ActivateShield())
+                            {
+                                failed = true;
+                                break;
+                            }
                         }
 
-                        if (Stamina <= 0)
+                        if (failed || Stamina <= 0)
                         {
                             foreach (var ship in Ships)
                             {
-                                ship.ActivateShield();
+                                ship.ShieldHealth = 0;
                             }
                             Stamina = oldStamina;
                         }

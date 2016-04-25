@@ -194,16 +194,18 @@ namespace CloudColony.GameObjects.Entities
             return shootDelayTimer >= FIRE_RATE;
         }
 
-        public void ActivateShield()
+        public bool ActivateShield()
         {
             if (ShieldHealth <= 0)
             {
-                Owner.DrainStamina(MathHelper.Lerp(7, 1, Owner.Ships.Count / (float)World.MAX_NUM_SHIPS) * SHIELD_COST * 0.7f);
+                Owner.DrainStamina(MathHelper.Lerp(7, 1, Owner.Ships.Count / (float)World.MAX_NUM_SHIPS) * SHIELD_COST * 0.3f);
                 ShieldHealth = MAX_SHIELD_HEALTH;
+                return true;
             }
             else
             {
                 ShieldHealth = 0;
+                return false;
             }
         }
 

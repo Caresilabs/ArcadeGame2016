@@ -9,7 +9,7 @@ namespace CloudColony.GameObjects.Entities
     {
         public const float DAMAGE = 8;
 
-        public const float COST = 4.5f; //35f;  //
+        public const float COST = 4.5f;
 
         public Vector2 Direction { get; private set; }
 
