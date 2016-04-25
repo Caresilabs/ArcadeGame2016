@@ -57,7 +57,11 @@ namespace CloudColony
 
             nextScreen = new MainMenuScreen();
             SetNextScreen();
-            //SetScreen(new MainMenuScreen());
+
+            // Start Transition
+            transitionAnimation = new FrameAnimation(CC.TransitionTexture, 0, 0, 160, 90, 18, 0.06f, new Point(1, 0), false, true);
+            transitionSprite.AddAnimation("anim", transitionAnimation).SetAnimation("anim");
+            transitionSprite.Update(0);
         }
 
         protected override void UnloadContent()

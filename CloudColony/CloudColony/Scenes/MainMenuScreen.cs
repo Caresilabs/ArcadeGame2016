@@ -54,7 +54,7 @@ namespace CloudColony.Scenes
             TotalTime += delta;
 
             // Hack so input wont happen after every game
-            if (TotalTime > 0.2f)
+            if (TotalTime > 0.3f)
             {
                 if (InputHandler.GetButtonState(PlayerIndex.One, PlayerInput.Side) == InputState.Released ||
                        InputHandler.GetButtonState(PlayerIndex.Two, PlayerInput.Side) == InputState.Released)
