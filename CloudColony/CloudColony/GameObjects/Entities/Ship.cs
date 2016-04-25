@@ -137,7 +137,7 @@ namespace CloudColony.GameObjects.Entities
                 {
                     if (enemy is Bullet)
                     {
-                        if ((enemy.Position - position).Length() <= 1.7f && Health <= 60)
+                        if ((enemy.Position - position).Length() <= 1.7f && Health <= 60 && ShieldHealth <= 0)
                             World.Slowmotion();
                     }
                 }

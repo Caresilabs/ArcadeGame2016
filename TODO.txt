@@ -3,10 +3,6 @@ LOGIC:
 ==================
 Graphics: 
 
-- hit FX vit.
-
-- Skriv om spelet så baldwin kan posta på FB.
-
 ===================
 Sound:
 -Shoot?
