@@ -173,7 +173,7 @@ namespace CloudColony.GameObjects.Entities
                         {
                             otherShip.ShieldHealth -= SHIELD_DAMAGE * delta;
 
-                            if (MathUtils.Random(0, 1f) < 0.01f)
+                            if (MathUtils.Random(0, 1f) < 0.002f)
                                 CC.ShieldHitSound.Play();
                         }
                         else
@@ -182,7 +182,9 @@ namespace CloudColony.GameObjects.Entities
                             if (MathUtils.Random(0, 1f) < 0.01f)
                             {
                                 World.SpawnEffect(Rendering.SpriteFX.EffectType.HIT, otherShip.position, Player.Index == PlayerIndex.One ? Color.Blue : Color.Red);
-                                CC.HitSound.Play();
+
+                                if (MathUtils.Random(0, 1f) < 0.2f)
+                                    CC.HitSound.Play();
                             }
                         }
                     }

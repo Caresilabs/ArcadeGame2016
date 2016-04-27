@@ -133,8 +133,9 @@ namespace CloudColony.GameObjects
                 }
 
                 // Attack def
-                if (ButtonDown(PlayerInput.Yellow))
+                if (ButtonDown(PlayerInput.Yellow) && Stamina > 10)
                 {
+                    int shootCount = 0;
                     foreach (var ship in Ships)
                     {
                         if (ship.CanShoot())
@@ -143,9 +144,13 @@ namespace CloudColony.GameObjects
                             if (TryDrainStamina(Bullet.COST * MathHelper.Lerp(1.2f, 0.3f, Ships.Count / (float)World.MAX_NUM_SHIPS))) //Stamina >= Bullet.COST *  Ships.Count)
                             {
                                 ship.Shoot();
+                                ++shootCount;
                             }
                         }
                     }
+
+                    if (shootCount >= 3)
+                        CC.ShootSound.Play();
                 }
 
                 // Shield

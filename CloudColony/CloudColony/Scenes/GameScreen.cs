@@ -5,6 +5,7 @@ using CloudColony.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 
 namespace CloudColony.Scenes
@@ -34,6 +35,8 @@ namespace CloudColony.Scenes
             this.UICamera = new Camera2D(CC.VIEWPORT_WIDTH, CC.VIEWPORT_HEIGHT);
             this.World = new World();
             this.Renderer = new GameRenderer(World);
+
+            MediaPlayer.Volume = 0.3f;
         }
 
         public override void Update(float delta)
@@ -51,7 +54,9 @@ namespace CloudColony.Scenes
                     World.Update(delta);
 
                     if (World.State == World.WorldState.RUNNING)
+                    {
                         State = GameState.RUNNING;
+                    }
                     break;
                 case GameState.RUNNING:
                     if (InputHandler.GetButtonState(PlayerIndex.One, PlayerInput.Start) == InputState.Released ||
@@ -66,12 +71,16 @@ namespace CloudColony.Scenes
                     {
                         State = GameState.GAMEOVER;
                         WinSprite = new Sprite(CC.WinRed, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.45f, 96, 64);
+                        MediaPlayer.Volume = 0.14f;
+                        CC.WinSound.Play();
                     }
 
                     if (World.State == World.WorldState.BLUEWON)
                     {
                         State = GameState.GAMEOVER;
                         WinSprite = new Sprite(CC.WinBlue, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.45f, 96, 64);
+                        MediaPlayer.Volume = 0.14f;
+                        CC.WinSound.Play();
                     }
 
                     break;

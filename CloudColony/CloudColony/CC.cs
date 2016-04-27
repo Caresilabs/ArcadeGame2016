@@ -66,6 +66,8 @@ namespace CloudColony
         public static SoundEffect PowerUpSound { get; private set; }
         public static SoundEffect ExlosionSound { get; private set; }
         public static SoundEffect ShieldHitSound { get; private set; }
+        public static SoundEffect WinSound { get; private set; }
+        public static SoundEffect ShootSound { get; private set; }
 
         public static void Load(ContentManager content)
         {
@@ -120,7 +122,8 @@ namespace CloudColony
             // Sound
             SoundEffect.MasterVolume = 1.0f;
 
-            MediaPlayer.Volume = 0.19f;
+            MediaPlayer.Volume = 0.05f;
+
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(content.Load<Song>("Sound/JuhaniJunkalaEpicBossBattle"));
 
@@ -128,7 +131,9 @@ namespace CloudColony
             PlayGameSound = content.Load<SoundEffect>("Sound/StartGame");
             PowerUpSound = content.Load<SoundEffect>("Sound/PowerUp");
             ExlosionSound = content.Load<SoundEffect>("Sound/Explosion");
-            ShieldHitSound = content.Load<SoundEffect>("Sound/Explosion");
+            ShieldHitSound = content.Load<SoundEffect>("Sound/ShieldHit");
+            ShootSound = content.Load<SoundEffect>("Sound/Shoot");
+            WinSound = content.Load<SoundEffect>("Sound/Jingle_Win_00"); 
         }
 
         public static bool AnyKeyPressed(PlayerIndex index)

@@ -113,3 +113,15 @@
 /processorParam:Quality=Best
 /build:Sound/ShieldHit.wav
 
+#begin Sound/Jingle_Win_00.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/Jingle_Win_00.wav
+
+#begin Sound/Shoot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/Shoot.wav
+

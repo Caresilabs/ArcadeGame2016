@@ -3,6 +3,7 @@ using CloudColony.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
 
 namespace CloudColony.Scenes
 {
@@ -14,6 +15,8 @@ namespace CloudColony.Scenes
         public float TotalTime { get; private set; }
 
         public float PlayDelayTime { get; private set; }
+
+        public bool BothReady { get; set; }
 
         public Sprite Background { get; private set; }
 
@@ -27,8 +30,11 @@ namespace CloudColony.Scenes
         {
             this.PlayerRedReady = false;
             this.PlayerBlueReady = false;
+            this.BothReady = false;
 
             InitUI();
+
+            MediaPlayer.Volume = 0.15f;
         }
 
         private void InitUI()
@@ -54,7 +60,7 @@ namespace CloudColony.Scenes
             TotalTime += delta;
 
             // Hack so input wont happen after every game
-            if (TotalTime > 0.3f)
+            if (TotalTime > 0.4f)
             {
                 if (InputHandler.GetButtonState(PlayerIndex.One, PlayerInput.Side) == InputState.Released ||
                        InputHandler.GetButtonState(PlayerIndex.Two, PlayerInput.Side) == InputState.Released)
@@ -76,8 +82,14 @@ namespace CloudColony.Scenes
 
                 if (PlayDelayTime >= 1f)
                 {
-                    SetScreen(new GameScreen());
-                    CC.PlayGameSound.Play();
+                    if (!BothReady)
+                    {
+                        SetScreen(new GameScreen());
+                        CC.PlayGameSound.Play();
+                        CC.PlayGameSound.Play();
+                        MediaPlayer.Volume = 0.04f;
+                        BothReady = true;
+                    }
                 }
             }
 
@@ -156,6 +168,7 @@ namespace CloudColony.Scenes
 
         public override void Dispose()
         {
+            // MediaPlayer.Volume = 0.2f;
         }
     }
 }
