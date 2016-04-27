@@ -106,6 +106,7 @@ namespace CloudColony.GameObjects.Entities
             {
                 IsDead = true;
                 World.SpawnEffect(Rendering.SpriteFX.EffectType.DESTROY, position);
+                CC.ExlosionSound.Play();
                 return;
             }
 
@@ -151,11 +152,13 @@ namespace CloudColony.GameObjects.Entities
                     if (ShieldHealth > 0)
                     {
                         ShieldHealth -= Bullet.DAMAGE;
+                        CC.ShieldHitSound.Play();
                     }
                     else
                     {
                         Health -= Bullet.DAMAGE;
                         World.SpawnEffect(Rendering.SpriteFX.EffectType.HIT, position, Player.Index == PlayerIndex.One ? Color.Red : Color.Blue);
+                        CC.HitSound.Play();
                     }
                 }
 
@@ -169,12 +172,18 @@ namespace CloudColony.GameObjects.Entities
                         if (otherShip.ShieldHealth > 0)
                         {
                             otherShip.ShieldHealth -= SHIELD_DAMAGE * delta;
+
+                            if (MathUtils.Random(0, 1f) < 0.01f)
+                                CC.ShieldHitSound.Play();
                         }
                         else
                         {
                             otherShip.Health -= SHIELD_DAMAGE * delta;
                             if (MathUtils.Random(0, 1f) < 0.01f)
+                            {
                                 World.SpawnEffect(Rendering.SpriteFX.EffectType.HIT, otherShip.position, Player.Index == PlayerIndex.One ? Color.Blue : Color.Red);
+                                CC.HitSound.Play();
+                            }
                         }
                     }
                 }
@@ -185,6 +194,7 @@ namespace CloudColony.GameObjects.Entities
                     Player.ActivePowerup = (Powerup)enemy;
                     Player.ActivePowerup.Init(Player);
                     World.SpawnEffect(Rendering.SpriteFX.EffectType.POWERUP, enemy.Position);
+                    CC.PowerUpSound.Play();
                 }
             }
         }

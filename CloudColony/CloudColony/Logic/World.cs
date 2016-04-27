@@ -3,7 +3,6 @@ using CloudColony.GameObjects;
 using CloudColony.GameObjects.Entities;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using System;
 using CloudColony.Framework.Tools;
 using CloudColony.GameObjects.Powerups;
 using CloudColony.Rendering;
@@ -245,7 +244,7 @@ namespace CloudColony.Logic
                     bool collided = false;
                     foreach (var entity in Entities)
                     {
-                        if (entity.Bounds.Contains(pos))
+                        if ((entity.Position - pos).Length() <= 2)
                         {
                             collided = true;
                             break;

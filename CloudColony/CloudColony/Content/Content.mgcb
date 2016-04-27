@@ -77,3 +77,39 @@
 /processorParam:TextureFormat=Color
 /build:PreviewData/GameBanner.png
 
+#begin Sound/JuhaniJunkalaEpicBossBattle.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/JuhaniJunkalaEpicBossBattle.wav
+
+#begin Sound/Explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/Explosion.wav
+
+#begin Sound/Hit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/Hit.wav
+
+#begin Sound/PowerUp.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/PowerUp.wav
+
+#begin Sound/StartGame.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/StartGame.wav
+
+#begin Sound/ShieldHit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/ShieldHit.wav
+

@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
 namespace CloudColony
 {
@@ -58,6 +60,13 @@ namespace CloudColony
         public static SpriteFont Font { get; private set; }
         public static TextureRegion CloudBackground { get; private set; }
 
+        // Sound
+        public static SoundEffect HitSound { get; private set; }
+        public static SoundEffect PlayGameSound { get; private set; }
+        public static SoundEffect PowerUpSound { get; private set; }
+        public static SoundEffect ExlosionSound { get; private set; }
+        public static SoundEffect ShieldHitSound { get; private set; }
+
         public static void Load(ContentManager content)
         {
             LoadAssets(content);
@@ -106,6 +115,20 @@ namespace CloudColony
             Pixel = new TextureRegion(Atlas, 422, 23, 1, 1);
 
             Font = content.Load<SpriteFont>("Font");
+
+
+            // Sound
+            SoundEffect.MasterVolume = 1.0f;
+
+            MediaPlayer.Volume = 0.19f;
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(content.Load<Song>("Sound/JuhaniJunkalaEpicBossBattle"));
+
+            HitSound = content.Load<SoundEffect>("Sound/Hit");
+            PlayGameSound = content.Load<SoundEffect>("Sound/StartGame");
+            PowerUpSound = content.Load<SoundEffect>("Sound/PowerUp");
+            ExlosionSound = content.Load<SoundEffect>("Sound/Explosion");
+            ShieldHitSound = content.Load<SoundEffect>("Sound/Explosion");
         }
 
         public static bool AnyKeyPressed(PlayerIndex index)

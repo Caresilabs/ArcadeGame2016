@@ -75,7 +75,10 @@ namespace CloudColony.Scenes
                 PlayDelayTime += delta;
 
                 if (PlayDelayTime >= 1f)
+                {
                     SetScreen(new GameScreen());
+                    CC.PlayGameSound.Play();
+                }
             }
 
         }
