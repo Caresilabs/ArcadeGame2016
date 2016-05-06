@@ -34,7 +34,7 @@ namespace CloudColony.Scenes
 
             InitUI();
 
-            MediaPlayer.Volume = 0.15f;
+            MediaPlayer.Volume = 0.4f;
         }
 
         private void InitUI()
@@ -69,10 +69,10 @@ namespace CloudColony.Scenes
                     return;
                 }
 
-                if (CC.AnyKeyPressed(PlayerIndex.One))
+                if (CC.AnyKeyJustClicked(PlayerIndex.One))
                     PlayerRedReady = true;
 
-                if (CC.AnyKeyPressed(PlayerIndex.Two))
+                if (CC.AnyKeyJustClicked(PlayerIndex.Two))
                     PlayerBlueReady = true;
             }
 
@@ -87,7 +87,7 @@ namespace CloudColony.Scenes
                         SetScreen(new GameScreen());
                         CC.PlayGameSound.Play();
                         CC.PlayGameSound.Play();
-                        MediaPlayer.Volume = 0.04f;
+                        MediaPlayer.Volume = 0.15f;
                         BothReady = true;
                     }
                 }
@@ -168,7 +168,6 @@ namespace CloudColony.Scenes
 
         public override void Dispose()
         {
-            // MediaPlayer.Volume = 0.2f;
         }
     }
 }

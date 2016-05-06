@@ -122,7 +122,7 @@ namespace CloudColony
             // Sound
             SoundEffect.MasterVolume = 1.0f;
 
-            MediaPlayer.Volume = 0.05f;
+            MediaPlayer.Volume = 0.0f;
 
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(content.Load<Song>("Sound/JuhaniJunkalaEpicBossBattle"));
@@ -142,6 +142,19 @@ namespace CloudColony
             for (int i = 1; i < Enum.GetValues(typeof(PlayerInput)).Length; i++)
             {
                 if (InputHandler.GetButtonState(index, (PlayerInput)i) == InputState.Released)
+                    pressed = true;
+            }
+
+            return pressed;
+        }
+
+
+        public static bool AnyKeyJustClicked(PlayerIndex index)
+        {
+            bool pressed = false;
+            for (int i = 1; i < Enum.GetValues(typeof(PlayerInput)).Length; i++)
+            {
+                if (InputHandler.GetButtonState(index, (PlayerInput)i) == InputState.Pressed)
                     pressed = true;
             }
 

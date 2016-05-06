@@ -13,11 +13,9 @@ namespace CloudColony.GameObjects.Entities
     {
         private const float MAX_HEALTH = 100;
 
-        private const float MAX_SHIELD_HEALTH = 50;
-        private const float SHIELD_COST = 1.2f;
-        private const float SHIELD_DAMAGE = 2.5f;
-
-        private const float FIRE_RATE = 0.8f;
+        private const float MAX_SHIELD_HEALTH = 75;
+        private const float SHIELD_COST = 34.0f; //1.2f;
+        private const float SHIELD_DAMAGE = 3.0f;
 
         public const float SEPARATION_WEIGHT = 13f;
         public const float COHESION_WEIGHT = 3f;
@@ -32,9 +30,6 @@ namespace CloudColony.GameObjects.Entities
         public float Speed { get; set; }
         public float MaxSpeed { get; set; }
 
-        // Shoot
-        private float shootDelayTimer;
-
         // Shield
         public float ShieldHealth { get; set; }
         public Sprite ShieldSprite { get; private set; }
@@ -45,14 +40,13 @@ namespace CloudColony.GameObjects.Entities
             this.Player = player;
             this.Target = player;
             this.Health = MAX_HEALTH;
-            this.shootDelayTimer = 0;
 
             MaxSpeed = 3f;
             velocity.X = (int)player.Index == 0 ? MaxSpeed : -MaxSpeed;
 
             ZIndex = 0.4f + MathUtils.Random(0.001f, 0.005f);
 
-            this.ShieldSprite = new Sprite(shieldTexture, 0, 0, 0.82f, 0.82f);
+            this.ShieldSprite = new Sprite(shieldTexture, 0, 0, 0.79f, 0.79f);
             ShieldSprite.ZIndex = ZIndex - 0.001f;
             ShieldSprite.Color = new Color(255, 255, 255, 255) * 0.3f;
 
@@ -72,8 +66,7 @@ namespace CloudColony.GameObjects.Entities
         {
             base.Update(delta);
 
-            //MaxSpeed = 2.8f + (((float)World.MAX_NUM_SHIPS / Player.Ships.Count) * 0.3f);
-            MaxSpeed = MathHelper.Lerp(5.5f, 3f, Player.Ships.Count / (float)World.MAX_NUM_SHIPS);
+            MaxSpeed = MathHelper.Lerp(5.62f, 3f, Player.Ships.Count / (float)World.MAX_NUM_SHIPS);
 
             // Don't udpate player twice
             if (Target != Player)
@@ -98,8 +91,6 @@ namespace CloudColony.GameObjects.Entities
             if (Target.Done)
                 Target = Player;
 
-            shootDelayTimer += delta;
-
             CheckCollision(delta);
 
             if (Health <= 0)
@@ -116,9 +107,10 @@ namespace CloudColony.GameObjects.Entities
             {
                 ShieldSprite.SetPosition(position);
                 ShieldSprite.SetScale((ShieldHealth / MAX_SHIELD_HEALTH) + 0.5f);
-                ShieldHealth -= delta * 3;
+                ShieldHealth -= delta * 14.5f;
 
-                if (!Owner.TryDrainStamina(MathHelper.Lerp(7, 1, Owner.Ships.Count / (float)World.MAX_NUM_SHIPS) * SHIELD_COST * delta))
+                //if (!Owner.TryDrainStamina(SHIELD_COST * delta * MathHelper.Lerp(1, 30, Owner.Ships.Count / (float)World.MAX_NUM_SHIPS) / Owner.Ships.Count ))
+                if (!Owner.TryDrainStamina( ((SHIELD_COST * delta) / Owner.Ships.Count ) * 1 ))
                 { }
                 //  ShieldHealth = 0;
             }
@@ -201,16 +193,12 @@ namespace CloudColony.GameObjects.Entities
             }
         }
 
-        public bool CanShoot()
-        {
-            return shootDelayTimer >= FIRE_RATE;
-        }
-
         public bool ActivateShield()
         {
             if (ShieldHealth <= 0)
             {
-                Owner.DrainStamina(MathHelper.Lerp(7, 1, Owner.Ships.Count / (float)World.MAX_NUM_SHIPS) * SHIELD_COST * 0.3f);
+                //Owner.DrainStamina(SHIELD_COST * .35f * MathHelper.Lerp(1, 30, Owner.Ships.Count / (float)World.MAX_NUM_SHIPS) / Owner.Ships.Count);
+                Owner.DrainStamina(((SHIELD_COST * 0.75f) / Owner.Ships.Count));
                 ShieldHealth = MAX_SHIELD_HEALTH;
                 return true;
             }
@@ -223,7 +211,6 @@ namespace CloudColony.GameObjects.Entities
 
         public void Shoot()
         {
-            shootDelayTimer = 0;
             var dir = Velocity;
             dir.Normalize();
 

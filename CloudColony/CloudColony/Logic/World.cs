@@ -231,7 +231,7 @@ namespace CloudColony.Logic
         {
             PowerupTime += delta;
 
-            if (PowerupTime >= 7.5f && MathUtils.Random(1.0f) < 0.01f)
+            if (PowerupTime >= 7.3f && MathUtils.Random(1.0f) < 0.008f)
             {
                 Powerup power = null;
                 Vector2 pos = Vector2.Zero;
@@ -244,7 +244,7 @@ namespace CloudColony.Logic
                     bool collided = false;
                     foreach (var entity in Entities)
                     {
-                        if ((entity.Position - pos).Length() <= 2)
+                        if ((entity.Position - pos).Length() <= 2.3f)
                         {
                             collided = true;
                             break;
@@ -259,13 +259,13 @@ namespace CloudColony.Logic
                 switch (MathUtils.Random(3))
                 {
                     case 0:
-                        power = new ReviveShipPowerup(this, CC.BluePowerup, pos.X, pos.Y);
+                        power = new SpeedPowerup(this, CC.RedPowerup, pos.X, pos.Y);
                         break;
                     case 1:
                         power = new UnlimitedStaminaPowerup(this, CC.GreenPowerup, pos.X, pos.Y);
                         break;
                     case 2:
-                        power = new SpeedPowerup(this, CC.RedPowerup, pos.X, pos.Y);
+                        power = new ReviveShipPowerup(this, CC.BluePowerup, pos.X, pos.Y);
                         break;
                     default:
                         break;

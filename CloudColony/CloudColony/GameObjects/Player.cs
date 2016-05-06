@@ -19,6 +19,8 @@ namespace CloudColony.GameObjects
         public const float STAMINA_GAIN = 25;
         public const float STAMINA_MAX = 100;
 
+        private const float FIRE_RATE = 0.8f;
+
         public bool Done { get { return false; } }
 
         public Vector2 Position { get { return position; } }
@@ -39,6 +41,9 @@ namespace CloudColony.GameObjects
         private readonly Sprite pointer;
         private readonly StaminaProgressBar staminaBar;
 
+        // Shoot
+        private float shootDelayTimer;
+
         public Player(World world, TextureRegion pointer, PlayerIndex index, float x, float y)
         {
             this.ShieldOn = false;
@@ -47,6 +52,7 @@ namespace CloudColony.GameObjects
             this.World = world;
             this.pointer = new Sprite(pointer, x, y, 0.9f, 0.9f);
             this.pointer.ZIndex = 0.01f;
+            this.shootDelayTimer = 0;
 
             this.staminaBar = new StaminaProgressBar(Index == PlayerIndex.One ? Color.Red : Color.Blue);
 
@@ -56,6 +62,8 @@ namespace CloudColony.GameObjects
 
         public void Update(float delta)
         {
+            shootDelayTimer += delta;
+
             pointer.SetPosition(position);
 
             Stamina = Math.Min(Stamina + STAMINA_GAIN * delta, STAMINA_MAX);
@@ -136,12 +144,14 @@ namespace CloudColony.GameObjects
                 if (ButtonDown(PlayerInput.Yellow) && Stamina > 10)
                 {
                     int shootCount = 0;
-                    foreach (var ship in Ships)
+                    if (CanShoot())
                     {
-                        if (ship.CanShoot())
+                        shootDelayTimer = 0;
+                        foreach (var ship in Ships)
                         {
                             ship.ShieldHealth = 0;
-                            if (TryDrainStamina(Bullet.COST * MathHelper.Lerp(1.2f, 0.3f, Ships.Count / (float)World.MAX_NUM_SHIPS))) //Stamina >= Bullet.COST *  Ships.Count)
+                            //  if (TryDrainStamina(Bullet.COST * MathHelper.Lerp(6.45f, 0.3f, Ships.Count / (float)World.MAX_NUM_SHIPS) / (float)Ships.Count)) //Stamina >= Bullet.COST *  Ships.Count)
+                            if (TryDrainStamina(((Bullet.COST) / Ships.Count) * MathHelper.Lerp(1f, 1.35f, Ships.Count / (float)World.MAX_NUM_SHIPS)))
                             {
                                 ship.Shoot();
                                 ++shootCount;
@@ -149,7 +159,7 @@ namespace CloudColony.GameObjects
                         }
                     }
 
-                    if (shootCount >= 3)
+                    if ((shootCount >= 3 && Ships.Count >= 3) || Ships.Count == shootCount)
                         CC.ShootSound.Play();
                 }
 
@@ -182,6 +192,11 @@ namespace CloudColony.GameObjects
             }
         }
 
+        public bool CanShoot()
+        {
+            return shootDelayTimer >= FIRE_RATE * MathHelper.Lerp(0.7f, 1, Ships.Count / (float)World.MAX_NUM_SHIPS);
+        }
+
         public bool TryDrainStamina(float cost)
         {
             if (Stamina - cost < 0)
@@ -194,7 +209,7 @@ namespace CloudColony.GameObjects
 
         public void DrainStamina(float cost)
         {
-            Stamina = Math.Max(0,  Stamina - cost);
+            Stamina = Math.Max(0, Stamina - cost);
         }
 
         private bool ButtonDown(PlayerInput button)
