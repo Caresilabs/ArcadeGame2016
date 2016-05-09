@@ -34,7 +34,7 @@ namespace CloudColony.Scenes
 
             InitUI();
 
-            MediaPlayer.Volume = 0.4f;
+            MediaPlayer.Volume = 0.33f;
         }
 
         private void InitUI()
@@ -87,7 +87,7 @@ namespace CloudColony.Scenes
                         SetScreen(new GameScreen());
                         CC.PlayGameSound.Play();
                         CC.PlayGameSound.Play();
-                        MediaPlayer.Volume = 0.15f;
+                        MediaPlayer.Volume = 0.12f;
                         BothReady = true;
                     }
                 }

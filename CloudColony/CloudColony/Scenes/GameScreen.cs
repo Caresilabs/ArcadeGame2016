@@ -36,7 +36,7 @@ namespace CloudColony.Scenes
             this.World = new World();
             this.Renderer = new GameRenderer(World);
 
-            MediaPlayer.Volume = 0.5f;
+            MediaPlayer.Volume = 0.42f;
         }
 
         public override void Update(float delta)
@@ -71,7 +71,7 @@ namespace CloudColony.Scenes
                     {
                         State = GameState.GAMEOVER;
                         WinSprite = new Sprite(CC.WinRed, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.45f, 96, 64);
-                        MediaPlayer.Volume = 0.25f;
+                        MediaPlayer.Volume = 0.21f;
                         CC.WinSound.Play();
                     }
 
@@ -79,7 +79,7 @@ namespace CloudColony.Scenes
                     {
                         State = GameState.GAMEOVER;
                         WinSprite = new Sprite(CC.WinBlue, CC.VIEWPORT_WIDTH / 2f, CC.VIEWPORT_HEIGHT * 0.45f, 96, 64);
-                        MediaPlayer.Volume = 0.25f;
+                        MediaPlayer.Volume = 0.21f;
                         CC.WinSound.Play();
                     }
 
