@@ -198,7 +198,7 @@ namespace CloudColony.GameObjects.Entities
             if (ShieldHealth <= 0)
             {
                 //Owner.DrainStamina(SHIELD_COST * .35f * MathHelper.Lerp(1, 30, Owner.Ships.Count / (float)World.MAX_NUM_SHIPS) / Owner.Ships.Count);
-                Owner.DrainStamina(((SHIELD_COST * 0.75f) / Owner.Ships.Count));
+                Owner.DrainStamina(((SHIELD_COST * 0.57f) / Owner.Ships.Count));
                 ShieldHealth = MAX_SHIELD_HEALTH;
                 return true;
             }
